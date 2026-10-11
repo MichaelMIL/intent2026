@@ -1,0 +1,18 @@
+CPL corrections applied (JLC/EasyEDA footprint orientation vs KiCad):
+D1    C2286      KiCad rot   0.0 -> JLC rot 180.0, offset (-0.000, -0.000) mm, fit err 0.037 mm
+D2    C2286      KiCad rot   0.0 -> JLC rot 180.0, offset (-0.000, -0.000) mm, fit err 0.037 mm
+D3    C2286      KiCad rot   0.0 -> JLC rot 180.0, offset (-0.000, -0.000) mm, fit err 0.037 mm
+D4    C2286      KiCad rot   0.0 -> JLC rot 180.0, offset (-0.000, -0.000) mm, fit err 0.037 mm
+D5    C2286      KiCad rot   0.0 -> JLC rot 180.0, offset (-0.000, -0.000) mm, fit err 0.037 mm
+Q1    C22469449  KiCad rot   0.0 -> JLC rot 180.0, offset (0.054, 0.000) mm, fit err 0.145 mm
+U2    C2456211   KiCad rot 270.0 -> JLC rot 180.0, offset (0.000, 0.000) mm, fit err 0.207 mm
+U3    C35259     KiCad rot   0.0 -> JLC rot 180.0, offset (0.033, 0.000) mm, fit err 0.087 mm
+U4    C2827654   KiCad rot   0.0 -> JLC rot 270.0, offset (0.000, -0.000) mm, fit err 0.012 mm
+
+NOT verifiable by pad geometry (symmetric pad pattern, 0 and 180 deg fit equally; 0 assumed).
+Check these in the JLC placement preview before paying:
+  D6     C7420330   SOD-123 Schottky: cathode (KiCad pad 1) towards U3 / VSYS. Reversed = no USB power.
+  U5     C91447     IRM-H638T: GND pair (pins 1,2) on the J4 side. 180 deg wrong puts VCC on a GND pad.
+  LED1-4 C52917434  WS2812B-2020: pin 1 (DOUT) corner as in the KiCad footprint.
+  Y1     C133334    3225 crystal: 180 deg is harmless, 90 deg shorts the crystal to GND.
+  D1-D5  C2286      cathode = KiCad pad 1 (CPL already rotated 180 deg for JLC).

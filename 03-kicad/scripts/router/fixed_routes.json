@@ -1,0 +1,77 @@
+{
+ "_note": "Pre-placed GND copper loaded by route2.py via FIXED_ROUTES. U1.19 (TESTEN) to Y1 pad 4 (GND): the straight corridor between XIN and GPIO15, taken from the rev 0.4 board. Route with GND_SKIP=U1.19. C2.2 (GND) stub + via east of the pad: the final GND pass found no path there with everything else frozen.",
+ "tracks": [
+  {
+   "net": "GND",
+   "layer": "F",
+   "x1": 29.0,
+   "y1": 46.2,
+   "x2": 29.0,
+   "y2": 45.9,
+   "w": 0.2
+  },
+  {
+   "net": "GND",
+   "layer": "F",
+   "x1": 29.0,
+   "y1": 45.9,
+   "x2": 28.9,
+   "y2": 45.8,
+   "w": 0.2
+  },
+  {
+   "net": "GND",
+   "layer": "F",
+   "x1": 28.9,
+   "y1": 45.8,
+   "x2": 28.8,
+   "y2": 45.8,
+   "w": 0.2
+  },
+  {
+   "net": "GND",
+   "layer": "F",
+   "x1": 28.8,
+   "y1": 45.8,
+   "x2": 28.4,
+   "y2": 45.4,
+   "w": 0.2
+  },
+  {
+   "net": "GND",
+   "layer": "F",
+   "x1": 28.4,
+   "y1": 45.4,
+   "x2": 28.4,
+   "y2": 43.8,
+   "w": 0.2
+  },
+  {
+   "net": "GND",
+   "layer": "F",
+   "x1": 34.08,
+   "y1": 46.2,
+   "x2": 34.4,
+   "y2": 46.2,
+   "w": 0.2
+  },
+  {
+   "net": "GND",
+   "layer": "F",
+   "x1": 34.4,
+   "y1": 46.2,
+   "x2": 34.65,
+   "y2": 46.45,
+   "w": 0.2
+  }
+ ],
+ "vias": [
+  {
+   "net": "GND",
+   "x": 34.65,
+   "y": 46.45,
+   "d": 0.6,
+   "drill": 0.3
+  }
+ ]
+}

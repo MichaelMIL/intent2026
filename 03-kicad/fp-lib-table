@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "intent")(type "KiCad")(uri "${KIPRJMOD}/intent.pretty")(options "")(descr "INTENT badge custom footprints (JLC/EasyEDA geometry)"))
+)

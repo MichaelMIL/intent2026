@@ -1,0 +1,15 @@
+** Drc report for intent-2026-badge.kicad_pcb **
+** Created on 2026-10-09T09:27:47+0300 **
+** Report includes: Errors, Warnings, Exclusions **
+
+** Found 1 DRC violations **
+[connection_width]: Copper connection too narrow (board setup constraints minimum connection width 0.1500 mm; actual 0.1228 mm) (F.Cu)
+    Rule: board setup constraints; warning
+    @(127.6000 mm, 103.0000 mm): Track [+3V3] on F.Cu, length 0.1414 mm
+    @(127.7000 mm, 103.3000 mm): Track [+3V3] on F.Cu, length 0.2000 mm
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **
