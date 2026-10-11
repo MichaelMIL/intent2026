@@ -3,6 +3,7 @@
 set -e
 W=${W:-/tmp/work}; KCLI=${KCLI:-/tmp/kcli}; KPY=${KPY:-/tmp/kpy}
 cd $W
+python3 scripts/gen_3d.py >/dev/null
 python3 scripts/gen_fp.py >/dev/null
 python3 scripts/gen_pro.py >/dev/null
 python3 scripts/gen_sch.py >/dev/null

@@ -37,4 +37,5 @@
 	(fp_line (start -4.7 3.4) (end -4.7 4.3) (stroke (width 0.12) (type solid)) (layer "F.SilkS"))
 	(fp_line (start 4.7 3.4) (end 4.7 4.3) (stroke (width 0.12) (type solid)) (layer "F.SilkS"))
 	(fp_rect (start -5.2 -3.3) (end 5.2 5.2) (stroke (width 0.05) (type solid)) (fill no) (layer "F.CrtYd"))
+	(model "${KIPRJMOD}/intent.3dshapes/USB_C_TYPE-C16PIN_C393939.wrl" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
 )

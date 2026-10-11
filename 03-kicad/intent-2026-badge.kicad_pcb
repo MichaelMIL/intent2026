@@ -569,7 +569,7 @@
 			(uuid "d08718ab-45f4-418b-a50c-a732b6551997")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_Push_1P1T_XKB_TS-1187A.step"
+		(model "${KIPRJMOD}/intent.3dshapes/SW_Push_1P1T_XKB_TS-1187A.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -1854,7 +1854,7 @@
 			(uuid "ae4fa795-cc83-4259-a64f-45c61e83f57c")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/LED_SMD.3dshapes/LED_WS2812B-2020_PLCC4_2.0x2.0mm.step"
+		(model "${KIPRJMOD}/intent.3dshapes/LED_WS2812B-2020_PLCC4_2.0x2.0mm.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -2426,6 +2426,17 @@
 			(uuid "bf8e1463-1677-4cfc-a43e-f1e5c06c78b6")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/intent.3dshapes/USB_C_TYPE-C16PIN_C393939.wrl"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "intent:IRM-H638T_C91447"
 		(layer "F.Cu")
@@ -2585,6 +2596,17 @@
 			(uuid "5022321b-201a-441b-820a-5ed843ad2b43")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/intent.3dshapes/IRM-H638T_C91447.wrl"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Resistor_SMD:R_0402_1005Metric"
 		(layer "F.Cu")
@@ -3380,7 +3402,7 @@
 			(uuid "3ea28123-1f72-4d85-b73f-fa87667826b1")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_Push_1P1T_XKB_TS-1187A.step"
+		(model "${KIPRJMOD}/intent.3dshapes/SW_Push_1P1T_XKB_TS-1187A.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -4196,6 +4218,17 @@
 			(uuid "1c2d9b52-dc1e-496a-a62b-390967e81698")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/intent.3dshapes/JST_PH_2P_SMD_Vertical_C722761.wrl"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0402_1005Metric"
 		(layer "F.Cu")
@@ -7307,7 +7340,7 @@
 			(uuid "d4377712-85a1-4864-837a-79cafc177cc4")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/LED_SMD.3dshapes/LED_WS2812B-2020_PLCC4_2.0x2.0mm.step"
+		(model "${KIPRJMOD}/intent.3dshapes/LED_WS2812B-2020_PLCC4_2.0x2.0mm.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -8935,6 +8968,17 @@
 			(uuid "d397263d-7c78-4d4f-81c8-da580b5292d3")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/intent.3dshapes/Buzzer_MLT-8530_C94599.wrl"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "LED_SMD:LED_0603_1608Metric"
 		(layer "F.Cu")
@@ -11419,7 +11463,7 @@
 			(uuid "d7a0ade9-92e0-41c9-864f-9e1536b07375")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_Push_1P1T_XKB_TS-1187A.step"
+		(model "${KIPRJMOD}/intent.3dshapes/SW_Push_1P1T_XKB_TS-1187A.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -14348,7 +14392,7 @@
 			(uuid "3ec69bd3-10ab-4ea2-bc64-742f0aaa0505")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/LED_SMD.3dshapes/LED_WS2812B-2020_PLCC4_2.0x2.0mm.step"
+		(model "${KIPRJMOD}/intent.3dshapes/LED_WS2812B-2020_PLCC4_2.0x2.0mm.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -15961,6 +16005,17 @@
 			(uuid "1b397ec3-f60e-44df-aa9f-8bf238061df5")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/intent.3dshapes/Jack_3.5mm_PJ-320D_SMD_C431535.wrl"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Diode_SMD:D_SOD-123"
 		(layer "F.Cu")
@@ -17813,7 +17868,7 @@
 			(uuid "06ebbb6f-c6f6-4e41-aa0f-e57b679f1363")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_Push_1P1T_XKB_TS-1187A.step"
+		(model "${KIPRJMOD}/intent.3dshapes/SW_Push_1P1T_XKB_TS-1187A.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -18692,7 +18747,7 @@
 			(uuid "d7d6ccf8-ed70-4e6a-bbec-6a81cc5c5a46")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/LED_SMD.3dshapes/LED_WS2812B-2020_PLCC4_2.0x2.0mm.step"
+		(model "${KIPRJMOD}/intent.3dshapes/LED_WS2812B-2020_PLCC4_2.0x2.0mm.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -19058,7 +19113,7 @@
 			(uuid "72251aaf-0768-4518-9f47-cb70fcd65a3e")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_SPDT_Shouhan_MSK12C02.step"
+		(model "${KIPRJMOD}/intent.3dshapes/SW_SPDT_Shouhan_MSK12C02.wrl"
 			(offset
 				(xyz 0 0 0)
 			)

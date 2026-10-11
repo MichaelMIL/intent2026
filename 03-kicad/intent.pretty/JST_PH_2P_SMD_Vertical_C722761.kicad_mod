@@ -19,4 +19,5 @@
 	(fp_line (start 1.7 0.8) (end 2.6 0.8) (stroke (width 0.12) (type solid)) (layer "F.SilkS"))
 	(fp_circle (center -2.2 2.6) (end -2.05 2.6) (stroke (width 0.3) (type solid)) (fill no) (layer "F.SilkS"))
 	(fp_rect (start -5.3 -5.1) (end 5.3 3.55) (stroke (width 0.05) (type solid)) (fill no) (layer "F.CrtYd"))
+	(model "${KIPRJMOD}/intent.3dshapes/JST_PH_2P_SMD_Vertical_C722761.wrl" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
 )

@@ -45,7 +45,13 @@ def header(name, descr, tags, attr='smd', ref_y=-5, val_y=5):
             '\t(attr %s)\n') % (name, descr, tags, f(ref_y), name, f(val_y), attr)
 
 
+NO_MODEL = ('LanyardHole_4.0mm_Plated', 'MouseBites_1x4_D0.5_P1.0')
+
+
 def write(name, body):
+    if name not in NO_MODEL:   # simplified VRML models from gen_3d.py
+        body += ('\t(model "${KIPRJMOD}/intent.3dshapes/%s.wrl" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) '
+                 '(rotate (xyz 0 0 0)))\n' % name)
     with open(os.path.join(OUT, name + '.kicad_mod'), 'w', newline='\n') as fh:
         fh.write(body + ')\n')
 

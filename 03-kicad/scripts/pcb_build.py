@@ -156,6 +156,19 @@ def add_mousebites(board):
         fp.Value().SetVisible(False)
 
 
+# stock footprints whose STEP model is not shipped with this KiCad install -> simplified VRML from gen_3d.py
+FALLBACK_3D = ('SW_Push_1P1T_XKB_TS-1187A', 'LED_WS2812B-2020_PLCC4_2.0x2.0mm', 'SW_SPDT_Shouhan_MSK12C02')
+
+
+def set_fallback_model(fp, name):
+    if name not in FALLBACK_3D:
+        return
+    fp.Models().clear()
+    m = pcbnew.FP_3DMODEL()
+    m.m_Filename = '${KIPRJMOD}/intent.3dshapes/%s.wrl' % name
+    fp.Models().push_back(m)
+
+
 def load_netlist(path):
     tree = parse(open(path, encoding='utf-8').read())[0]
     comps = {}
@@ -227,6 +240,7 @@ def main(prj, netpath, geopath):
         fp.SetExcludedFromBOM(exbom or dnp)
         if dnp or exbom:
             fp.SetExcludedFromPosFiles(True)
+        set_fallback_model(fp, name)
         x, y, rot, side = placement.get(ref)
         board.Add(fp)
         if side == 'B':

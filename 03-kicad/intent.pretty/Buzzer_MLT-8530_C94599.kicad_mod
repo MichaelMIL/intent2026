@@ -23,4 +23,5 @@
 	(fp_line (start -2 4.4) (end 2 4.4) (stroke (width 0.12) (type solid)) (layer "F.SilkS"))
 	(fp_circle (center -5.3 4.4) (end -5.15 4.4) (stroke (width 0.3) (type solid)) (fill no) (layer "F.SilkS"))
 	(fp_rect (start -5 -5) (end 5 5) (stroke (width 0.05) (type solid)) (fill no) (layer "F.CrtYd"))
+	(model "${KIPRJMOD}/intent.3dshapes/Buzzer_MLT-8530_C94599.wrl" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
 )

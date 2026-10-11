@@ -37,6 +37,9 @@ The `.kicad_sch` / `.kicad_pcb` files are **generated**. Do not hand-edit them f
   `design.MODULES` maps module → ground net / socket / header.
 - Silkscreen art: `scripts/silk.py`, logo via `scripts/art_logo.py`
 - Project rules / netclasses: `scripts/gen_pro.py`
+- 3D models: `scripts/gen_3d.py` → `intent.3dshapes/*.wrl` (simplified boxes/cylinders for the custom footprints and
+  for TS-1187A / WS2812B-2020 / MSK12C02, whose STEP files KiCad 10 does not ship). `pcb_build.py` attaches them;
+  `add_3d.py <board>` does the same on an existing board.
 - Custom footprints: `scripts/gen_fp.py` → `intent.pretty/` (incl. the MLT-8530 transducer and the board-only
   `MouseBites_1x4_D0.5_P1.0` footprint that `pcb_build.py` places as MB1–MB3; those are not in the schematic)
 - Board outline incl. tabs and modules: `pcb_build.py` (`OUTLINE` = badge, `bottom_detour()` adds the modules);
