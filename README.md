@@ -37,9 +37,11 @@ The three modules are 13 × 22 mm soda cans hanging under the pedestal on 4 mm t
 into its slot. Every port has the same pinout (GND / 3V3 / signal, power in the middle), so a module plugged
 in backwards swaps ground and signal and never puts 3V3 on a GPIO.
 
-The silkscreen plays along: the RGB LEDs are shelf items A1–A4 with price tags over a dispensing coil, the keys sit in a
-SELECT bezel, the five red LEDs are the CREDIT meter, the module slots are the ITEM PICKUP door, and the UART test pads
-are the coins. The modules are the vended drinks.
+The artwork plays along: the INTENT logo, the INTENT-O-MATIC marquee, the key letters and the can rims are exposed
+copper (gold with ENIG), the RGB LEDs glow inside drawn products (can, cup, chips, candy bar) on a shelf with price tags
+and a dispensing coil, the keys sit in a SELECT bezel, the five red LEDs are the CREDIT meter, the module slots are the
+ITEM PICKUP door, the UART test pads are the coins, and the cabinet stands on two feet. The back shows the three AAA
+cells where the battery box goes, a DANGER 3V3 sticker and a service log. The modules are the vended drinks.
 
 | Item | Module | Circuit | Slot |
 |---|---|---|---|

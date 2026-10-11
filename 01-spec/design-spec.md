@@ -1,6 +1,6 @@
 # Intent 2026 PCB — Design Specification (rev 0.3, 2026-10-08)
 
-**rev 0.5 (2026-10-11):** the IR receiver, the audio jack and a new speaker are **breakaway soda-can modules** (13 × 22 mm) under the pedestal (56 × 124 mm blank; the top of the badge is a header sign box holding the lanyard holes, see BUILD-NOTES item 12), each with a 1×3 header that plugs into a socket on the main board. See §3.11 and `00-bom/bom-deltas.md` rev 0.5.
+**rev 0.5 (2026-10-11):** the IR receiver, the audio jack and a new speaker are **breakaway soda-can modules** (13 × 22 mm) under the pedestal (56 × 124 mm blank; the top of the badge is a header sign box holding the lanyard holes, the cabinet stands on two feet, logo/marquee/key letters are exposed copper — BUILD-NOTES items 12–13), each with a 1×3 header that plugs into a socket on the main board. See §3.11 and `00-bom/bom-deltas.md` rev 0.5.
 
 **rev 0.3:** board **56 × 100 mm** vending-machine outline, **two** lanyard holes, INTENT logo (white silk) + summit tagline on the front, team names + QR reserve on the back, add-ons: audio jack, IR receiver, 3×AAA battery power path. Power switch: on the battery box; SW5 pads kept on the board, DNP.
 

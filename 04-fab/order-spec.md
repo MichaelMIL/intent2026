@@ -4,12 +4,12 @@
 |---|---|
 | Base material | FR-4, TG 130–140 |
 | Layers | 2 |
-| Dimensions | **56 × 124 mm** blank: the 56 × 100 badge (header sign box on top) plus three 13 × 22 mm breakaway cans under the pedestal, joined by 4 mm tabs with mouse bites (0.5 mm NPTH). Irregular outline, tab-routed. Order it as **one board**, not as a panel |
+| Dimensions | **56 × 124 mm** blank: the 56 × 100 badge (header sign box on top, feet at the cabinet corners) plus three 13 × 22 mm breakaway cans under the pedestal, joined by 4 mm tabs with mouse bites (0.5 mm NPTH). Irregular outline, tab-routed. Order it as **one board**, not as a panel |
 | Quantity | 10 |
 | Thickness | 1.6 mm |
 | Solder mask | **Purple** |
 | Silkscreen | White |
-| Surface finish | HASL (lead-free) — switch to ENIG if RP2040 paste/assembly issues appear |
+| Surface finish | **ENIG recommended**: the exposed-copper art (INTENT logo, marquee, A/B/C, can rims) is gold with ENIG and dull silver with lead-free HASL. HASL (lead-free) works electrically. |
 | Outer copper | 1 oz |
 | Via covering | Tented |
 | Min via hole / diameter | 0.3 / 0.6 mm (all vias on the board) |

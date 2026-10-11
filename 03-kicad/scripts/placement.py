@@ -79,3 +79,12 @@ def get(ref):
     v = P[ref]
     side = v[3] if len(v) > 3 else 'F'
     return v[0], v[1], v[2], side
+
+# --- exposed-copper art regions (front): no signal tracks may run here, GND stitching vias are pruned here
+# (router/prune_routes.py --art). Checked against routes.json on 2026-10-11; re-check after any re-route.
+ART_KEEPOUTS = [            # (x1, y1, x2, y2, layer)
+    (8.0, 9.8, 48.0, 21.5, 'F'),      # INTENT logo in copper
+    (15.0, 3.2, 41.0, 6.0, 'F'),      # INTENT-O-MATIC marquee
+    (48.9, 63.6, 50.9, 78.4, 'F'),    # key letters A / B / C (a VSYS track runs at x 48.3-48.55)
+    (48.3, 32.1, 52.9, 33.7, 'F'),    # BOOT
+]

@@ -1,7 +1,7 @@
 # INTENT 2026 badge — project guide for Claude
 
 RP2040 conference badge for the INTENT 2026 security summit. 56 × 100 mm, 2-layer, purple mask,
-vending-machine outline (header sign box with the lanyard holes on top of a 56 mm cabinet, pedestal below), plus three
+vending-machine outline (header sign box with the lanyard holes on top of a 56 mm cabinet with feet, pedestal below), plus three
 **breakaway soda-can modules** 13 × 22 mm (IR receiver, audio jack, speaker) hanging under the pedestal on mouse-bite
 tabs (blank 56 × 124 mm). Each module has a 1×3 pin header (P1–P3) and plugs into a
 1×3 socket on the main board (J5 IR / J6 AUDIO / J7 SPK; pin 1 GND, 2 3V3, 3 signal). Fab: JLCPCB (10-board
@@ -37,9 +37,12 @@ The `.kicad_sch` / `.kicad_pcb` files are **generated**. Do not hand-edit them f
   cans); `MP` = module parts in module-local mm (converted at import); H1/H2 lanyard holes sit in the header box.
   Module nets are prefixed IRM_/AUM_/SPM_ and must never touch a main-board part (no copper crosses a tab);
   `design.MODULES` maps module → ground net / socket / header.
-- Silkscreen art: `scripts/silk.py` (vending-machine theme: INTENT-O-MATIC marquee in the header box, shelf items A1–A4
-  with prices, coil, keypad bezel, CREDIT meter, ITEM PICKUP door with slots B1/B2/B3, coin slot, back service-panel
-  texts; cans B1 IR COLA / B2 AUDIO POP / B3 BEEP FIZZ), logo via `scripts/art_logo.py` (`build/logo.json`, y 10–21.3)
+- Silkscreen art: `scripts/silk.py` (vending-machine theme: shelf items A1–A4 with product icons and prices, coil,
+  glass glare, keypad bezel, CREDIT meter, ITEM PICKUP door with slots B1/B2/B3, coin + coin slot, back: AAA cells,
+  DANGER sticker, service log; cans B1 IR COLA / B2 AUDIO POP / B3 BEEP FIZZ with pull-tab rings on the stubs).
+- Exposed-copper art: `scripts/art_copper.py` (INTENT logo from `build/logo.json` via `scripts/art_logo.py`,
+  INTENT-O-MATIC marquee, A/B/C, BOOT, can rims). Regions in `placement.ART_KEEPOUTS` must stay free of F.Cu
+  signal tracks; `router/prune_routes.py --art` removes GND vias there. Re-check after any re-route.
 - Project rules / netclasses: `scripts/gen_pro.py`
 - 3D models: `scripts/gen_3d.py` → `intent.3dshapes/*.wrl` (simplified boxes/cylinders for the custom footprints and
   for TS-1187A / WS2812B-2020 / MSK12C02, whose STEP files KiCad 10 does not ship). `pcb_build.py` attaches them;
@@ -110,6 +113,7 @@ Open the project: `open -a KiCad "/Users/michael/Downloads/AI PCB /03-kicad/inte
 3. Battery box supplier (wired 3×AAA, with switch, JST-PH 2.0 plug). Verify plug polarity against J3 silk.
 4. QR code for the back silk once the repo URL exists (silk only, no re-layout).
 5. Logo permission (Palo Alto Networks wordmark).
+6. Surface finish: the copper art (logo, marquee, A/B/C, can rims) is gold with ENIG, silver with lead-free HASL. Pick before ordering.
 
 ## Conventions
 

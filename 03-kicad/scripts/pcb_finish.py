@@ -8,6 +8,7 @@ import pcbnew
 from pcb_build import OX, OY, mm, P, outline_points, MODULES
 import design
 import silk
+import art_copper
 
 LAY = {'F': pcbnew.F_Cu, 'B': pcbnew.B_Cu}
 
@@ -70,7 +71,9 @@ def main(prj, routes_path, art_path):
         add_zone(board, L, 'GND', outline_points(5, with_modules=False), 'GND')
         for name, (x1, y1, x2, y2, _) in MODULES.items():
             add_zone(board, L, design.MODULES[name]['gnd'], [(x1, y1), (x2, y1), (x2, y2), (x1, y2)], name + '_GND')
-    silk.apply(board, json.load(open(art_path)) if art_path and os.path.exists(art_path) else None)
+    art = json.load(open(art_path)) if art_path and os.path.exists(art_path) else None
+    art_copper.apply(board, art)
+    silk.apply(board, art)
     filler = pcbnew.ZONE_FILLER(board)
     filler.Fill(board.Zones())
     pcbnew.SaveBoard(pcbpath, board)
