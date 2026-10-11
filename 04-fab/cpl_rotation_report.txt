@@ -11,7 +11,7 @@ P1    C49257     KiCad rot  90.0 -> JLC rot   0.0, offset (2.540, 0.000) mm, fit
 P2    C49257     KiCad rot  90.0 -> JLC rot   0.0, offset (2.540, 0.000) mm, fit err 0.000 mm
 P3    C49257     KiCad rot  90.0 -> JLC rot   0.0, offset (2.540, 0.000) mm, fit err 0.000 mm
 Q1    C22469449  KiCad rot   0.0 -> JLC rot 180.0, offset (0.054, 0.000) mm, fit err 0.145 mm
-Q2    C2146      KiCad rot  90.0 -> JLC rot 270.0, offset (0.000, 0.054) mm, fit err 0.145 mm
+Q2    C2146      KiCad rot   0.0 -> JLC rot 180.0, offset (0.054, 0.000) mm, fit err 0.145 mm
 U2    C2456211   KiCad rot 270.0 -> JLC rot 180.0, offset (0.000, 0.000) mm, fit err 0.207 mm
 U3    C35259     KiCad rot   0.0 -> JLC rot 180.0, offset (0.033, 0.000) mm, fit err 0.087 mm
 U4    C2827654   KiCad rot   0.0 -> JLC rot 270.0, offset (0.000, -0.000) mm, fit err 0.012 mm

@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "/private/tmp/claude-501/-Users-michael-Downloads-AI-PCB-/98755137-d59e-4c71-9570-1f5e1e0b6ebd/scratchpad/W/intent-2026-badge.kicad_sch")
-		(date "2026-10-11T15:13:02")
+		(date "2026-10-11T23:24:45")
 		(tool "Eeschema 10.0.3")
 		(textvar
 			(name "EVENT") "INTENT 2026")

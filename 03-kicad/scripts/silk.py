@@ -2,8 +2,9 @@
 
 Vending-machine theme (rev 0.5): price-tagged shelf items A1-A4 (the RGB LEDs) over a dispensing coil, a keypad
 bezel with SELECT, a CREDIT meter with coin values, an ITEM PICKUP door around the three module slots B1-B3, a coin
-slot by the UART test pads, service-panel texts on the back. The breakaway modules are the vended items: B1 IR
-"EYE CANDY" (candy bar wrapper), B2 "AUDIO POP" (soda can), B3 "BEEP CHIPS" (chips bag)."""
+slot by the UART test pads, a marquee in the header sign box, service-panel texts on the back. The breakaway modules
+are soda cans: B1 "IR COLA", B2 "AUDIO POP", B3 "BEEP FIZZ" (rim lines, label band with a wave, pin labels)."""
+import math
 import pcbnew
 from pcb_build import OX, OY, mm, P, MODULES
 
@@ -95,6 +96,13 @@ def zigzag(board, c0, t1, t2, amp=0.3, period=1.0, layer=FS, w=0.15, vertical=Tr
     polyline(board, pts, layer, w, close=False)
 
 
+def wave(board, xa, xb, y, amp=0.4, period=2.75, layer=FS, w=0.15, n_per=8):
+    """Soda-label wave: one sine line from xa to xb."""
+    n = max(4, int((xb - xa) / period * n_per))
+    pts = [(xa + (xb - xa) * i / n, y + amp * math.sin(2 * math.pi * ((xb - xa) * i / n) / period)) for i in range(n + 1)]
+    polyline(board, pts, layer, w, close=False)
+
+
 def coil(board, xa, xb, y, d=1.2, layer=FS, w=0.15):
     """Dispensing spiral seen from the front: a row of half loops hanging under the shelf line."""
     x = xa
@@ -137,8 +145,9 @@ def apply(board, art):
     # ---------------- FRONT ----------------
     if art:
         logo(board, art)
-    text(board, '2026 · THE SECURITY SUMMIT', 28, 22.5, 1.2, thick=0.2)
-    text(board, 'FOR RESEARCHERS / BY RESEARCHERS', 28, 24.5, 1.2, thick=0.2)
+    text(board, 'INTENT-O-MATIC', 28, 4.6, 1.8, thick=0.3, bold=True)      # header sign box, between the lanyard holes
+    text(board, '2026 · THE SECURITY SUMMIT', 28, 23.3, 1.2, thick=0.2)
+    text(board, 'FOR RESEARCHERS / BY RESEARCHERS', 28, 25.1, 1.2, thick=0.2)
     # product window (notched at the bottom right for the keypad bezel), shelf with dispensing coil, snack boxes
     polyline(board, [(9, 26.2), (53, 26.2), (53, 61.0), (38.4, 61.0), (38.4, 64.6), (9, 64.6)], w=0.2)
     line(board, 10.2, 40.0, 51.8, 40.0, w=0.2)
@@ -174,36 +183,30 @@ def apply(board, art):
     text(board, 'TX', 37.0, 97.0, 0.9); text(board, 'RX', 40.5, 97.0, 0.9); text(board, 'GND', 44.0, 97.0, 0.9)
     text(board, '3×AAA', 12.2, 94.4, 1.0)
     text(board, '+', 17.6, 97.4, 1.2, thick=0.2); text(board, '−', 22.5, 97.4, 1.2, thick=0.2)
-    # ---------------- BREAKAWAY MODULES = vended items (front art, back: name + where it plugs in) ----------------
+    # ---------------- BREAKAWAY MODULES = soda cans (front: rims, label band; back: name + where it plugs in) --------
     for name, (x1, y1, x2, y2, tx) in MODULES.items():
-        hx = x1 + {'IR': 5.46, 'AUDIO': 5.96, 'SPK': 5.96}[name]
-        for i, c in enumerate(('G', '+', 'S')):
-            text(board, c, hx + 2.54 * i, y1 + 15.2, 0.8)
         X = lambda v: x1 + v
         Y = lambda v: y1 + v
+        code, slot = {'IR': ('B1', 'J5'), 'AUDIO': ('B2', 'J6'), 'SPK': ('B3', 'J7')}[name]
+        line(board, X(1.1), Y(0.7), X(11.9), Y(0.7))        # top rim
+        line(board, X(1.3), Y(21.5), X(11.7), Y(21.5))      # bottom rim
+        for i, c in enumerate(('G', '+', 'S')):
+            text(board, c, X(3.96 + 2.54 * i), Y(20.7), 0.8)
         if name == 'IR':
-            # candy bar: wrapper with crimped ends, item code B1
-            zigzag(board, X(0.95), Y(0.8), Y(11.2))
-            zigzag(board, X(15.05), Y(0.8), Y(11.2))
-            line(board, X(0.95), Y(0.8), X(15.05), Y(0.8)); line(board, X(0.95), Y(11.2), X(15.05), Y(11.2))
-            text(board, 'B1', X(2.3), Y(1.75), 0.8)
-            text(board, 'EYE CANDY', X(8.0), Y(7.8), 0.8)
-            text(board, 'IR', X(3.4), Y(9.6), 0.8); text(board, '38kHz', X(12.3), Y(9.6), 0.8)
+            line(board, X(0.7), Y(12.0), X(12.3), Y(12.0)); line(board, X(0.7), Y(17.4), X(12.3), Y(17.4))
+            text(board, 'B1 · IR COLA', X(6.5), Y(13.6), 0.9, thick=0.16)
+            wave(board, X(1.0), X(12.0), Y(15.2), 0.4)
+            text(board, '38 kHz', X(6.5), Y(16.5), 0.8)
         elif name == 'AUDIO':
-            # soda can lying on its side: the jack barrel is the opening, fizz bubbles, item code B2
-            text(board, 'B2', X(13.3), Y(1.0), 0.8)
-            circle(board, X(14.9), Y(9.6), 0.45); circle(board, X(13.8), Y(10.6), 0.3); circle(board, X(15.9), Y(8.4), 0.25)
-            text(board, 'AUDIO POP · 3.5mm', X(8.5), Y(11.3), 0.8)
+            text(board, '3.5mm', X(6.5), Y(12.8), 0.8)
+            wave(board, X(1.0), X(12.0), Y(15.7), 0.3)
+            text(board, 'B2 · AUDIO POP', X(6.5), Y(16.9), 0.8)
         else:
-            # chips bag: crimped sides, item code B3
-            zigzag(board, X(0.95), Y(2.4), Y(9.4))            # starts below the 2 mm corner chamfer
-            zigzag(board, X(16.5), Y(5.0), Y(13.4), amp=0.25)
-            text(board, 'B3', X(1.6), Y(10.0), 0.8)
-            text(board, 'BEEP CHIPS', X(8.0), Y(11.2), 0.8)
-        slot, code = {'IR': ('J5', 'B1'), 'AUDIO': ('J6', 'B2'), 'SPK': ('J7', 'B3')}[name]
+            text(board, 'B3 · BEEP FIZZ', X(6.5), Y(17.25), 0.8)
         cx = (x1 + x2) / 2
-        text(board, code + ' · ' + name + ' MODULE', cx, y1 + 8.6, 0.9, layer=BS, thick=0.15)
-        text(board, 'snap off, plug into ' + slot, cx, y1 + 10.7, 0.8, layer=BS)
+        text(board, code + ' ' + name + ' MODULE', cx, Y(11.0), 0.8, layer=BS, thick=0.15)
+        text(board, 'snap off,', cx, Y(13.0), 0.8, layer=BS)
+        text(board, 'plug into ' + slot, cx, Y(14.6), 0.8, layer=BS)
     # ---------------- BACK: service panel ----------------
     text(board, 'TEAM', 52, 11.5, 1.6, layer=BS, just='L', thick=0.25)
     for i, n in enumerate(TEAM):

@@ -1,7 +1,8 @@
 # INTENT 2026 Hardware Badge
 
-RP2040 conference badge for the INTENT 2026 security summit, shaped like a vending machine.
-56 × 100 mm, two layers, purple solder mask, with three **breakaway expansion modules** (IR receiver,
+RP2040 conference badge for the INTENT 2026 security summit, shaped like a vending machine: a header sign
+with the lanyard holes, the cabinet with the product window, keypad and item-pickup door, and a pedestal.
+56 × 100 mm, two layers, purple solder mask, with three **breakaway soda-can modules** (IR receiver,
 audio jack, speaker) that snap off and plug back into slots on the badge.
 
 Board rev **0.5** (2026-10-11). Fab target: JLCPCB, Standard PCBA.
@@ -32,19 +33,19 @@ Board rev **0.5** (2026-10-11). Fab target: JLCPCB, Standard PCBA.
 
 ### Breakaway modules
 
-The three modules hang under the pedestal on 4 mm tabs with mouse bites. Snap them off, then plug each one
+The three modules are 13 × 22 mm soda cans hanging under the pedestal on 4 mm tabs with mouse bites. Snap them off, then plug each one
 into its slot. Every port has the same pinout (GND / 3V3 / signal, power in the middle), so a module plugged
 in backwards swaps ground and signal and never puts 3V3 on a GPIO.
 
 The silkscreen plays along: the RGB LEDs are shelf items A1–A4 with price tags over a dispensing coil, the keys sit in a
 SELECT bezel, the five red LEDs are the CREDIT meter, the module slots are the ITEM PICKUP door, and the UART test pads
-are the coins. The modules are the vended items.
+are the coins. The modules are the vended drinks.
 
 | Item | Module | Circuit | Slot |
 |---|---|---|---|
-| B1 "EYE CANDY" (candy bar) | IR | Everlight IRM-H638T 38 kHz receiver with RC supply filter | J5, GPIO22 |
-| B2 "AUDIO POP" (soda can) | AUDIO | 3.5 mm TRRS jack behind a 1 k / 10 n PWM low-pass and 10 µF DC block | J6, GPIO11 (PWM) |
-| B3 "BEEP CHIPS" (chips bag) | SPK | MLT-8530 magnetic transducer, S8050 low-side driver, flyback diode | J7, GPIO25 (2.7 kHz square wave) |
+| B1 "IR COLA" | IR | Everlight IRM-H638T 38 kHz receiver with RC supply filter | J5, GPIO22 |
+| B2 "AUDIO POP" | AUDIO | 3.5 mm TRRS jack behind a 1 k / 10 n PWM low-pass and 10 µF DC block | J6, GPIO11 (PWM) |
+| B3 "BEEP FIZZ" | SPK | MLT-8530 magnetic transducer, S8050 low-side driver, flyback diode | J7, GPIO25 (2.7 kHz square wave) |
 
 ## Repository layout
 

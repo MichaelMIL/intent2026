@@ -1,6 +1,6 @@
 # Intent 2026 PCB — Design Specification (rev 0.3, 2026-10-08)
 
-**rev 0.5 (2026-10-11):** the IR receiver, the audio jack and a new speaker are **breakaway modules** under the pedestal (56 × 118 mm blank), each with a 1×3 header that plugs into a socket on the main board. See §3.11 and `00-bom/bom-deltas.md` rev 0.5.
+**rev 0.5 (2026-10-11):** the IR receiver, the audio jack and a new speaker are **breakaway soda-can modules** (13 × 22 mm) under the pedestal (56 × 124 mm blank; the top of the badge is a header sign box holding the lanyard holes, see BUILD-NOTES item 12), each with a 1×3 header that plugs into a socket on the main board. See §3.11 and `00-bom/bom-deltas.md` rev 0.5.
 
 **rev 0.3:** board **56 × 100 mm** vending-machine outline, **two** lanyard holes, INTENT logo (white silk) + summit tagline on the front, team names + QR reserve on the back, add-ons: audio jack, IR receiver, 3×AAA battery power path. Power switch: on the battery box; SW5 pads kept on the board, DNP.
 
@@ -21,12 +21,12 @@ and are **assumed applied** in this spec (marked Δ).
 | Min track / space | 0.15 / 0.15 mm (RP2040 fan-out), 0.2 mm elsewhere |
 | Min via | 0.3 mm drill / 0.6 mm pad |
 | Corners | 3 mm radius on body, 2 mm on pedestal |
-| Lanyard | **H1, H2: Ø 4.0 mm plated holes** at (10, 6) and (46, 6). Either one takes a single lanyard clip; both take a strap. 1.5 mm copper-free ring, no parts within 3 mm |
+| Lanyard | **H1, H2: Ø 4.0 mm plated holes** at (12, 5.5) and (44, 5.5) in the header sign box (rev 0.5 outline rework; was (10, 6) / (46, 6)). Either one takes a single lanyard clip; both take a strap. 1.5 mm copper-free ring, no parts within 3 mm |
 | Panel (600 run) | single boards or 2-up (160 × 140) — JLC decides; irregular outline → tab-routed, not V-score |
 
 ### 1.1 Outline (edge cuts)
 ```
-        ┌────────────┐ ← rounded top R 6, two lanyard holes
+        ┌────────────┐ ← header sign box x 7–49 × y 0–9 with the two lanyard holes (rev 0.5 rework; was a R 6 rounded top)
         │ INTENT logo│   y 8–25   white silk logo + "2026 · THE SECURITY SUMMIT FOR RESEARCHERS / BY RESEARCHERS"
         │  WINDOW    │   y 26–60  RGB shelf, RP2040 "prize", BOOTSEL "service key"
         │ CREDIT ■■■ │   y 62–79  5 LEDs + keypad A/B/C
@@ -34,10 +34,10 @@ and are **assumed applied** in this spec (marked Δ).
         └──┐      ┌──┘
            │ FOOT │     y 90–100, x 8–48 (pedestal 40 mm wide)
            └─┬──┬──┬┘
-         ┌───┴┐┌─┴──┐┌┴───┐   y 102–118  breakaway modules IR | AUDIO | SPK (4 mm tabs, mouse bites at y 100)
+         ┌───┴┐┌─┴──┐┌┴───┐   y 102–124  breakaway cans IR | AUDIO | SPK, 13 × 22 mm (4 mm tabs at x 12/28/44, mouse bites at y 100)
          └────┘└────┘└────┘
 ```
-Full width 56 mm from y 0 to 90; pedestal 40 mm wide for the last 10 mm. rev 0.5: three 16–17 × 16 mm modules hang 2 mm below the pedestal on 4 mm tabs (blank 56 × 118 mm); after snapping them off the badge is the 56 × 100 mm silhouette again. Battery box (wired 3×AAA with switch, ≈ 50 × 36 × 14 mm) taped on the **back**, cells along the long axis, x 10–46, y 26–76 — clear of J2's through-hole pins (x < 8).
+Full width 56 mm from y 0 to 90; pedestal 40 mm wide for the last 10 mm. rev 0.5: three 13 × 22 mm soda-can modules hang 2 mm below the pedestal on 4 mm tabs (blank 56 × 124 mm); after snapping them off the badge is the 56 × 100 mm silhouette again. Battery box (wired 3×AAA with switch, ≈ 50 × 36 × 14 mm) taped on the **back**, cells along the long axis, x 10–46, y 26–76 — clear of J2's through-hole pins (x < 8).
 
 ## 2. Power tree
 
@@ -229,7 +229,7 @@ Power in the middle: a module plugged in backwards swaps GND and signal; 3V3 can
 
 Speaker module: GPIO25 → R20 1 kΩ → Q2 base (R21 10 kΩ to ground keeps it off while the pin floats at reset); Q2 emitter → ground; collector → LS1 (−); LS1 (+) → 3V3; D7 cathode to 3V3, anode to the collector (flyback); C25 across 3V3/ground. Drive with a 2.7 kHz square wave at 50 % duty (resonance); ≤ 95 mA pulsed from the 3V3 LDO.
 
-Mechanics: the three modules (16 × 16, 17 × 16, 17 × 16 mm) hang 2 mm under the pedestal at y 102–118 on 4 mm wide tabs with four 0.5 mm mouse-bite holes (1.0 mm pitch) on the pedestal edge line, so the badge edge stays clean and the stub remains on the module. No copper crosses a tab: every module has its own ground net and pour. Modules are plugged in standing upright; right-angle pin headers on the modules (same pads) would make them lie flat and face forward instead.
+Mechanics: the three modules (soda cans 13 × 22 mm, R 2.2 corners) hang 2 mm under the pedestal at y 102–124 on 4 mm wide tabs with four 0.5 mm mouse-bite holes (1.0 mm pitch) on the pedestal edge line, so the badge edge stays clean and the stub remains on the module. No copper crosses a tab: every module has its own ground net and pour. Modules are plugged in standing upright; right-angle pin headers on the modules (same pads) would make them lie flat and face forward instead.
 
 ### 3.8 Removed from BOM-B2
 

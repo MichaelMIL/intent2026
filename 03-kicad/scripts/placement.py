@@ -6,20 +6,18 @@ and the x centre of its 4 mm tab on the pedestal edge (y 100-102). Module part c
 module-local mm (origin = module top-left) via MP and converted to board coordinates at import.
 """
 
-# --- breakaway modules: name -> (x1, y1, x2, y2, tab_x). Tabs must sit on the straight pedestal edge x 9.5-46.5.
+# --- breakaway modules = soda cans (13 x 22 mm, R 2.2 shoulders), name -> (x1, y1, x2, y2, tab_x).
+# Tabs must sit on the straight pedestal edge x 9.5-46.5; the cans leave 3 mm routed gaps between them.
 TAB_W, TAB_L = 4.0, 2.0          # tab width / length (= routed gap between main board and module)
+CAN_W, CAN_H, CAN_R = 13.0, 22.0, 2.2
 MODULES = {
-    'IR':    (0.0, 102.0, 16.0, 118.0, 12.5),
-    'AUDIO': (19.0, 102.0, 36.0, 118.0, 27.5),
-    'SPK':   (39.0, 102.0, 56.0, 118.0, 43.5),
+    'IR':    (5.5, 102.0, 18.5, 124.0, 12.0),
+    'AUDIO': (21.5, 102.0, 34.5, 124.0, 28.0),
+    'SPK':   (37.5, 102.0, 50.5, 124.0, 44.0),
 }
-# vending-item look of each module outline: ('chamfer' | 'round', corner size mm). Corners must stay clear of the
-# tab (tab_x +- 2) and of copper; the router still sees the plain rectangle, so keep corner cuts small.
-MODULE_CORNERS = {
-    'IR':    ('chamfer', 1.2),   # candy bar wrapper
-    'AUDIO': ('round', 2.5),     # soda can
-    'SPK':   ('chamfer', 2.0),   # chips bag
-}
+# outline corner style of each module: ('chamfer' | 'round', size mm). Corners must stay clear of the tab
+# (tab_x +- 2) and of copper; the router sees the real outline, the pours are clipped to it.
+MODULE_CORNERS = {name: ('round', CAN_R) for name in MODULES}
 
 P = {
     # --- MCU block ("PRIZE" window) ---
@@ -55,20 +53,21 @@ P = {
     # --- back side ---
     'SW5': (30.5, 95.6, 0, 'B'), 'JP1': (30.5, 91.0, 0, 'B'),
     # --- lanyard ---
-    'H1': (10.0, 6.0, 0), 'H2': (46.0, 6.0, 0),
+    'H1': (12.0, 5.5, 0), 'H2': (44.0, 5.5, 0),      # in the header sign box, 3 mm web above the hole
 }
 
-# --- module parts, module-local coordinates (origin = module top-left; module = 16-17 x 16 mm) ---
-# Headers lie along the bottom edge (pins extend +x at rot 90, pin 1 = GND on the left).
+# --- module parts, module-local coordinates (origin = can top-left; can = 13 x 22 mm, tab at the top centre x 6.5) ---
+# Headers lie along the bottom (pins extend +x at rot 90, pin 1 = GND on the left, pin 2 on the can centre line).
+HDR = (3.96, 19.0, 90)
 MP = {
-    'IR': {'P1': (5.46, 13.0, 90), 'U5': (8.0, 4.6, 0), 'R19': (13.5, 3.0, 90), 'C23': (13.5, 5.6, 90),
-           'C24': (8.0, 9.4, 0)},
-    # jack body 0.4 mm inside the left edge, barrel 1.6 mm into the routed gap (mouth -x)
-    'AUDIO': {'P2': (5.96, 13.0, 90), 'J4': (7.7, 5.6, 0), 'R17': (15.0, 2.0, 0), 'C21': (15.0, 4.0, 0),
-              'C22': (15.0, 6.5, 0)},
-    # transducer leads (+Y row) toward the header, sound port toward the tab; driver column on the right
-    'SPK': {'P3': (5.96, 13.0, 90), 'LS1': (8.0, 5.3, 0), 'Q2': (14.8, 3.0, 90), 'D7': (14.8, 7.5, 90),
-            'R20': (14.8, 11.5, 0), 'R21': (14.8, 13.5, 0), 'C25': (2.3, 12.3, 90)},
+    # IR: receiver dome up top, RC filter below it, label band y 12-17.5
+    'IR': {'P1': HDR, 'U5': (6.5, 5.0, 0), 'R19': (3.0, 9.6, 90), 'C23': (10.0, 9.6, 90), 'C24': (6.5, 10.3, 0)},
+    # AUDIO: jack lying across the can, body 0.2 mm inside the left edge, barrel 1.8 mm into the 3 mm gap (mouth -x);
+    # PWM filter in a row below it
+    'AUDIO': {'P2': HDR, 'J4': (7.5, 7.0, 0), 'R17': (3.5, 14.2, 0), 'C21': (6.5, 14.2, 0), 'C22': (10.2, 14.3, 0)},
+    # SPK: transducer up top (leads toward the driver row), driver row below, label line above the header
+    'SPK': {'P3': HDR, 'LS1': (6.5, 6.0, 0), 'Q2': (3.2, 12.95, 0), 'D7': (9.6, 12.3, 0), 'R20': (9.6, 14.0, 0),
+            'R21': (6.5, 14.0, 0), 'C25': (3.4, 15.75, 0)},
 }
 for _m, _parts in MP.items():
     _x1, _y1 = MODULES[_m][0], MODULES[_m][1]

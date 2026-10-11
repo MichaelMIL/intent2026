@@ -4,7 +4,7 @@
 |---|---|
 | Base material | FR-4, TG 130–140 |
 | Layers | 2 |
-| Dimensions | **56 × 118 mm** blank: the 56 × 100 badge plus three breakaway modules under the pedestal, joined by 4 mm tabs with mouse bites (0.5 mm NPTH). Irregular outline, tab-routed. Order it as **one board**, not as a panel |
+| Dimensions | **56 × 124 mm** blank: the 56 × 100 badge (header sign box on top) plus three 13 × 22 mm breakaway cans under the pedestal, joined by 4 mm tabs with mouse bites (0.5 mm NPTH). Irregular outline, tab-routed. Order it as **one board**, not as a panel |
 | Quantity | 10 |
 | Thickness | 1.6 mm |
 | Solder mask | **Purple** |

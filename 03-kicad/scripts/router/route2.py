@@ -13,7 +13,7 @@ from shapely.geometry import Polygon, Point, LineString
 HERE = os.path.dirname(os.path.abspath(__file__))
 G = 0.1
 X0, Y0 = -1.0, -1.0
-NX, NY = 590, 1210        # x -1..57.9, y -1..119.9 (main board 0..100 + breakaway modules to y 118)
+NX, NY = 590, 1270        # x -1..57.9, y -1..125.9 (main board 0..100 + breakaway cans to y 124)
 NC = NX * NY
 CLR = 0.15
 MARGIN = 0.045
@@ -487,6 +487,12 @@ class Router:
             xs = [p['x'] for p in self.nets[n]]; ys = [p['y'] for p in self.nets[n]]
             return (max(xs) - min(xs)) + (max(ys) - min(ys))
         order = sorted([n for n in self.nets if n != 'GND'], key=span) + ([] if os.environ.get('GND_LAST') else ['GND'])
+        # NET_ONLY=IRM_,AUM_,SPM_: route just these net prefixes (e.g. the breakaway modules after a re-placement);
+        # everything else comes in as FIXED_ROUTES and is exported separately by main()
+        only = os.environ.get('NET_ONLY')
+        if only:
+            pre = tuple(only.split(','))
+            order = [n for n in order if n.startswith(pre)]
         gs = os.environ.get('GND_SUBSET')
         if gs:
             self.gnd_subset = set(gs.split(','))
@@ -536,9 +542,11 @@ class Router:
                             open(sp, 'wb'))
         return best
 
-    def export(self):
+    def export(self, prefixes=None):
         tracks, vias = [], []
         for r in list(self.routes.values()) + [self.fixed]:
+            if prefixes and not r.name.startswith(prefixes):
+                continue
             for L, pts, w in r.tracks:
                 for a, b in zip(pts[:-1], pts[1:]):
                     tracks.append(dict(net=r.name, layer='F' if L == 0 else 'B', x1=a[0], y1=a[1], x2=b[0], y2=b[1], w=w))
@@ -568,6 +576,8 @@ def main(geopath, outpath):
         bad2 = rt.conflicts()
         print('conflicts after stitching', bad2)
         data = rt.export()
+    if os.environ.get('NET_ONLY'):
+        data = rt.export(tuple(os.environ['NET_ONLY'].split(',')))
     data['unrouted'] = unrouted
     data['conflicts'] = bad
     json.dump(data, open(outpath, 'w'), indent=0)

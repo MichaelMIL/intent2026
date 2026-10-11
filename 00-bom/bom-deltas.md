@@ -64,7 +64,7 @@ The IR receiver and the audio jack leave the main board, a speaker (BOM-B2 add-o
 sit on **breakaway sub-boards under the pedestal** (same PCB, tab-routed, 4 mm tabs with mouse bites, no copper
 across the tabs). Each module carries a 1×3 pin header and plugs into a matching 1×3 socket on the main board.
 Pinout on every port: **1 = GND (square pad), 2 = 3V3, 3 = signal**; power in the middle, so a module plugged
-in backwards swaps GND and signal and never puts 3V3 on a GPIO. Board blank grows from 56 × 100 to 56 × 118 mm.
+in backwards swaps GND and signal and never puts 3V3 on a GPIO. Board blank grows from 56 × 100 to 56 × 124 mm (cans 13 × 22 mm).
 
 | Ref | LCSC | Part | Qty | New type? | Where | Notes |
 |---|---|---|---|---|---|---|
@@ -92,7 +92,7 @@ GPIO: GPIO25 is taken for the speaker (it stays on J2 pin 15 as a shared signal)
 | THT hand-solder, 18 joints | ≈ +$0.31 |
 | Transducer, S8050, 1N4148W, 10 k, 1 k, 10 µF + 14 SMD joints | ≈ +$0.26 |
 | 5 new part types ($1.53 each per order) + $3.50 THT setup | ≈ +$0.02 |
-| PCB blank 56 × 118 instead of 56 × 100 (+18 % area, more routing) | ≈ +$0.10 |
+| PCB blank 56 × 124 instead of 56 × 100 (+24 % area, more routing) | ≈ +$0.12 |
 | **Total** | **≈ +$0.9–1.0** |
 
 At 10 boards the fixed fees dominate: 5 × $1.53 + $3.50 ≈ $11 per order, so ≈ +$2.5/board. Prices are LCSC
