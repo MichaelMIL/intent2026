@@ -36,11 +36,15 @@ The three modules hang under the pedestal on 4 mm tabs with mouse bites. Snap th
 into its slot. Every port has the same pinout (GND / 3V3 / signal, power in the middle), so a module plugged
 in backwards swaps ground and signal and never puts 3V3 on a GPIO.
 
-| Module | Circuit | Slot |
-|---|---|---|
-| IR | Everlight IRM-H638T 38 kHz receiver with RC supply filter | J5, GPIO22 |
-| AUDIO | 3.5 mm TRRS jack behind a 1 k / 10 n PWM low-pass and 10 µF DC block | J6, GPIO11 (PWM) |
-| SPK | MLT-8530 magnetic transducer, S8050 low-side driver, flyback diode | J7, GPIO25 (2.7 kHz square wave) |
+The silkscreen plays along: the RGB LEDs are shelf items A1–A4 with price tags over a dispensing coil, the keys sit in a
+SELECT bezel, the five red LEDs are the CREDIT meter, the module slots are the ITEM PICKUP door, and the UART test pads
+are the coins. The modules are the vended items.
+
+| Item | Module | Circuit | Slot |
+|---|---|---|---|
+| B1 "EYE CANDY" (candy bar) | IR | Everlight IRM-H638T 38 kHz receiver with RC supply filter | J5, GPIO22 |
+| B2 "AUDIO POP" (soda can) | AUDIO | 3.5 mm TRRS jack behind a 1 k / 10 n PWM low-pass and 10 µF DC block | J6, GPIO11 (PWM) |
+| B3 "BEEP CHIPS" (chips bag) | SPK | MLT-8530 magnetic transducer, S8050 low-side driver, flyback diode | J7, GPIO25 (2.7 kHz square wave) |
 
 ## Repository layout
 

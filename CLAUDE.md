@@ -32,10 +32,12 @@ The `.kicad_sch` / `.kicad_pcb` files are **generated**. Do not hand-edit them f
   After any change run `python3 scripts/check_sch.py --erc` (must print 0 problems, ERC 0 errors) and
   `python3 scripts/render_sch.py out.png [dpi] [x0 y0 x1 y1]` to look at it.
 - Placement: `03-kicad/scripts/placement.py` (x, y, rot, side; mm from top-left of the 56 × 100 box).
-  `MODULES` = breakaway module rectangles + tab x; `MP` = module parts in module-local mm (converted at import).
+  `MODULES` = breakaway module rectangles + tab x; `MODULE_CORNERS` = per-module corner style (chamfer / round, the
+  vending-item silhouettes); `MP` = module parts in module-local mm (converted at import).
   Module nets are prefixed IRM_/AUM_/SPM_ and must never touch a main-board part (no copper crosses a tab);
   `design.MODULES` maps module → ground net / socket / header.
-- Silkscreen art: `scripts/silk.py`, logo via `scripts/art_logo.py`
+- Silkscreen art: `scripts/silk.py` (vending-machine theme: shelf items A1–A4 with prices, coil, keypad bezel, CREDIT meter,
+  ITEM PICKUP door with slots B1/B2/B3, coin slot, back service-panel texts; modules styled as vended items), logo via `scripts/art_logo.py`
 - Project rules / netclasses: `scripts/gen_pro.py`
 - 3D models: `scripts/gen_3d.py` → `intent.3dshapes/*.wrl` (simplified boxes/cylinders for the custom footprints and
   for TS-1187A / WS2812B-2020 / MSK12C02, whose STEP files KiCad 10 does not ship). `pcb_build.py` attaches them;

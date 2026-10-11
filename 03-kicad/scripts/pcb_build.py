@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import pcbnew
 from sexpr import parse, find, findall
 import placement
-from placement import MODULES, TAB_W, TAB_L
+from placement import MODULES, TAB_W, TAB_L, MODULE_CORNERS
 
 OX, OY = 100.0, 50.0          # board origin on the KiCad page
 BOTTOM = ('L', (46.5, 100), (9.5, 100))   # pedestal bottom edge: the breakaway tabs hang from it
@@ -57,13 +57,44 @@ def modules_desc():
     return sorted(MODULES, key=lambda n: -MODULES[n][4])
 
 
+def _corner(kind, c, p_in, center, a1, a2, p_out, step_deg=15):
+    """Points of one module corner walked from p_in to p_out: chamfer = the two end points, round = arc samples."""
+    if c <= 0:
+        return [p_in]
+    if kind == 'round':
+        n = max(2, int(abs(a2 - a1) / step_deg))
+        return [(center[0] + c * math.cos(math.radians(a1 + (a2 - a1) * i / n)),
+                 center[1] + c * math.sin(math.radians(a1 + (a2 - a1) * i / n))) for i in range(n + 1)]
+    return [p_in, p_out]
+
+
+def module_corners(name):
+    """(kind, c, TR, BR, BL, TL) with each corner = (p_in, center, a1, a2, p_out) in detour order (clockwise on
+    screen: top edge -> right edge -> bottom edge -> left edge)."""
+    x1, y1, x2, y2, _ = MODULES[name]
+    kind, c = MODULE_CORNERS.get(name, ('chamfer', 0.0))
+    return kind, c, [((x2 - c, y1), (x2 - c, y1 + c), 270, 360, (x2, y1 + c)),
+                     ((x2, y2 - c), (x2 - c, y2 - c), 0, 90, (x2 - c, y2)),
+                     ((x1 + c, y2), (x1 + c, y2 - c), 90, 180, (x1, y2 - c)),
+                     ((x1, y1 + c), (x1 + c, y1 + c), 180, 270, (x1 + c, y1))]
+
+
+def module_perimeter(name):
+    """Points from the right tab side down around the module and back up the left tab side."""
+    kind, c, corners = module_corners(name)
+    tx1, tx2 = tab_x(name)
+    y1 = MODULES[name][1]
+    pts = [(tx2, 100.0), (tx2, y1)]
+    for p_in, center, a1, a2, p_out in corners:
+        pts += _corner(kind, c, p_in, center, a1, a2, p_out)
+    return pts + [(tx1, y1), (tx1, 100.0)]
+
+
 def bottom_detour():
     """Points replacing the straight pedestal bottom edge: down each tab, around its module, back up."""
     pts = [BOTTOM[1]]
     for name in modules_desc():
-        mx1, my1, mx2, my2, _ = MODULES[name]
-        tx1, tx2 = tab_x(name)
-        pts += [(tx2, 100.0), (tx2, my1), (mx2, my1), (mx2, my2), (mx1, my2), (mx1, my1), (tx1, my1), (tx1, 100.0)]
+        pts += module_perimeter(name)
     return pts
 
 
@@ -110,6 +141,34 @@ def edge_line(board, a, b):
     board.Add(s)
 
 
+def edge_arc(board, a, m, b):
+    s = pcbnew.PCB_SHAPE(board)
+    s.SetLayer(pcbnew.Edge_Cuts)
+    s.SetWidth(mm(0.1))
+    s.SetShape(pcbnew.SHAPE_T_ARC)
+    s.SetArcGeometry(P(*a), P(*m), P(*b))
+    board.Add(s)
+
+
+def add_module_edges(board, name):
+    """Edge.Cuts of one module: top edge split by the tab, three straight sides, shaped corners."""
+    x1, y1, x2, y2, _ = MODULES[name]
+    tx1, tx2 = tab_x(name)
+    kind, c, corners = module_corners(name)
+    edge_line(board, (tx2, 100.0), (tx2, y1)); edge_line(board, (tx1, 100.0), (tx1, y1))
+    edge_line(board, (x1 + c, y1), (tx1, y1)); edge_line(board, (tx2, y1), (x2 - c, y1))
+    edge_line(board, (x2, y1 + c), (x2, y2 - c)); edge_line(board, (x2 - c, y2), (x1 + c, y2))
+    edge_line(board, (x1, y2 - c), (x1, y1 + c))
+    for p_in, center, a1, a2, p_out in corners:
+        if c <= 0:
+            continue
+        if kind == 'round':
+            am = math.radians((a1 + a2) / 2)
+            edge_arc(board, p_in, (center[0] + c * math.cos(am), center[1] + c * math.sin(am)), p_out)
+        else:
+            edge_line(board, p_in, p_out)
+
+
 def add_outline(board):
     for seg in OUTLINE:
         if seg == BOTTOM:
@@ -128,12 +187,9 @@ def add_outline(board):
     # pedestal bottom edge in pieces between the tabs, then the tabs and the module rectangles
     x = BOTTOM[1][0]
     for name in modules_desc():
-        mx1, my1, mx2, my2, _ = MODULES[name]
         tx1, tx2 = tab_x(name)
         edge_line(board, (x, 100.0), (tx2, 100.0))
-        edge_line(board, (tx2, 100.0), (tx2, my1)); edge_line(board, (tx1, 100.0), (tx1, my1))
-        edge_line(board, (mx1, my1), (tx1, my1)); edge_line(board, (tx2, my1), (mx2, my1))
-        edge_line(board, (mx2, my1), (mx2, my2)); edge_line(board, (mx2, my2), (mx1, my2)); edge_line(board, (mx1, my2), (mx1, my1))
+        add_module_edges(board, name)
         x = tx1
     edge_line(board, (x, 100.0), BOTTOM[2])
 

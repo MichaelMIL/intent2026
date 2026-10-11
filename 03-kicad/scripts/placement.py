@@ -13,6 +13,13 @@ MODULES = {
     'AUDIO': (19.0, 102.0, 36.0, 118.0, 27.5),
     'SPK':   (39.0, 102.0, 56.0, 118.0, 43.5),
 }
+# vending-item look of each module outline: ('chamfer' | 'round', corner size mm). Corners must stay clear of the
+# tab (tab_x +- 2) and of copper; the router still sees the plain rectangle, so keep corner cuts small.
+MODULE_CORNERS = {
+    'IR':    ('chamfer', 1.2),   # candy bar wrapper
+    'AUDIO': ('round', 2.5),     # soda can
+    'SPK':   ('chamfer', 2.0),   # chips bag
+}
 
 P = {
     # --- MCU block ("PRIZE" window) ---

@@ -33,5 +33,6 @@ Origin top-left of bounding box, mm. Front: `board-mockup.svg`. Back: `board-moc
 - Modules: each has its own ground net and pour (IRM_GND / AUM_GND / SPM_GND); the main GND pour stops at the pedestal edge, nothing is routed across a tab. The mouse-bite holes carry a 0.5 mm clearance so copper stays off the break line.
 
 ## Silkscreen checklist (JLC: min 0.15 mm line, ≥ 1 mm text; logo fine detail ≥ 0.2 mm)
-Front: outline, logo + tagline, window + shelves + 4 product boxes + prize box, display box + "CREDIT", A/B/C, BOOT, slot labels "IR / AUDIO / SPK" + "G + S", "INSERT COIN →". Modules: name, "G + S" under the header; back: "<name> MODULE — snap off, plug into slot Jx".
-Back: team list, QR box, battery outline, J3 polarity, SW5 note, warning, rev.
+Front (vending-machine theme): outline, logo + tagline, product window (notched around the keypad) with shelf, dispensing coil and 4 product boxes with price tags A1 25¢ … A4 $1, "← PRIZE" at the RP2040, "J2 HACK PORT" (vertical), CREDIT meter with coin values 5¢…$1, keypad bezel + SELECT + A/B/C, BOOT, ITEM PICKUP door with slot labels "B1 IR / B2 AUDIO / B3 SPK" + "G + S", "INSERT COIN →" + coin slot, 3×AAA + −, TX/RX/GND.
+Modules (the vended items): B1 IR "EYE CANDY" candy-bar wrapper (crimped edges, chamfered corners), B2 "AUDIO POP · 3.5mm" soda can (rounded corners, bubbles), B3 "BEEP CHIPS" chips bag (crimped edges, 2 mm chamfers); "G + S" under each header; back: "Bn · <name> MODULE — snap off, plug into Jx".
+Back: team list, QR box, battery outline = SERVICE COMPARTMENT (AUTHORIZED PERSONNEL ONLY, model plate), J2 warning + rev, battery lead note, NO REFUNDS · DO NOT TILT OR ROCK, SW5/JP1 notes.
