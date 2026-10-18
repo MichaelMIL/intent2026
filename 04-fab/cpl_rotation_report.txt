@@ -6,7 +6,7 @@ D4    C2286      KiCad rot   0.0 -> JLC rot 180.0, offset (-0.000, -0.000) mm, f
 D5    C2286      KiCad rot   0.0 -> JLC rot 180.0, offset (-0.000, -0.000) mm, fit err 0.037 mm
 Q1    C22469449  KiCad rot   0.0 -> JLC rot 180.0, offset (0.054, 0.000) mm, fit err 0.145 mm
 Q2    C2146      KiCad rot   0.0 -> JLC rot 180.0, offset (0.054, 0.000) mm, fit err 0.145 mm
-U2    C2456211   KiCad rot 270.0 -> JLC rot 180.0, offset (0.000, 0.000) mm, fit err 0.207 mm
+U2    C2456211   KiCad rot   0.0 -> JLC rot 270.0, offset (-0.000, 0.000) mm, fit err 0.207 mm
 U4    C2827654   KiCad rot   0.0 -> JLC rot 270.0, offset (0.000, -0.000) mm, fit err 0.012 mm
 
 NOT verifiable by pad geometry (symmetric pad pattern, 0 and 180 deg fit equally; 0 assumed).
