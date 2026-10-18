@@ -3,9 +3,9 @@
 RP2040 conference badge for the INTENT 2026 security summit. 56 × 100 mm, 2-layer, purple mask,
 vending-machine outline (header sign box with the lanyard holes on top of a 56 mm cabinet with feet, pedestal below), plus three
 **breakaway soda-can modules** 13 × 22 mm (IR receiver, audio jack, speaker) hanging under the pedestal on mouse-bite
-tabs (blank 56 × 124 mm). Each module has a 1×3 pin header (P1–P3) and plugs into a
-1×3 socket on the main board (J5 IR / J6 AUDIO / J7 SPK; pin 1 GND, 2 3V3, 3 signal). Fab: JLCPCB (10-board
-prototype, then 600). Board rev 0.5 (2026-10-11).
+tabs (blank 56 × 124 mm). Each module has a 2×3 SMD SAO pin header (P1–P3) and plugs into a
+2×3 SMD SAO socket on the main board (J5 IR / J6 AUDIO / J7 SPK; rev 0.6, see Conventions). Fab: JLCPCB (10-board
+prototype, then 600). Board, schematic and BOM rev 0.6 (2026-10-18, re-laid out and re-routed, see BUILD-NOTES items 14-16).
 
 **Path note:** the project folder is `/Users/michael/Downloads/AI PCB ` with a trailing space.
 Always quote paths.
@@ -17,8 +17,8 @@ Always quote paths.
 | `00-bom/` | BOM-B2 (priced) + `bom-deltas.md` (changes applied on top) | done |
 | `01-spec/` | `design-spec.md` rev 0.3 (power tree, nets, GPIO map), `open-questions.md` | done, superseded in places by BUILD-NOTES |
 | `02-layout/` | placement plan, front/back SVG mockups, logo artwork | done |
-| `03-kicad/` | KiCad project + the scripts that generate it | rev 0.5 regenerated on the Mac 2026-10-11, see BUILD-NOTES status table |
-| `04-fab/` | gerbers.zip, bom_jlc.csv, cpl_jlc.csv, reports, renders, order-spec | regenerated 2026-10-11 (rev 0.5), **not yet uploaded to JLC** |
+| `03-kicad/` | KiCad project + the scripts that generate it | rev 0.6 regenerated on Windows 2026-10-18 (`scripts/win/`), see BUILD-NOTES status table |
+| `04-fab/` | gerbers.zip, bom_jlc.csv, cpl_jlc.csv, reports, renders, order-spec | regenerated 2026-10-18 (rev 0.6; rev 0.5 in `archive-rev0.5/`), **not yet uploaded to JLC** |
 | `05-firmware-notes/` | GPIO map for firmware | done |
 
 Read `03-kicad/BUILD-NOTES.md` first for anything hardware. It lists every deviation from the spec.
@@ -107,9 +107,9 @@ Open the project: `open -a KiCad "/Users/michael/Downloads/AI PCB /03-kicad/inte
 
 ## Open items before ordering
 
-0. Decide whether JLC populates the six 1×3 headers (J5–J7, P1–P3; THT hand-solder fee) or they ship DNP with loose headers. Default in the files: populated.
-1. JLC upload preview: check rotations of D1–D5, D6, D7, Q1, Q2, U2, U3, U4, U5, LS1 (corrections already in CPL, see `04-fab/cpl_rotation_report.txt`). 1N4148W C81598 showed only 300 in LCSC stock on 2026-10-11.
-2. Crystal C133334 wants CL = 20 pF; C11/C12 are 15 pF. ≈ +50 ppm, acceptable for USB. Swap to 27–33 pF if exactness matters.
+0. ~~THT header population~~ moot since 2026-10-18: the SAO connectors J5–J7 / P1–P3 are SMT (C42163131 / C3294461). Keyed connectors were checked and are not available as a board-mount pair (bom-deltas rev 0.6b).
+1. JLC upload preview: check rotations of D1–D5, D6, D7, Q1, Q2, U2, U3, U4, U5, LS1 (corrections already in CPL, see `04-fab/cpl_rotation_report.txt`) and of the rev 0.6 parts without JLC footprint data: J1, U3 (AP2112K), U6, J5–J7, P1–P3. 1N4148W C81598 showed only 300 in LCSC stock on 2026-10-11.
+2. ~~Crystal CL mismatch~~ resolved in rev 0.6: Y1 = ABM8-272-T3 (C20625731, CL 10 pF).
 3. Battery box supplier (wired 3×AAA, with switch, JST-PH 2.0 plug). Verify plug polarity against J3 silk.
 4. QR code for the back silk once the repo URL exists (silk only, no re-layout).
 5. Logo permission (Palo Alto Networks wordmark).
@@ -119,7 +119,7 @@ Open the project: `open -a KiCad "/Users/michael/Downloads/AI PCB /03-kicad/inte
 
 - Keypad: A = GPIO4 (SW2, top), B = GPIO3, C = GPIO2 (SW4, bottom).
 - IR receiver U5 pinout: 1, 2 = GND, 3 = OUT, 4 = VCC. U5 lives on the IR module (nets IRM_*).
-- Expansion slots: J5 IR = GPIO22, J6 AUDIO = GPIO11, J7 SPK = GPIO25 (GPIO25 is also J2 pin 15). Pin 1 = GND (square pad), 2 = 3V3, 3 = signal on every port.
+- Expansion slots (rev 0.6, SAO): 1 = 3V3, 2 = GND, 3 = SDA (GPIO12), 4 = SCL (GPIO13), 5 = GPIO1 (J5 IR = GPIO22, J6 AUDIO = GPIO11, J7 SPK = GPIO25, also J2 pin 15), 6 = GPIO2 (GPIO26/27/28). 4.7k I²C pull-ups R22/R23.
 - Mouse bites MB1–MB3 are board-only footprints (`SetBoardOnly`), excluded from BOM/CPL and from schematic parity.
 - J3 is on the FRONT pedestal so assembly stays top-side only. SW5 (DNP) + JP1 are on the back.
 - All refdes are on the Fab layer, not silk.

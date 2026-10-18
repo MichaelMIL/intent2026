@@ -110,3 +110,67 @@ P1–P3 unpopulated (DNP, like J2) and bag loose headers; that removes the THT f
   headers (same pads, `PinHeader_1x03_P2.54mm_Horizontal`); nothing else changes.
 - The transducer footprint wires its two dummy pads crosswise to the two lead pads, so a 180° placement error
   only reverses the coil. A 90° error leaves both leads on one net: silent, but nothing is damaged.
+
+---
+
+# rev 0.6 — review against the RP2040 hardware design guide (2026-10-17)
+
+User review + kicad-happy run (report: `01-spec/rp2040-review-2026-10-17.md`). Applied in `design.py` and the
+schematic; the PCB is **not** re-laid out yet (new footprints: J1, U3, U6, J5–J7, P1–P3; new parts C26–C29, R22,
+R23, SW6). TP1–TP3 stay (user decision).
+
+| Ref | Change | LCSC | Why |
+|---|---|---|---|
+| C18 | 100 nF → **1 µF** | C6119792 | guide §2.1.3: 1 µF on VREG_VIN |
+| C10 | 1 µF → **100 nF** | C60474 | now only DVDD pin 50 |
+| C26 | **new** 1 µF on +1V1 | C6119792 | guide §2.1.3: 1 µF on VREG_VOUT |
+| Y1 | C133334 (CL 20 pF) → **Abracon ABM8-272-T3** | **C20625731** | guide §2.3.1 crystal; CL 10 pF matches the 15 pF loads + 1k. Same 3225 footprint |
+| U3 | ME6206A33M3G → **AP2112K-3.3TRG1** (SOT-23-5, EN tied to VIN) | **C51118** | 600 mA instead of a 200 mA-class LDO. C23380830 is a different maker under the same MPN |
+| C20 | 1 µF → **10 µF 0805** | C7503495 | LDO output bulk |
+| J1 | TYPE-C-16PIN C393939 → **HRO TYPE-C-31-M-12** | **C165948** | user's proven part; stock KiCad footprint |
+| C27, C28 | **new** 1 µF + 100 nF on VBUS | C6119792, C60474 | there was no VBUS capacitor (kicad-happy UC-001 / DC-002) |
+| SW6 | **new** RESET button, RUN → GND | C318884 | battery users can reach BOOTSEL without unplugging |
+| U6, C29 | **new** SN74LV1T34DBVR on VSYS + 100 nF | **C100024**, C60474 | RGB data buffer: DIN swings to VSYS, so VIH = 0.7·VDD is met at any VSYS (it was 3.3 V vs ≈ 3.2 V on USB) |
+| J5–J7 | 1×3 socket → **2×3 socket (SAO)** | **C541853** | SAO pinout 1 3V3, 2 GND, 3 SDA, 4 SCL, 5 GPIO1, 6 GPIO2 |
+| P1–P3 | 1×3 header → **2×3 header (SAO)** | **C65114** | plain header: a shrouded 2×3 is wider than the 13 mm can |
+| R22, R23 | **new** 4.7 kΩ I²C pull-ups | C25900 (basic) | SAO I²C0 on GPIO12/13 |
+
+RGB, option not taken: there is no addressable LED on LCSC/JLC rated for a 3.0–3.3 V supply. The lowest are
+SK6805-EC20 (C2890036, 3.5–5.5 V, 4 in stock), WS2812B-MINI-V3 3535 (3.5 V) and the rest at 3.7 V+; the
+"3 V" XL-2835/5050RGBC-KS parts are self-flashing, not addressable. So the LEDs stay on VSYS
+(WS2812B-2020-V6, 944k stock) with the buffer, and firmware stops them when VSYS < ≈ 3.7 V.
+
+Part types: −0 replaced (crystal, LDO, USB-C, socket, header) + 2 new (SN74LV1T34, 4.7 kΩ basic).
+Joints: +7 SMD parts (≈ +16 joints) and THT 18 → 36 joints (2×3 instead of 1×3).
+Cost @600 (LCSC single-piece, rough): crystal +$0.25, LDO +$0.12, buffer +$0.18, sockets/headers +$0.05,
+caps/resistors/switch +$0.05, extra THT joints +$0.31 → **≈ +$0.95/board**. With the THT parts shipped DNP
+the THT line drops out.
+
+## rev 0.6b — SAO connectors to SMT, keyed option checked (2026-10-18)
+
+| Ref | Was (THT) | Now (SMT) | LCSC | Stock / price (LCSC, 2026-10-18) |
+|---|---|---|---|---|
+| J5–J7 | PM254V-12-06-H85 C541853 | **HC-PM254-5.0H-2x3PS-02A**, 2×3 SMD socket, 5.0 mm tall | **C42163131** | 7,625 / $0.116 |
+| P1–P3 | 2.54-2*3P C65114 | **PZ254-2-03-S**, 2×3 SMD pin header | **C3294461** | 14,540 / $0.080 (100+: $0.063) |
+
+Footprints: KiCad `PinSocket_2x03_P2.54mm_Vertical_SMD` / `PinHeader_2x03_P2.54mm_Vertical_SMD` (pads splay
+outward, ≈ 8 mm across the two rows). Check the land pattern against both datasheets during the PCB re-layout.
+The socket is wider than the 1×3 THT one, so the 7 mm socket pitch on the main board will not hold; J5–J7 need
+re-placing. Alternates: socket C41397152 (HX PM2.54-2x3P TP, 3,830), header C780054 (XKB X6521WVS-2x03H, 5,330).
+
+Effect: no THT parts left except J2 (DNP), so JLC's hand-solder fee ($3.50/order + 36 joints ≈ $0.62/board)
+goes away; the six connectors become ordinary SMT placements (≈ +$0.10/board for the parts vs THT).
+Net vs rev 0.6: ≈ **−$0.5/board** at 600.
+
+**Keyed option (checked, not applied):**
+- Keyed SMT box headers exist: **BH254VS-6P C492445** (XFCN, 4,800, $0.16; 5,100+: $0.086) and HX NJ2.54-2x3P
+  TP-CE C22438045 (1,150, $0.33). Body 15.27 × 8.8 mm (10.5 mm across the pads).
+- There is **no board-mount keyed female** to mate with them on LCSC/JLC (the keyed mate is the IDC ribbon
+  connector). A plain 2×3 socket fits inside the shroud but the cavity is ≈ 13 mm long for a 7.6 mm socket, so it
+  locates nothing: no orientation key and no offset key.
+- A box header would also only fit the 13 mm can turned 90°, taking ≈ 15 × 10.5 mm of the 13 × 22 mm can.
+- So keying is not achievable within the SAO standard with stock parts. Recommendation: unkeyed SMT plus large
+  pin-1 triangles on the badge and on each can, and the can art drawn so the "upright" can = correct orientation.
+- Plugged in rotated 180°, our modules get badge 3V3 on their unused pin 6 and their 3V3/GND pins land on GPIO2/GPIO1:
+  nothing is shorted, the module just does not work. Third-party SAOs could be back-powered from a GPIO; firmware
+  should keep GPIO1/GPIO2 as inputs until a module is detected.

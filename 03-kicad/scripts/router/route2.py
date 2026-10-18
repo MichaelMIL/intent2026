@@ -197,6 +197,17 @@ class Router:
         diag = quad & (np.abs(np.abs(xx) - np.abs(yy)) < float(os.environ.get("CORR_W", "0.5")) * 1.4142) & (np.hypot(xx, yy) < float(os.environ.get("CORR_R", "7")))
         body = (np.abs(xx) < 1.9) & (np.abs(yy) < 1.9)
         self.b_forbid = diag | body
+        # exposed-copper art (placement.ART_KEEPOUTS, F.Cu only): no tracks or vias of any net there, plus the
+        # clearance ring (rev 0.6; before, the art regions were only checked after routing)
+        self.art_forbid = np.zeros((NY, NX), bool)
+        if os.environ.get('ART_KEEPOUT', '1') == '1':
+            sys.path.insert(0, os.path.join(HERE, '..'))
+            import placement
+            gx, gy = np.meshgrid(XS, YS)
+            m = CLR + 0.15 + MARGIN
+            for x1, y1, x2, y2, lay in placement.ART_KEEPOUTS:
+                if lay == 'F':
+                    self.art_forbid |= (gx > x1 - m) & (gx < x2 + m) & (gy > y1 - m) & (gy < y2 + m)
         self.hist = [np.zeros((NY, NX), np.int32), np.zeros((NY, NX), np.int32)]
         self.vhist = np.zeros((NY, NX), np.int32)
         self.pres = 30
@@ -221,9 +232,10 @@ class Router:
         free = [((self.st.foreign(L, nid) >= r) & (self.st.edist >= er)).astype(np.uint8) for L in (0, 1)]
         if net != 'GND':
             free[1] = (free[1] & ~self.b_forbid).astype(np.uint8)
+        free[0] = (free[0] & ~self.art_forbid).astype(np.uint8)
         vr = CLR + VIA_D / 2 + MARGIN
         via = ((self.st.foreign(0, nid) >= vr) & (self.st.foreign(1, nid) >= vr) & (self.st.paddist >= VIA_D / 2 + 0.08)
-               & (self.st.edist >= EDGE_CLR + VIA_D / 2 + 0.05)).astype(np.uint8)
+               & (self.st.edist >= EDGE_CLR + VIA_D / 2 + 0.05) & ~self.art_forbid).astype(np.uint8)
         ft = self.foreign_tracks(net)
         pen = []
         for L in (0, 1):

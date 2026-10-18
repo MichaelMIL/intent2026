@@ -63,7 +63,7 @@ class Sheet:
 
     # ---- symbols --------------------------------------------------------
     # pin numbers that newer KiCad libraries renamed; the footprints / design.py keep the old names
-    PIN_RENAMES = {'Connector:USB_C_Receptacle_USB2.0_16P': {'SH': 'S1'}}
+    PIN_RENAMES = {}   # rev 0.6: J1 uses the stock HRO footprint (shield pad SH), no rename needed
 
     def libsym(self, lib_id):
         if lib_id not in self.lib_cache:

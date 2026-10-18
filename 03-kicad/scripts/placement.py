@@ -1,6 +1,12 @@
 """Component placement, board coordinates in mm (origin = top-left of the 56x100 bounding box,
 y down, as in 02-layout/placement-plan.md). rot = KiCad degrees (CCW). side F/B.
 
+rev 0.6 (2026-10-18): RP2040 core re-placed after the hardware design guide (RP-008279-DS): 1 uF on VREG_VIN (C18)
+and VREG_VOUT (C26) and 100 nF on DVDD 50 (C10) / USB_VDD (C7) / IOVDD 49 (C5) / ADC_AVDD (C8) in a row right under
+pins 43-50; C19 (DVDD 23) stays 3 mm out at the top-left so SWCLK/SWDIO/RUN can fan out; the 27R USB terminations R11/R12 right below pins 46/47; QSPI_SS resistors R3/R14
+next to the flash. New parts: U6 RGB buffer + C29, SW6 RESET, C27/C28 VBUS, R22/R23 I2C pull-ups, HRO USB-C, SAO 2x3
+SMD sockets J5-J7 and SMD headers P1-P3.
+
 rev 0.5: three breakaway modules hang under the pedestal (y 102-118). MODULES gives each module's rectangle
 and the x centre of its 4 mm tab on the pedestal edge (y 100-102). Module part coordinates below are given in
 module-local mm (origin = module top-left) via MP and converted to board coordinates at import.
@@ -21,32 +27,39 @@ MODULE_CORNERS = {name: ('round', CAN_R) for name in MODULES}
 
 P = {
     # --- MCU block ("PRIZE" window) ---
-    'U1': (28.0, 50.0, 180), 'U2': (30.0, 60.8, 270), 'Y1': (29.2, 43.0, 90),
+    # U1 rot 180: pins 43-50 along the bottom edge (y 53.44, x 25.4 ... 28.2), 19-23 along the top (x 29.0 ... 27.4)
+    'U1': (28.0, 50.0, 180), 'U2': (30.0, 62.3, 270), 'Y1': (29.2, 43.0, 90),
     'R13': (26.4, 43.6, 90), 'C11': (31.8, 44.4, 90), 'C12': (26.4, 41.0, 90),
     'C19': (24.6, 44.4, 0), 'C2': (33.6, 46.2, 0), 'C3': (35.2, 44.6, 0),
-    'C1': (33.6, 55.0, 0), 'C4': (23.4, 54.6, 0), 'C17': (35.7, 55.0, 0),
-    'C8': (21.9, 57.2, 90), 'C18': (22.9, 57.2, 90), 'C10': (23.9, 57.2, 90), 'C7': (24.9, 57.2, 90),
-    'C5': (25.9, 55.2, 0), 'C6': (34.0, 64.0, 0),
-    'R3': (34.4, 61.6, 90), 'R4': (21.0, 45.2, 90),
-    'R11': (24.6, 63.2, 90), 'R12': (23.4, 63.2, 90),
+    'C1': (33.6, 55.0, 0), 'C4': (23.2, 54.6, 0), 'C17': (35.7, 55.0, 0),
+    # row under pins 43-50: ADC_AVDD, VREG_VIN 1u, VREG_VOUT 1u | USB 27R | DVDD 50, USB_VDD, IOVDD 49
+    'C8': (23.75, 56.6, 90), 'C18': (24.8, 55.2, 90), 'C26': (25.85, 55.2, 90),
+    'R12': (26.6, 57.3, 90), 'R11': (27.65, 57.3, 90),
+    'C10': (29.3, 55.2, 90), 'C7': (30.35, 55.2, 90), 'C5': (31.4, 55.2, 90),
+    'C6': (34.0, 65.0, 0), 'R3': (34.4, 62.6, 90), 'R14': (35.5, 62.6, 90), 'R4': (21.0, 45.2, 90),
+    # --- RGB data buffer (VSYS-powered) between U1 and LED1 ---
+    'U6': (40.5, 41.0, 0), 'C29': (40.5, 44.0, 0),
     # --- RGB shelf (chain runs right -> left) ---
     'LED1': (44.0, 36.0, 0), 'LED2': (34.0, 36.0, 0), 'LED3': (24.0, 36.0, 0), 'LED4': (14.0, 36.0, 0),
     'C13': (44.0, 33.6, 0), 'C14': (34.0, 33.6, 0), 'C15': (24.0, 33.6, 0), 'C16': (14.0, 33.6, 0),
     # --- BOOTSEL service key ---
-    'SW1': (49.0, 29.0, 0), 'R14': (44.6, 27.4, 90),
+    'SW1': (49.0, 29.0, 0),
+    'SW6': (49.5, 44.6, 0),          # RESET, in the product window under the shelf (BOOT is above it)
     # --- J2 service port (left edge) ---
     'J2': (3.6, 31.0, 0),
     # --- credit display + keypad ---
     'D1': (12.0, 69.4, 0), 'D2': (16.0, 69.4, 0), 'D3': (20.0, 69.4, 0), 'D4': (24.0, 69.4, 0), 'D5': (28.0, 69.4, 0),
     'R5': (12.0, 67.0, 0), 'R6': (16.0, 67.0, 0), 'R7': (20.0, 67.0, 0), 'R8': (24.0, 67.0, 0), 'R9': (28.0, 67.0, 0),
     'SW2': (44.0, 65.0, 0), 'SW3': (44.0, 71.0, 0), 'SW4': (44.0, 77.0, 0),
-    # --- coin / dispense area: three expansion "slots" (1x3 sockets, pin 1 = GND at the top), power path ---
-    'J5': (4.5, 82.46, 0), 'J6': (11.5, 82.46, 0), 'J7': (18.5, 82.46, 0),
-    'U3': (29.6, 85.6, 0), 'C9': (33.0, 85.6, 90), 'C20': (27.0, 85.6, 90),
-    'Q1': (35.6, 82.4, 0), 'D6': (36.6, 87.8, 0), 'R10': (38.6, 83.4, 90),
+    # --- coin / dispense area: three SAO slots (2x3 SMD sockets at rot 90, rows horizontal), power path ---
+    'J5': (4.65, 84.5, 90), 'J6': (13.45, 84.5, 90), 'J7': (22.25, 84.5, 90),
+    'R22': (31.0, 76.6, 0), 'R23': (31.0, 77.8, 0),
+    'C20': (28.2, 86.0, 90), 'U3': (31.4, 86.0, 0), 'C9': (31.4, 89.6, 0),
+    'Q1': (35.6, 82.4, 0), 'D6': (37.0, 88.2, 0), 'R10': (38.6, 83.4, 90),
     'R15': (40.0, 87.0, 90), 'R16': (41.2, 87.0, 90),
     'U4': (44.4, 84.0, 0), 'R1': (46.4, 86.6, 0), 'R2': (46.4, 81.4, 0),
-    'J1': (51.34, 84.0, 90),
+    'C28': (44.4, 81.0, 0), 'C27': (44.4, 87.0, 0),
+    'J1': (53.15, 84.6, 90),         # HRO TYPE-C-31-M-12: shell front 0.8 mm past the x 56 edge
     # --- pedestal ---
     'J3': (20.0, 95.2, 0),
     'TP1': (37.0, 95.0, 0), 'TP2': (40.5, 95.0, 0), 'TP3': (44.0, 95.0, 0),
@@ -57,17 +70,17 @@ P = {
 }
 
 # --- module parts, module-local coordinates (origin = can top-left; can = 13 x 22 mm, tab at the top centre x 6.5) ---
-# Headers lie along the bottom (pins extend +x at rot 90, pin 1 = GND on the left, pin 2 on the can centre line).
-HDR = (3.96, 19.0, 90)
+# rev 0.6: SAO 2x3 SMD header at the bottom of the can (rot 0: odd pins in the left column, pin 1 top left).
+HDR = (6.5, 18.6, 0)
 MP = {
-    # IR: receiver dome up top, RC filter below it, label band y 12-17.5
+    # IR: receiver dome up top, RC filter below it, label band y 11.3-14.5
     'IR': {'P1': HDR, 'U5': (6.5, 5.0, 0), 'R19': (3.0, 9.6, 90), 'C23': (10.0, 9.6, 90), 'C24': (6.5, 10.3, 0)},
     # AUDIO: jack lying across the can, body 0.2 mm inside the left edge, barrel 1.8 mm into the 3 mm gap (mouth -x);
-    # PWM filter in a row below it
-    'AUDIO': {'P2': HDR, 'J4': (7.5, 7.0, 0), 'R17': (3.5, 14.2, 0), 'C21': (6.5, 14.2, 0), 'C22': (10.2, 14.3, 0)},
-    # SPK: transducer up top (leads toward the driver row), driver row below, label line above the header
-    'SPK': {'P3': HDR, 'LS1': (6.5, 6.0, 0), 'Q2': (3.2, 12.95, 0), 'D7': (9.6, 12.3, 0), 'R20': (9.6, 14.0, 0),
-            'R21': (6.5, 14.0, 0), 'C25': (3.4, 15.75, 0)},
+    # PWM filter in a row between the jack and the header
+    'AUDIO': {'P2': HDR, 'J4': (7.5, 7.0, 0), 'R17': (2.0, 13.3, 0), 'C21': (4.6, 13.3, 0), 'C22': (8.4, 13.3, 0)},
+    # SPK: transducer up top, driver row between it and the header
+    'SPK': {'P3': HDR, 'LS1': (6.5, 5.5, 0), 'Q2': (2.6, 12.4, 0), 'D7': (7.5, 11.8, 0), 'R20': (6.0, 13.6, 0),
+            'R21': (8.5, 13.6, 0), 'C25': (11.4, 12.4, 90)},
 }
 for _m, _parts in MP.items():
     _x1, _y1 = MODULES[_m][0], MODULES[_m][1]
@@ -80,8 +93,8 @@ def get(ref):
     side = v[3] if len(v) > 3 else 'F'
     return v[0], v[1], v[2], side
 
-# --- exposed-copper art regions (front): no signal tracks may run here, GND stitching vias are pruned here
-# (router/prune_routes.py --art). Checked against routes.json on 2026-10-11; re-check after any re-route.
+# --- exposed-copper art regions (front): no tracks or vias of any net here. Since rev 0.6 router/route2.py enforces
+# these as a hard F.Cu keepout (ART_KEEPOUT=1, default); router/prune_routes.py --art is only needed for old route sets.
 ART_KEEPOUTS = [            # (x1, y1, x2, y2, layer)
     (8.0, 9.8, 48.0, 21.5, 'F'),      # INTENT logo in copper
     (15.0, 3.2, 41.0, 6.0, 'F'),      # INTENT-O-MATIC marquee

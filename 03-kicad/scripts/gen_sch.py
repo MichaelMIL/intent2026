@@ -63,7 +63,11 @@ W(P('J1', 'A7'), (73.66, 66.04), (73.66, 68.58)); W(P('J1', 'B7'), (78.74, 68.58
 W(P('J1', 'A6'), (76.2, 71.12), (76.2, 73.66)); W(P('J1', 'B6'), (76.2, 73.66), (76.2, 101.6), (93.98, 101.6))
 sh.label('USB_DP_CONN', 80.01, 101.6); sh.label('USB_DM_CONN', 78.74, 91.44, 90)
 sh.nc(P('J1', 'A8')); sh.nc(P('J1', 'B8'))
-W(P('J1', 'A1'), (55.88, 96.52)); W(P('J1', 'S1'), (48.26, 96.52), (55.88, 96.52)); sh.power('GND', 55.88, 96.52)
+W(P('J1', 'A1'), (55.88, 96.52)); W(P('J1', 'SH'), (48.26, 96.52), (55.88, 96.52)); sh.power('GND', 55.88, 96.52)
+# VBUS decoupling (rev 0.6): 1 uF bulk + 100 nF at the connector / USBLC6 pin 5
+sh.power('VBUS', 127.0, 40.64); W((127.0, 40.64), (142.24, 40.64))
+put('C27', 132.08, 44.45, **V); put('C28', 142.24, 44.45, **V)
+W(P('C27', 2), (132.08, 53.34), (142.24, 53.34)); W(P('C28', 2), (142.24, 53.34)); sh.power('GND', 137.16, 53.34)
 put('U4', 99.06, 101.6, ref_at=(-6.35, -7.62), val_at=(2.54, -7.62), just=['left'])
 W(P('U4', 5), (99.06, 91.44)); sh.power('VBUS', 99.06, 91.44)
 W(P('U4', 2), (99.06, 111.76)); sh.power('GND', 99.06, 111.76)
@@ -73,9 +77,9 @@ W(P('U4', 6), P('R11', 1)); sh.label('USB_DP_CONN', 105.41, 101.6)
 W(P('R11', 2), (130.81, 101.6)); sh.label('USB_DP', 130.81, 101.6)
 W(P('U4', 4), (106.68, 104.14), (106.68, 106.68), P('R12', 1)); sh.label('USB_DM_CONN', 107.95, 106.68)
 W(P('R12', 2), (130.81, 106.68)); sh.label('USB_DM', 130.81, 106.68)
-note(27.94, 110.49, '5.1k on CC1/CC2 = UFP (device). SBU pins unused.',
-     'USBLC6-2 ESD array in line, 27R series resistors',
-     'per the RP2040 hardware design guide.')
+note(27.94, 110.49, 'HRO TYPE-C-31-M-12 (C165948). 5.1k on CC1/CC2 = UFP.',
+     'USBLC6-2 ESD array, 27R series (RP2040 guide).',
+     'C27/C28 VBUS decoupling. SBU pins unused.')
 
 # =============================================================================================
 # Block B - power path
@@ -102,28 +106,37 @@ sh.power('VBUS', 248.92, 43.18); put('R15', 248.92, 50.8, **V); put('R16', 248.9
 W((248.92, 43.18), P('R15', 1)); W(P('R15', 2), P('R16', 1)); W(P('R16', 2), (248.92, 71.12)); sh.power('GND', 248.92, 71.12)
 W((248.92, 57.15), (259.08, 57.15)); sh.label('VBUS_SENSE', 259.08, 57.15)
 # LDO
-sh.power('VSYS', 279.4, 43.18); W((279.4, 43.18), (279.4, 53.34), (287.02, 53.34))
-put('C9', 279.4, 57.15, **V); put('U3', 294.64, 53.34, ref_at=(0, -7.62), val_at=(0, -10.16)); put('C20', 309.88, 57.15, **V)
-W(P('U3', 2), (317.5, 53.34), (317.5, 43.18)); sh.power('+3V3', 317.5, 43.18)
-W(P('C9', 2), (279.4, 63.5), (309.88, 63.5), P('C20', 2)); W(P('U3', 1), (294.64, 63.5)); sh.power('GND', 294.64, 63.5)
+sh.power('VSYS', 279.4, 43.18); W((279.4, 43.18), (279.4, 53.34))
+put('C9', 279.4, 57.15, **V); put('U3', 297.18, 55.88, ref_at=(0, -7.62), val_at=(0, -10.16)); put('C20', 309.88, 57.15, **V)
+W((279.4, 53.34), P('U3', 1)); W((284.48, 53.34), (284.48, 55.88), P('U3', 3)); sh.nc(P('U3', 4))
+W(P('U3', 5), (317.5, 53.34), (317.5, 43.18)); sh.power('+3V3', 317.5, 43.18)
+W(P('C9', 2), (279.4, 66.04), (309.88, 66.04), P('C20', 2)); W(P('U3', 2), (297.18, 66.04)); sh.power('GND', 297.18, 66.04)
 note(160.02, 102.87, 'VSYS = 4.65 V on USB (after D6), 3.0-4.8 V on battery. With both present VBUS holds Q1 off, D6 blocks back-feed.',
      'SW5 is DNP (the switch is on the battery box); JP1 bridges it. Cut JP1 only if SW5 is fitted.',
-     'RGB LEDs run from VSYS, everything else from 3V3 (ME6206, 300 mA).',
+     'RGB LEDs run from VSYS, everything else from 3V3 (AP2112K-3.3, 600 mA, EN tied to VIN).',
      'R15/R16: VBUS_SENSE = 2.5 V on USB, 0 V on battery (GPIO29 / ADC3) so firmware can dim and sleep.')
 
 # =============================================================================================
 # Block C - expansion ports (main board side)
 # =============================================================================================
-sh.box(335.28, 25.4, 424.18, 121.92, 'EXPANSION PORTS  3 x 1x3 socket')
-for ref, y in (('J5', 48.26), ('J6', 71.12), ('J7', 93.98)):
-    put(ref, 381.0, y, ref_at=(5.08, -5.08), val_at=(5.08, -2.54), just=['left'])
-    p1, p2, p3 = P(ref, 1), P(ref, 2), P(ref, 3)
-    W(p1, (368.3, p1[1]), (368.3, p1[1] - 5.08)); sh.power('GND', 368.3, p1[1] - 5.08, rot=180)
-    W(p2, (360.68, p2[1]), (360.68, p2[1] - 7.62)); sh.power('+3V3', 360.68, p2[1] - 7.62)
-    W(p3, (368.3, p3[1])); sh.label(D[ref]['pins']['3'], 368.3, p3[1], 180)
-note(337.82, 104.14, 'Same pinout on all three: 1 = GND (square pad), 2 = 3V3, 3 = signal.',
-     'Power in the middle: a module plugged in backwards swaps GND', 'and signal, never 3V3 onto a GPIO.',
-     'IR -> GPIO22, AUDIO -> GPIO11, SPK -> GPIO25 (also J2 pin 15).')
+sh.box(335.28, 25.4, 424.18, 121.92, 'SAO PORTS  3 x 2x3 socket')
+for ref, y in (('J5', 40.64), ('J6', 60.96), ('J7', 81.28)):
+    put(ref, 381.0, y, ref_at=(-1.27, -6.35), val_at=(-1.27, 6.35), just=['left'])
+    pins = D[ref]['pins']
+    p = P(ref, 1); W(p, (368.3, p[1])); sh.power('+3V3', 368.3, p[1])
+    for pn in (3, 5):
+        p = P(ref, pn); W(p, (368.3, p[1])); sh.label(pins[str(pn)], 368.3, p[1], 180)
+    p = P(ref, 2); W(p, (393.7, p[1])); sh.power('GND', 393.7, p[1], rot=90)
+    for pn in (4, 6):
+        p = P(ref, pn); W(p, (396.24, p[1])); sh.label(pins[str(pn)], 396.24, p[1])
+for ref, y in (('R22', 96.52), ('R23', 104.14)):
+    put(ref, 360.68, y, 90, ref_at=(0, -1.91), val_at=(0, 1.91))
+    W(P(ref, 1), (350.52, y)); sh.label(D[ref]['pins']['1'], 350.52, y, 180)
+    W(P(ref, 2), (370.84, y))
+W((370.84, 93.98), (370.84, 104.14)); sh.power('+3V3', 370.84, 93.98)
+sh.text('SAO (badge.team): 1 3V3, 2 GND, 3 SDA, 4 SCL, 5 GPIO1, 6 GPIO2.', 337.82, 110.49, 1.27)
+sh.text('I2C0 on GPIO12/13, 4.7k pull-ups. GPIO1: IR 22 / AUDIO 11 / SPK 25.', 337.82, 113.79, 1.27)
+sh.text('GPIO2: GPIO26/27/28 (ADC). Socket on badge, 2x3 pin header on the add-on.', 337.82, 117.09, 1.27)
 
 # =============================================================================================
 # Block D - IR module (breakaway board; nets IRM_*)
@@ -136,13 +149,15 @@ put('U5', 492.76, 68.58, mir='y', ref_at=(0, -10.16), val_at=(0, 10.16))
 sh.label('IRM_VCC', 469.9, 63.5)
 W(P('C23', 2), (452.12, 73.66), P('U5', 1)); W(P('C24', 2), (462.28, 73.66)); sh.power('IRM_GND', 457.2, 73.66, lib='power:GND')
 sh.label('IRM_OUT', P('U5', 3)[0], P('U5', 3)[1], 180)
-put('P1', 439.42, 88.9, mir='x', ref_at=(-1.27, -8.89), val_at=(-1.27, -6.35), just=['left'])
-p = P('P1', 3); W(p, (452.12, p[1])); sh.label('IRM_OUT', 452.12, p[1])
-p = P('P1', 2); W(p, (452.12, p[1])); sh.label('IRM_3V3', 452.12, p[1])
-p = P('P1', 1); W(p, (447.04, p[1]), (447.04, p[1] + 5.08)); sh.power('IRM_GND', 447.04, p[1] + 5.08, lib='power:GND')
+put('P1', 444.5, 88.9, mir='y', ref_at=(-1.27, -6.35), val_at=(-1.27, 6.35), just=['left'])
+p = P('P1', 1); W(p, (457.2, p[1])); sh.label('IRM_3V3', 457.2, p[1])
+p = P('P1', 5); W(p, (457.2, p[1])); sh.label('IRM_OUT', 457.2, p[1])
+p = P('P1', 2); W(p, (434.34, p[1]), (434.34, 96.52)); sh.power('IRM_GND', 434.34, 96.52, lib='power:GND')
+for pn in (3, 4, 6):
+    sh.nc(P('P1', pn))
 note(434.34, 106.68, 'Everlight IRM-H638T, 38 kHz. Open-collector out, active low, internal pull-up.',
      'R19 + C24 = datasheet RC filter. Pinout 1,2 = GND, 3 = OUT, 4 = VCC (verified).',
-     'P1: 1 = GND, 2 = 3V3, 3 = OUT, mates with J5 (IR slot). IRM_* nets live only on this board;',
+     'P1: SAO 2x3 header, 1 = 3V3, 2 = GND, 5 = GPIO1 = OUT; plugs into J5. IRM_* nets live only on this board;',
      'no copper crosses the tab. Snap off at the mouse bites, plug in standing up (lens looks sideways).')
 
 # =============================================================================================
@@ -164,6 +179,9 @@ W(P('U1', 19), (170.18, 223.52), (170.18, 226.06)); sh.power('GND', 170.18, 226.
 put('R4', 162.56, 227.33, 180, **V)
 W(P('U1', 26), (154.94, 231.14)); sh.label('RUN', 154.94, 231.14, 180)
 W(P('R4', 2), (162.56, 220.98)); sh.power('+3V3', 162.56, 220.98)
+put('SW6', 124.46, 233.68, ref_at=(0, -5.08), val_at=(0, -7.62))
+W(P('SW6', 1), (114.3, 233.68)); sh.label('RUN', 114.3, 233.68, 180)
+W(P('SW6', 2), (132.08, 233.68), (132.08, 236.22)); sh.power('GND', 132.08, 236.22)
 # USB, QSPI, SWD stubs with labels
 stub_labels('U1', (46, 47, 56, 52, 53, 55, 54, 51, 24, 25), 172.72, 180)
 # crystal
@@ -176,15 +194,16 @@ put('C11', 137.16, 287.02, 270, **H); put('C12', 152.4, 287.02, 90, **H)
 W(P('C11', 2), (130.81, 287.02), (130.81, 302.26), (158.75, 302.26), (158.75, 287.02), P('C12', 2))
 W(P('Y1', 2), (144.78, 302.26)); sh.power('GND', 144.78, 302.26)
 # decoupling bank
-sh.text('Decoupling: one 100 nF per RP2040 supply pin (6x IOVDD, USB_VDD, ADC_AVDD, VREG_VIN); 1 uF + 100 nF on the 1V1 core rail.', 33.02, 143.51, 1.5)
+sh.text('Decoupling (RP2040 guide 2.1.2/2.1.3): 100 nF per IOVDD (6x), USB_VDD, ADC_AVDD, DVDD (C19 pin 23, C10 pin 50); 1 uF on VREG_VIN (C18) and VREG_VOUT (C26).', 33.02, 143.51, 1.5)
 caps = ['C1', 'C2', 'C3', 'C4', 'C5', 'C17', 'C7', 'C8', 'C18']
 for i, c in enumerate(caps):
     put(c, 38.1 + 10.16 * i, 156.21, **V)
     W(P(c, 2), (38.1 + 10.16 * i, 165.1))
 W((33.02, 152.4), (119.38, 152.4)); W((33.02, 165.1), (119.38, 165.1))
 sh.power('+3V3', 33.02, 152.4); sh.power('GND', 33.02, 165.1)
-put('C19', 142.24, 156.21, **V); put('C10', 152.4, 156.21, **V)
-W((137.16, 152.4), (152.4, 152.4)); W(P('C19', 2), (142.24, 165.1), (157.48, 165.1)); W(P('C10', 2), (152.4, 165.1))
+put('C19', 142.24, 156.21, **V); put('C10', 152.4, 156.21, **V); put('C26', 162.56, 156.21, **V)
+W((137.16, 152.4), (162.56, 152.4)); W(P('C19', 2), (142.24, 165.1), (162.56, 165.1)); W(P('C10', 2), (152.4, 165.1))
+W(P('C26', 2), (162.56, 165.1))
 sh.power('+1V1', 137.16, 152.4); sh.power('GND', 157.48, 165.1)
 # flash + BOOTSEL
 put('U2', 88.9, 254.0, ref_at=(-7.62, -15.24), val_at=(-7.62, 15.24), just=['left'])
@@ -197,12 +216,12 @@ sh.label('QSPI_SS', 73.66, 292.1, 180); W((73.66, 292.1), P('R3', 1)); W(P('R3',
 W(P('R3', 1), P('R14', 1)); W(P('R14', 2), P('SW1', 1)); sh.label('BOOT_SW', 104.14, 292.1)
 W(P('SW1', 2), (124.46, 292.1), (124.46, 294.64)); sh.power('GND', 124.46, 294.64)
 note(33.02, 320.04, 'BOOTSEL: hold SW1 while plugging USB in -> UF2 bootloader. R14 protects the QSPI_SS driver.',
-     'Crystal 12 MHz: CL = 20 pF part with 15 pF loads (Pico values, ~ +50 ppm, fine for USB). R13 limits drive.',
-     'TESTEN tied to GND. RUN has a 10k pull-up and is on J2 for an external reset / debugger.')
+     'Crystal: Abracon ABM8-272-T3 (CL 10 pF, ESR 50 ohm) with 15 pF loads + 1k, exactly the RP2040 guide 2.3 circuit.',
+     'TESTEN tied to GND. RUN: 10k pull-up, SW6 RESET to GND, also on J2. BOOTSEL + tap RESET = UF2 mode.')
 # GPIO stubs
 stub_labels('U1', tuple(design.gpio_pin[g] for g in range(30)), 236.22, 0)
-note(243.84, 320.04, 'GPIO: 0/1 UART0 -> TP1/TP2;  4/3/2 = keys A/B/C;', '5-9 red LEDs;  10 WS2812 data;  11 AUDIO slot (PWM);',
-     '22 IR slot;  25 SPK slot (also J2.15);  29 VBUS sense (ADC3);', '12-21, 23/24, 26-28 free on J2 (SPI1, I2C0, UART1, ADC0-2).')
+note(243.84, 320.04, 'GPIO: 0/1 UART0 -> TP1/TP2;  4/3/2 = keys A/B/C;', '5-9 red LEDs;  10 WS2812 data (via U6);  11/22/25 SAO GPIO1;',
+     '12/13 SAO I2C0;  26-28 SAO GPIO2 (ADC0-2);  29 VBUS sense;', '14-21, 23/24 free on J2 (SPI1, UART1).')
 
 # =============================================================================================
 # Block F - UI
@@ -224,7 +243,13 @@ for i in range(5):
 W((414.02, 147.32), (414.02, 180.34)); sh.power('GND', 414.02, 180.34)
 # RGB chain
 sh.power('VSYS', 434.34, 203.2); W((434.34, 203.2), (556.26, 203.2))
-sh.label('RGB_DIN', 424.18, 215.9, 180)
+put('U6', 398.78, 215.9, ref_at=(5.08, -7.62), val_at=(5.08, 7.62), just=['left'])
+W(P('U6', 2), (383.54, 215.9)); sh.label('RGB_CTRL', 383.54, 215.9, 180)
+W(P('U6', 4), (424.18, 215.9)); sh.label('RGB_DIN', 414.02, 215.9)
+sh.nc(P('U6', 1))
+W(P('U6', 5), (398.78, 203.2)); sh.power('VSYS', 398.78, 203.2)
+put('C29', 383.54, 207.01, **V); W((383.54, 203.2), (398.78, 203.2)); sh.power('GND', 383.54, 210.82)
+W(P('U6', 3), (398.78, 226.06)); sh.power('GND', 398.78, 226.06)
 leds = ['LED1', 'LED2', 'LED3', 'LED4']
 chain = ['RGB_DIN', 'RGB_D2', 'RGB_D3', 'RGB_D4', 'RGB_DOUT']
 for i, ref in enumerate(leds):
@@ -240,8 +265,8 @@ for i, c in enumerate(('C13', 'C14', 'C15', 'C16')):
     x = 533.4 + 7.62 * i
     put(c, x, 207.01, **V); W(P(c, 2), (x, 213.36))
 W((533.4, 213.36), (556.26, 213.36)); sh.power('GND', 541.02, 213.36)
-note(426.72, 236.22, 'WS2812B-2020-V6 x4 on VSYS (not 3V3), 100 nF each. Data from GPIO10, chain out to J2 pin 19.',
-     'DIN is driven at 3.3 V against VIH = 0.7 x VDD: marginal on paper, works in practice.')
+note(376.92, 236.22, 'WS2812B-2020-V6 x4 on VSYS, 100 nF each. GPIO10 -> U6 SN74LV1T34 (VCC = VSYS) -> DIN, so DIN swings to VSYS.',
+     'LED VDD spec is 3.7-5.3 V: firmware dims/stops the LEDs on low battery (VSYS < ~3.7 V). Chain out to J2 pin 19.')
 
 # =============================================================================================
 # Block G - header, test points, holes, power flags
@@ -267,7 +292,7 @@ for pn in even:
         W(p, (391.16, p[1])); sh.label(net, 391.16, p[1], 0)
 note(340.36, 313.69, '2x13, 2.54 mm, not fitted - players solder their own pins. 3V3 logic only, no 5 V on the header.',
      'Pin 1 = top-left square pad. GND on both end rows: a reversed ribbon shorts 3V3 to GND at worst (LDO limits).',
-     '15 free GPIO + SPK_PWM + SWD + RUN + RGB chain out.   TP1-TP3: UART0 console 115200 8N1.   H1/H2: 4.0 mm plated lanyard holes.')
+     '10 free GPIO + SAO I2C/GPIO2 + SPK_PWM + SWD + RUN + RGB out.   TP1-TP3: UART0 115200 8N1.   H1/H2: 4.0 mm lanyard holes.')
 # test points
 for ref, y in (('TP1', 271.78), ('TP2', 284.48), ('TP3', 297.18)):
     put(ref, 436.88, y, ref_at=(-2.54, -3.81), val_at=(2.54, -3.81), just=['left'])
@@ -294,11 +319,12 @@ sh.text('(row 2: breakaway-module rails and grounds).', 505.46, 322.58, 1.5)
 # Block H - audio module (breakaway board; nets AUM_*)
 # =============================================================================================
 sh.box(17.78, 347.98, 203.2, 407.67, 'AUDIO MODULE  breakaway board, plugs into J6')
-put('P2', 25.4, 383.54, mir='x', ref_at=(-1.27, -8.89), val_at=(-1.27, -6.35), just=['left'])
+put('P2', 30.48, 378.46, mir='y', ref_at=(-1.27, -8.89), val_at=(-1.27, -6.35), just=['left'])
 put('R17', 45.72, 381.0, 90, **H)
-W(P('P2', 3), P('R17', 1)); sh.label('AUM_PWM', 35.56, 381.0)
-sh.nc(P('P2', 2))
-p = P('P2', 1); W(p, (33.02, p[1]), (33.02, 388.62)); sh.power('AUM_GND', 33.02, 388.62, lib='power:GND')
+W(P('P2', 5), P('R17', 1)); sh.label('AUM_PWM', 38.1, 381.0, 270)
+p = P('P2', 2); W(p, (20.32, p[1]), (20.32, 388.62)); sh.power('AUM_GND', 20.32, 388.62, lib='power:GND')
+for pn in (1, 3, 4, 6):
+    sh.nc(P('P2', pn))
 W(P('R17', 2), (63.5, 381.0))
 put('C21', 55.88, 384.81, **V); sh.power('AUM_GND', 55.88, 388.62, lib='power:GND')
 sh.label('AUM_FILT', 52.07, 381.0)
@@ -309,17 +335,19 @@ W(P('J4', 'R1'), (83.82, 378.46), (83.82, 381.0))
 W(P('J4', 'R2'), (88.9, 375.92), (88.9, 368.3)); W(P('J4', 'S'), (88.9, 373.38)); sh.power('AUM_GND', 88.9, 368.3, rot=180, lib='power:GND')
 note(20.32, 397.51, 'GPIO11 PWM (>= 100 kHz carrier) -> 1k / 10n low-pass (fc ~ 16 kHz) -> 10 uF DC block -> tip + ring 1 (mono). Sleeve + ring 2 = GND.',
      'Level into 32 ohm ~ 0.1 Vpp. PJ-320D (C431535) SMD pads: 1 = S, 2 = R2, 3 = R1, 4 = T. Detect-switch pads unused.',
-     'P2: 1 = GND, 2 = n.c. (no 3V3 needed), 3 = PWM, mates with J6 (AUDIO slot). Snap off; the jack then points sideways.')
+     'P2: SAO 2x3 header, 2 = GND, 5 = GPIO1 = PWM (3V3 unused); plugs into J6. Snap off; the jack then points sideways.')
 
 # =============================================================================================
 # Block I - speaker module (breakaway board; nets SPM_*; BOM-B2 add-on 7)
 # =============================================================================================
 sh.box(208.28, 347.98, 406.4, 407.67, 'SPEAKER MODULE  breakaway board, plugs into J7')
-put('P3', 218.44, 383.54, mir='x', ref_at=(-1.27, -8.89), val_at=(-1.27, -6.35), just=['left'])
+put('P3', 223.52, 378.46, mir='y', ref_at=(-1.27, -8.89), val_at=(-1.27, -6.35), just=['left'])
 put('R20', 241.3, 381.0, 90, **H)
-W(P('P3', 3), P('R20', 1)); sh.label('SPM_SIG', 226.06, 381.0)
-p = P('P3', 2); W(p, (226.06, p[1])); sh.label('SPM_3V3', 226.06, p[1])
-p = P('P3', 1); W(p, (226.06, p[1]), (226.06, 393.7)); sh.power('SPM_GND', 226.06, 393.7, lib='power:GND')
+W(P('P3', 5), P('R20', 1)); sh.label('SPM_SIG', 231.14, 381.0, 270)
+p = P('P3', 1); W(p, (233.68, p[1])); sh.label('SPM_3V3', 233.68, p[1])
+p = P('P3', 2); W(p, (213.36, p[1]), (213.36, 388.62)); sh.power('SPM_GND', 213.36, 388.62, lib='power:GND')
+for pn in (3, 4, 6):
+    sh.nc(P('P3', pn))
 put('Q2', 264.16, 381.0, ref_at=(5.08, -2.54), val_at=(5.08, 0), just=['left'])
 W(P('R20', 2), P('Q2', 1)); sh.label('SPM_BASE', 247.65, 381.0)
 put('R21', 251.46, 388.62, **V)
@@ -336,7 +364,7 @@ put('C25', 304.8, 364.49, **V); W(P('C25', 2), (304.8, 373.38)); sh.power('SPM_G
 note(317.5, 362.0, 'MLT-8530 magnetic transducer: 2.7 kHz resonance, 16 ohm,', '<= 95 mA at 2.5-4.5 V, so it runs from the 3V3 LDO.',
      'S8050 low-side switch, 1k base; 10k keeps it off while the', 'GPIO floats at reset. 1N4148W flyback, 10 uF local bulk.',
      'Drive: 2.7 kHz square wave (50 % PWM) on GPIO25.', 'GPIO25 is also J2 pin 15 (shared).',
-     'P3: 1 = GND, 2 = 3V3, 3 = SIG, mates with J7 (SPK slot).', 'Footprint wires the two dummy pads crosswise,',
+     'P3: SAO 2x3, 1 = 3V3, 2 = GND, 5 = GPIO1 = SIG (J7).', 'Footprint wires the two dummy pads crosswise,',
      'so a 180 deg placement only reverses the coil.', '(BOM-B2 add-on 7.)')
 
 # =============================================================================================
@@ -349,7 +377,7 @@ if __name__ == '__main__':
     missing = [r for r in D if r not in sh.placed]
     if missing:
         raise SystemExit('parts not placed: %s' % missing)
-    nw, nj = sh.write(OUT, 'INTENT 2026 Hardware Badge', '2026-10-11', '0.5', 'INTENT 2026 - by Palo Alto Networks',
-                      ['RP2040 badge, 56x100 mm vending-machine outline + 3 breakaway modules (IR, audio, speaker)',
+    nw, nj = sh.write(OUT, 'INTENT 2026 Hardware Badge', '2026-10-17', '0.6', 'INTENT 2026 - by Palo Alto Networks',
+                      ['RP2040 badge, 56x100 mm vending-machine outline + 3 breakaway SAO modules (IR, audio, speaker)',
                        'Generated by scripts/gen_sch.py - edit design.py, not this file'])
     print('wrote', os.path.abspath(OUT), len(sh.placed), 'symbols', nw, 'wires', nj, 'junctions')

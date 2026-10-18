@@ -154,6 +154,16 @@ def logo(board, art):
             board.Add(s)
 
 
+def pin1(board, x, y, s=0.7):
+    """Filled pin-1 triangle pointing right (+x), tip at (x + s/2, y)."""
+    polyline(board, [(x - s / 2, y - s / 2), (x + s / 2, y), (x - s / 2, y + s / 2)], w=0.12)
+    poly = pcbnew.PCB_SHAPE(board)
+    poly.SetShape(pcbnew.SHAPE_T_POLY)
+    poly.SetPolyPoints([P(x - s / 2, y - s / 2), P(x + s / 2, y), P(x - s / 2, y + s / 2)])
+    poly.SetFilled(True); poly.SetWidth(0); poly.SetLayer(FS)
+    board.Add(poly)
+
+
 def hide_refs(board):
     for fp in board.GetFootprints():
         r = fp.Reference()
@@ -178,6 +188,7 @@ def apply(board, art):
         product(board, kind, x)                                     # the WS2812 glows inside the product
     line(board, 10.0, 63.5, 13.5, 54.0, w=0.25); line(board, 11.6, 63.5, 14.0, 57.0, w=0.2)   # glass glare, lower-left pane
     text(board, '← PRIZE', 41.5, 50.3, 1.0)                        # the RP2040 is the prize behind the glass
+    text(board, 'RESET', 49.5, 48.6, 0.8)                          # SW6 (rev 0.6)
     text(board, 'J2  HACK PORT', 8.1, 36.0, 0.9, angle=90)
     # credit meter: five LEDs = coins inserted
     rect(board, 9, 65.4, 33, 73.0, w=0.2)
@@ -187,13 +198,12 @@ def apply(board, art):
     # keypad bezel with SELECT; key letters stay beside the keys
     text(board, 'SELECT', 43.2, 59.8, 0.8)
     rect(board, 38.4, 61.0, 48.0, 80.4, w=0.2)
-    # item pickup door: the three module slots B1..B3 (1x3 sockets, pin 1 = GND at the top)
-    text(board, 'ITEM PICKUP', 12.5, 77.4, 0.8)
-    rect(board, 1.2, 78.4, 23.8, 89.2, w=0.2)
-    for x, name in ((4.5, 'B1 IR'), (11.5, 'B2 AUDIO'), (18.5, 'B3 SPK')):
-        text(board, name, x, 79.6, 0.8, thick=0.15)
-    for y, c in ((82.46, 'G'), (85.0, '+'), (87.54, 'S')):
-        text(board, c, 21.3, y, 0.8, just='L')
+    # item pickup door: the three SAO slots B1..B3 (2x3 SMD sockets at rot 90, pin 1 = top-left pad, marked)
+    text(board, 'ITEM PICKUP', 13.45, 77.3, 0.8)
+    rect(board, 0.6, 78.4, 26.9, 89.5, w=0.2)
+    for x, name in ((4.65, 'B1 IR'), (13.45, 'B2 AUDIO'), (22.25, 'B3 SPK')):
+        text(board, name, x, 79.3, 0.8, thick=0.15)
+        pin1(board, x - 3.75, 81.98)
     text(board, 'USB-C', 53.3, 78.1, 0.8)
     # coin slot: the UART test pads are the coins
     circle(board, 32.9, 92.3, 0.9, w=0.18); text(board, '¢', 32.9, 92.3, 0.8)   # the coin
@@ -208,21 +218,18 @@ def apply(board, art):
         Y = lambda v: y1 + v
         code, slot = {'IR': ('B1', 'J5'), 'AUDIO': ('B2', 'J6'), 'SPK': ('B3', 'J7')}[name]
         circle(board, tx, 101.1, 0.6)                        # pull tab on the stub that stays on the can
-        line(board, X(1.1), Y(0.7), X(11.9), Y(0.7))        # top rim
-        line(board, X(1.3), Y(21.5), X(11.7), Y(21.5))      # bottom rim
-        for i, c in enumerate(('G', '+', 'S')):
-            text(board, c, X(3.96 + 2.54 * i), Y(20.7), 0.8)
+        line(board, X(1.1), Y(0.7), X(11.9), Y(0.7))        # top rim (the bottom of the can is the SAO header now)
+        pin1(board, X(1.55), Y(16.06))                      # SAO header pin 1 (top-left pad)
         if name == 'IR':
-            line(board, X(0.7), Y(12.0), X(12.3), Y(12.0)); line(board, X(0.7), Y(17.4), X(12.3), Y(17.4))
-            text(board, 'B1 · IR COLA', X(6.5), Y(13.6), 0.9, thick=0.16)
-            wave(board, X(1.0), X(12.0), Y(15.2), 0.4)
-            text(board, '38 kHz', X(6.5), Y(16.5), 0.8)
+            line(board, X(0.7), Y(11.3), X(12.3), Y(11.3)); line(board, X(0.7), Y(14.6), X(12.3), Y(14.6))
+            text(board, 'B1 · IR COLA', X(6.5), Y(12.35), 0.8, thick=0.15)
+            text(board, '38 kHz', X(6.5), Y(13.75), 0.8)
         elif name == 'AUDIO':
-            text(board, '3.5mm', X(6.5), Y(12.8), 0.8)
-            wave(board, X(1.0), X(12.0), Y(15.7), 0.3)
-            text(board, 'B2 · AUDIO POP', X(6.5), Y(16.9), 0.8)
+            text(board, 'B2', X(0.85), Y(18.6), 0.8, angle=90)
+            text(board, 'AUDIO POP', X(12.05), Y(18.6), 0.8, angle=90)
         else:
-            text(board, 'B3 · BEEP FIZZ', X(6.5), Y(17.25), 0.8)
+            text(board, 'B3', X(0.85), Y(18.6), 0.8, angle=90)
+            text(board, 'BEEP FIZZ', X(12.05), Y(18.6), 0.8, angle=90)
         cx = (x1 + x2) / 2
         text(board, code + ' ' + name + ' MODULE', cx, Y(11.0), 0.8, layer=BS, thick=0.15)
         text(board, 'snap off,', cx, Y(13.0), 0.8, layer=BS)
@@ -255,7 +262,7 @@ def apply(board, art):
         line(board, x, 46.0, x, 70.0, layer=BS, w=0.15)
     rect(board, 22.0, 77.4, 46.5, 84.4, layer=BS, w=0.15)
     text(board, 'J2: 3V3 LOGIC ONLY \u2014 NO 5V', 34.25, 79.4, 1.1, layer=BS, thick=0.2)
-    text(board, 'INTENT 2026 badge \u00b7 rev 0.5 \u00b7 2026-10', 34.25, 82.4, 0.9, layer=BS)
+    text(board, 'INTENT 2026 badge \u00b7 rev 0.6 \u00b7 2026-10', 34.25, 82.4, 0.9, layer=BS)
     text(board, 'battery lead \u2192 J3 (front, bottom)', 34.25, 86.8, 0.9, layer=BS)
     text(board, 'NO REFUNDS · DO NOT TILT OR ROCK', 34.25, 89.0, 0.9, layer=BS)
     text(board, 'SW5: optional (DNP)', 18.6, 92.6, 0.8, layer=BS)

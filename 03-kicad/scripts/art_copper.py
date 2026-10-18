@@ -66,5 +66,5 @@ def apply(board, art):
         ctext(board, c, 49.7, y, 1.8, 0.32)
     ctext(board, 'BOOT', 50.6, 32.9, 1.0, 0.18)
     for name, (x1, y1, x2, y2, tx) in MODULES.items():                   # can rims over the module ground pours
-        mask_rect(board, x1 + 2.4, y1 + 0.45, x1 + 10.6, y1 + 0.95)
-        mask_rect(board, x1 + 2.4, y1 + 21.15, x1 + 10.6, y1 + 21.6)
+        rx1, rx2 = (4.2, 8.8) if name == 'SPK' else (2.4, 10.6)          # SPK: stay clear of the LS1 corner pads
+        mask_rect(board, x1 + rx1, y1 + 0.45, x1 + rx2, y1 + 0.95)      # top rim only: the SAO header pads reach y1 + 21.6

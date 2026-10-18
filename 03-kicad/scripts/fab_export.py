@@ -95,8 +95,8 @@ def main(pcb, outdir):
         w.writerow(['Comment', 'Designator', 'Footprint', 'LCSC Part #'])
         for (fpn, lcsc), items in bom.items():
             vals = list(OrderedDict.fromkeys(v for _, v in items))
-            val = vals[0] if len(vals) == 1 else {'C318884': 'TS-1187A-B-A-B tactile 5.1x5.1', 'C541850': 'Female header 1x3 2.54mm (slots)',
-                                                   'C49257': 'Pin header 1x3 2.54mm (modules)'}.get(lcsc, '/'.join(vals))
+            val = vals[0] if len(vals) == 1 else {'C318884': 'TS-1187A-B-A-B tactile 5.1x5.1', 'C42163131': 'SAO socket 2x3 2.54mm SMD',
+                                                   'C3294461': 'SAO pin header 2x3 2.54mm SMD'}.get(lcsc, '/'.join(vals))
             w.writerow([val, ','.join(r for r, _ in items), fpn, lcsc])
     with open(os.path.join(outdir, 'cpl_jlc.csv'), 'w', newline='', encoding='utf-8') as f:
         w = csv.writer(f)
@@ -111,12 +111,16 @@ def main(pcb, outdir):
                 '  D6     C7420330   SOD-123 Schottky: cathode (KiCad pad 1) towards U3 / VSYS. Reversed = no USB power.\n'
                 '  U5     C91447     IRM-H638T: GND pair (pins 1,2) on the J4 side. 180 deg wrong puts VCC on a GND pad.\n'
                 '  LED1-4 C52917434  WS2812B-2020: pin 1 (DOUT) corner as in the KiCad footprint.\n'
-                '  Y1     C133334    3225 crystal: 180 deg is harmless, 90 deg shorts the crystal to GND.\n'
+                '  Y1     C20625731  ABM8-272-T3 3225 crystal: 180 deg is harmless, 90 deg shorts the crystal to GND.\n'
                 '  D1-D5  C2286      cathode = KiCad pad 1 (CPL already rotated 180 deg for JLC).\n'
                 '  D7     C81598     1N4148W SOD-123 on the SPK module: cathode (KiCad pad 1) towards SPM_3V3 / LS1 side.\n'
                 '  LS1    C94599     MLT-8530: lead row (+/-) towards the module header P3. The footprint wires the dummy pads\n'
                 '                    crosswise, so 180 deg only reverses the coil; 90 deg = silent but harmless.\n'
-                '  J5-J7, P1-P3      1x3 headers (THT, hand-soldered by JLC): symmetric, orientation irrelevant.\n')
+                '  J5-J7  C42163131  SAO 2x3 SMD socket, P1-P3 C3294461 SAO 2x3 SMD header: a 180 deg error swaps 3V3/GND with\n'
+                '                    GPIO pins: pin 1 must match the silk triangle.\n'
+                'rev 0.6 parts with NO JLC footprint data in jlc_footprints.json (no correction applied, check in the preview):\n'
+                '  J1 C165948 HRO TYPE-C-31-M-12, U3 C51118 AP2112K SOT-23-5 (pin 1 = VIN), U6 C100024 SN74LV1T34 SOT-23-5,\n'
+                '  J5-J7 C42163131, P1-P3 C3294461, C22 C19702 (0603, symmetric).\n')
     print('BOM lines', len(bom), 'placements', len(cpl), 'corrected', len(report))
     print('\n'.join(report))
 

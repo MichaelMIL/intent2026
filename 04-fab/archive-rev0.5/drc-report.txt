@@ -1,0 +1,279 @@
+** Drc report for intent-2026-badge.kicad_pcb **
+** Created on 2026-10-13T23:38:59 **
+** Report includes: Errors, Warnings, Exclusions **
+
+** Found 0 DRC violations **
+
+** Found 0 unconnected pads **
+
+** Found 86 Footprint errors **
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'IOVDD')
+    Local override; warning
+    @(133.6000 mm, 105.0000 mm): Footprint C1
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'IOVDD')
+    Local override; warning
+    @(133.6000 mm, 96.2000 mm): Footprint C2
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'IOVDD')
+    Local override; warning
+    @(135.2000 mm, 94.6000 mm): Footprint C3
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'IOVDD')
+    Local override; warning
+    @(123.4000 mm, 104.6000 mm): Footprint C4
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'IOVDD')
+    Local override; warning
+    @(125.9000 mm, 105.2000 mm): Footprint C5
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'flash VCC')
+    Local override; warning
+    @(134.0000 mm, 114.0000 mm): Footprint C6
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'USB_VDD')
+    Local override; warning
+    @(124.9000 mm, 107.2000 mm): Footprint C7
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'ADC_AVDD')
+    Local override; warning
+    @(121.9000 mm, 107.2000 mm): Footprint C8
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'LDO input')
+    Local override; warning
+    @(133.0000 mm, 135.6000 mm): Footprint C9
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'VREG_VOUT / DVDD pin 50')
+    Local override; warning
+    @(123.9000 mm, 107.2000 mm): Footprint C10
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Unpolarized capacitor')
+    Local override; warning
+    @(131.8000 mm, 94.4000 mm): Footprint C11
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Unpolarized capacitor')
+    Local override; warning
+    @(126.4000 mm, 91.0000 mm): Footprint C12
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'LED1 VDD')
+    Local override; warning
+    @(144.0000 mm, 83.6000 mm): Footprint C13
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'LED2 VDD')
+    Local override; warning
+    @(134.0000 mm, 83.6000 mm): Footprint C14
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'LED3 VDD')
+    Local override; warning
+    @(124.0000 mm, 83.6000 mm): Footprint C15
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'LED4 VDD')
+    Local override; warning
+    @(114.0000 mm, 83.6000 mm): Footprint C16
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'IOVDD')
+    Local override; warning
+    @(135.7000 mm, 105.0000 mm): Footprint C17
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'VREG_VIN')
+    Local override; warning
+    @(122.9000 mm, 107.2000 mm): Footprint C18
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'DVDD pin 23')
+    Local override; warning
+    @(124.6000 mm, 94.4000 mm): Footprint C19
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'LDO output')
+    Local override; warning
+    @(127.0000 mm, 135.6000 mm): Footprint C20
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Unpolarized capacitor')
+    Local override; warning
+    @(128.0000 mm, 166.2000 mm): Footprint C21
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'DC block')
+    Local override; warning
+    @(131.7000 mm, 166.3000 mm): Footprint C22
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Unpolarized capacitor')
+    Local override; warning
+    @(115.5000 mm, 161.6000 mm): Footprint C23
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Unpolarized capacitor')
+    Local override; warning
+    @(112.0000 mm, 162.3000 mm): Footprint C24
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'module bulk')
+    Local override; warning
+    @(140.9000 mm, 167.7500 mm): Footprint C25
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Light emitting diode')
+    Local override; warning
+    @(112.0000 mm, 119.4000 mm): Footprint D1
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Light emitting diode')
+    Local override; warning
+    @(116.0000 mm, 119.4000 mm): Footprint D2
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Light emitting diode')
+    Local override; warning
+    @(120.0000 mm, 119.4000 mm): Footprint D3
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Light emitting diode')
+    Local override; warning
+    @(124.0000 mm, 119.4000 mm): Footprint D4
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Light emitting diode')
+    Local override; warning
+    @(128.0000 mm, 119.4000 mm): Footprint D5
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Schottky diode')
+    Local override; warning
+    @(136.6000 mm, 137.8000 mm): Footprint D6
+[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'https://www.vishay.com/docs/85748/1n4148w.pdf')
+    Local override; warning
+    @(147.1000 mm, 164.3000 mm): Footprint D7
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Mounting Hole without connection')
+    Local override; warning
+    @(112.0000 mm, 55.5000 mm): Footprint H1
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Mounting Hole without connection')
+    Local override; warning
+    @(144.0000 mm, 55.5000 mm): Footprint H2
+[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'https://www.usb.org/sites/default/files/documents/usb_type-c.zip')
+    Local override; warning
+    @(151.3400 mm, 134.0000 mm): Footprint J1
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: '2x13 expansion / SWD, DNP')
+    Local override; warning
+    @(103.6000 mm, 81.0000 mm): Footprint J2
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Battery box plug, pin1 = +')
+    Local override; warning
+    @(120.0000 mm, 145.2000 mm): Footprint J3
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Audio Jack, 4 Poles (TRRS)')
+    Local override; warning
+    @(129.0000 mm, 159.0000 mm): Footprint J4
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Expansion port IR: 1 = GND, 2 = 3V3, 3 = IR_OUT')
+    Local override; warning
+    @(104.5000 mm, 132.4600 mm): Footprint J5
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Expansion port AUDIO: 1 = GND, 2 = 3V3, 3 = AUDIO_PWM')
+    Local override; warning
+    @(111.5000 mm, 132.4600 mm): Footprint J6
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Expansion port SPK: 1 = GND, 2 = 3V3, 3 = SPK_PWM')
+    Local override; warning
+    @(118.5000 mm, 132.4600 mm): Footprint J7
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Solder Jumper, 2-pole, closed/bridged')
+    Local override; warning
+    @(130.5000 mm, 141.0000 mm): Footprint JP1
+[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'https://cdn-shop.adafruit.com/product-files/4684/4684_WS2812B-2020_V1.3_EN.pdf')
+    Local override; warning
+    @(144.0000 mm, 86.0000 mm): Footprint LED1
+[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'https://cdn-shop.adafruit.com/product-files/4684/4684_WS2812B-2020_V1.3_EN.pdf')
+    Local override; warning
+    @(134.0000 mm, 86.0000 mm): Footprint LED2
+[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'https://cdn-shop.adafruit.com/product-files/4684/4684_WS2812B-2020_V1.3_EN.pdf')
+    Local override; warning
+    @(124.0000 mm, 86.0000 mm): Footprint LED3
+[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'https://cdn-shop.adafruit.com/product-files/4684/4684_WS2812B-2020_V1.3_EN.pdf')
+    Local override; warning
+    @(114.0000 mm, 86.0000 mm): Footprint LED4
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Magnetic transducer 2.7 kHz, 16 ohm, 95 mA max')
+    Local override; warning
+    @(144.0000 mm, 158.0000 mm): Footprint LS1
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Module pins, mate with J5')
+    Local override; warning
+    @(109.4600 mm, 171.0000 mm): Footprint P1
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Module pins, mate with J6 (3V3 pin unused)')
+    Local override; warning
+    @(125.4600 mm, 171.0000 mm): Footprint P2
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Module pins, mate with J7')
+    Local override; warning
+    @(141.4600 mm, 171.0000 mm): Footprint P3
+[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'http://www.aosmd.com/pdfs/datasheet/AO3401A.pdf')
+    Local override; warning
+    @(135.6000 mm, 132.4000 mm): Footprint Q1
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'NPN low-side driver')
+    Local override; warning
+    @(140.7000 mm, 164.9500 mm): Footprint Q2
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(146.4000 mm, 136.6000 mm): Footprint R1
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(146.4000 mm, 131.4000 mm): Footprint R2
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(134.4000 mm, 111.6000 mm): Footprint R3
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(121.0000 mm, 95.2000 mm): Footprint R4
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(112.0000 mm, 117.0000 mm): Footprint R5
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(116.0000 mm, 117.0000 mm): Footprint R6
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(120.0000 mm, 117.0000 mm): Footprint R7
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(124.0000 mm, 117.0000 mm): Footprint R8
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(128.0000 mm, 117.0000 mm): Footprint R9
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(138.6000 mm, 133.4000 mm): Footprint R10
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(124.6000 mm, 113.2000 mm): Footprint R11
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(123.4000 mm, 113.2000 mm): Footprint R12
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(126.4000 mm, 93.6000 mm): Footprint R13
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(144.6000 mm, 77.4000 mm): Footprint R14
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(140.0000 mm, 137.0000 mm): Footprint R15
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(141.2000 mm, 137.0000 mm): Footprint R16
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(125.0000 mm, 166.2000 mm): Footprint R17
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Resistor')
+    Local override; warning
+    @(108.5000 mm, 161.6000 mm): Footprint R19
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'base resistor')
+    Local override; warning
+    @(147.1000 mm, 166.0000 mm): Footprint R20
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'keeps Q2 off while the GPIO floats')
+    Local override; warning
+    @(144.0000 mm, 166.0000 mm): Footprint R21
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Push button switch, generic, two pins')
+    Local override; warning
+    @(149.0000 mm, 79.0000 mm): Footprint SW1
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Push button switch, generic, two pins')
+    Local override; warning
+    @(144.0000 mm, 115.0000 mm): Footprint SW2
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Push button switch, generic, two pins')
+    Local override; warning
+    @(144.0000 mm, 121.0000 mm): Footprint SW3
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Push button switch, generic, two pins')
+    Local override; warning
+    @(144.0000 mm, 127.0000 mm): Footprint SW4
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Optional on-board power switch (DNP, cut JP1 if fitted)')
+    Local override; warning
+    @(130.5000 mm, 145.6000 mm): Footprint SW5
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'test point')
+    Local override; warning
+    @(137.0000 mm, 145.0000 mm): Footprint TP1
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'test point')
+    Local override; warning
+    @(140.5000 mm, 145.0000 mm): Footprint TP2
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'test point')
+    Local override; warning
+    @(144.0000 mm, 145.0000 mm): Footprint TP3
+[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf')
+    Local override; warning
+    @(128.0000 mm, 100.0000 mm): Footprint U1
+[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'http://www.winbond.com/resource-files/w25q32jv%20revg%2003272018%20plus.pdf')
+    Local override; warning
+    @(130.0000 mm, 110.8000 mm): Footprint U2
+[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'https://www.torexsemi.com/file/xc6206/XC6206.pdf')
+    Local override; warning
+    @(129.6000 mm, 135.6000 mm): Footprint U3
+[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'https://www.st.com/resource/en/datasheet/usblc6-2.pdf')
+    Local override; warning
+    @(144.4000 mm, 134.0000 mm): Footprint U4
+[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'https://en.everlight.com/wp-content/plugins/ItemRelationship/product_files/pdf/DMO-0000004-IRM-H6XX-TR2_Series_Datasheet_V4.pdf')
+    Local override; warning
+    @(112.0000 mm, 157.0000 mm): Footprint U5
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Four pin crystal, GND on pins 2 and 4')
+    Local override; warning
+    @(129.2000 mm, 93.0000 mm): Footprint Y1
+
+** Ignored checks **
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Silkscreen clearance
+    - Footprint component type doesn't match footprint pads
+    - Footprint not found in libraries
+    - Footprint doesn't match copy in library
+
+** End of Report **
