@@ -28647,17 +28647,6 @@
 			)
 		)
 	)
-	(gr_text "38k"
-		(at 117.5 169.5 270)
-		(layer "F.SilkS")
-		(uuid "c686c6c5-e551-4ed3-8c01-17b201b750e7")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-		)
-	)
 	(gr_text "TX"
 		(at 137 147 0)
 		(layer "F.SilkS")
@@ -28780,19 +28769,8 @@
 			)
 		)
 	)
-	(gr_text "FOR RESEARCHERS\nBY RESEARCHERS"
-		(at 138 76 0)
-		(layer "F.SilkS")
-		(uuid "1d7be8db-86ad-4a23-8c73-3e52c5e340fb")
-		(effects
-			(font
-				(size 1.2 1.2)
-				(thickness 0.2)
-			)
-		)
-	)
-	(gr_text "THE SECURITY SUMMIT"
-		(at 139 73.3 0)
+	(gr_text "THE SECURITY SUMMIT\nFOR RESEARCHERS\nBY RESEARCHERS"
+		(at 139 75 0)
 		(layer "F.SilkS")
 		(uuid "a2a88568-1e8d-4b45-9cc8-e289da13b53c")
 		(effects
