@@ -178,6 +178,11 @@ for ref, name, g1, g2 in SAO_PORTS:
          desc='SAO port: 1 3V3, 2 GND, 3 SDA, 4 SCL, 5 GPIO1 = %s, 6 GPIO2 = %s' % (g1, g2))
 R('R22', '4.7k', L_4K7, 'SAO_SDA', '+3V3', desc='I2C0 SDA pull-up')
 R('R23', '4.7k', L_4K7, 'SAO_SCL', '+3V3', desc='I2C0 SCL pull-up')
+# 0.96" I2C OLED module (SSD1306, 4-pin GND/VCC/SCL/SDA) on the same I2C0 bus (2026-10-29). SMD 1x4 socket, staggered
+# pins starting right ("YQ"); placement is Benny's in KiCad.
+part('J8', 'Connector_Generic:Conn_01x04', 'OLED 0.96 I2C', 'Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical_SMD_Pin1Right',
+     'C42379197', {'1': GND, '2': '+3V3', '3': 'SAO_SCL', '4': 'SAO_SDA'},
+     desc='0.96 inch I2C OLED module: 1 GND, 2 VCC (3V3), 3 SCL, 4 SDA')
 
 # ---- IR module (breakaway, nets IRM_*) ------------------------------------------
 M = 'IR'

@@ -194,3 +194,9 @@ Net vs rev 0.6: ≈ **−$0.5/board** at 600.
 
 - I2C mode (datasheet Mode 1): CS = VDDIO, SA0 = GND → address **0x6A**, SDx/SCx = GND, pins 10/11 NC. SDA/SCL go to the SAO I2C bus (pull-ups R22/R23 on the badge). INT1 → SAO GPIO1 (GPIO11, net renamed AUDIO_PWM → IMU_INT1), INT2 → SAO GPIO2 (GPIO27).
 - Cost at 600: about +$0.95/board for U7 + caps, −$0.25 for the jack and filter.
+
+## rev 0.6f — 0.96" OLED connector (2026-10-29, user request)
+
+| Ref | Change | LCSC | Notes |
+|---|---|---|---|
+| J8 | **new** 1×4 2.54 mm SMD female socket, HX PM2.54-1x4P TP-YQ, 5 mm tall | **C42379197** | 15,269 in stock. For a 0.96" SSD1306 I2C OLED module: 1 GND, 2 VCC (3V3), 3 SCL, 4 SDA, on the SAO I2C bus. Check your module's pin order (some swap GND/VCC) |

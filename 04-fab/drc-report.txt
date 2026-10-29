@@ -1,19 +1,8 @@
 ** Drc report for intent-2026-badge.kicad_pcb **
-** Created on 2026-10-29T22:30:39 **
+** Created on 2026-10-29T23:00:48 **
 ** Report includes: Errors, Warnings, Exclusions **
 
-** Found 5 DRC violations **
-[isolated_copper]: Isolated copper fill
-    Local override; warning
-    @(105.5000 mm, 152.0000 mm): Zone 'IR_GND_BOT' [IRM_GND] on B.Cu, priority 0
-[silk_over_copper]: Silkscreen clipped by solder mask
-    Local override; warning
-    @(138.6000 mm, 152.7000 mm): Segment on F.Silkscreen
-    @(140.4000 mm, 153.9000 mm): Pad 1 [SPM_3V3] of LS1 on F.Cu
-[silk_over_copper]: Silkscreen clipped by solder mask
-    Local override; warning
-    @(138.6000 mm, 152.7000 mm): Segment on F.Silkscreen
-    @(147.6000 mm, 153.9000 mm): Pad 2 [SPM_COL] of LS1 on F.Cu
+** Found 2 DRC violations **
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning (excluded)
     @(156.0000 mm, 61.0000 mm): Segment on Edge.Cuts
@@ -25,22 +14,7 @@
 
 ** Found 0 unconnected pads **
 
-** Found 5 Footprint errors **
-[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'U7 VDD')
-    Local override; warning
-    @(124.1000 mm, 159.5000 mm): Footprint C30
-[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'U7 VDDIO')
-    Local override; warning
-    @(131.9000 mm, 159.5000 mm): Footprint C31
-[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: 'SAO port: 1 3V3, 2 GND, 3 SDA, 4 SCL, 5 GPIO1 = AUDIO_PWM, 6 GPIO2 = SAO2_GPIO2', Schematic: 'SAO port: 1 3V3, 2 GND, 3 SDA, 4 SCL, 5 GPIO1 = IMU_INT1, 6 GPIO2 = SAO2_GPIO2')
-    Local override; warning
-    @(118.5000 mm, 134.5000 mm): Footprint J6
-[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: 'SAO add-on header (GPIO1 = PWM, 3V3 unused)', Schematic: 'SAO add-on header: I2C to the badge, GPIO1 = INT1, GPIO2 = INT2')
-    Local override; warning
-    @(128.0000 mm, 169.5000 mm): Footprint P2
-[footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'https://www.st.com/resource/en/datasheet/lsm6ds3tr-c.pdf')
-    Local override; warning
-    @(128.0000 mm, 159.5000 mm): Footprint U7
+** Found 0 Footprint errors **
 
 ** Ignored checks **
     - Footprint has no courtyard defined

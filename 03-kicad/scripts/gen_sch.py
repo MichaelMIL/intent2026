@@ -134,6 +134,12 @@ W((370.84, 93.98), (370.84, 104.14)); sh.power('+3V3', 370.84, 93.98)
 sh.text('SAO (badge.team): 1 3V3, 2 GND, 3 SDA, 4 SCL, 5 GPIO1, 6 GPIO2.', 337.82, 110.49, 1.27)
 sh.text('I2C0 on GPIO12/13, 4.7k pull-ups. GPIO1: IR 22 / IMU 11 / SPK 25.', 337.82, 113.79, 1.27)
 sh.text('GPIO2: GPIO26/27/28 (ADC). Socket on badge, 2x3 pin header on the add-on.', 337.82, 117.09, 1.27)
+# J8: 0.96" I2C OLED module socket on the same bus
+put('J8', 414.02, 99.06, ref_at=(-1.27, -8.89), val_at=(-1.27, -6.35), just=['right'])
+p = P('J8', 1); W(p, (401.32, p[1])); sh.power('GND', 401.32, p[1], rot=270)
+p = P('J8', 2); W(p, (403.86, p[1])); sh.power('+3V3', 403.86, p[1], rot=90)
+p = P('J8', 3); W(p, (401.32, p[1])); sh.label('SAO_SCL', 401.32, p[1], 180)
+p = P('J8', 4); W(p, (401.32, p[1])); sh.label('SAO_SDA', 401.32, p[1], 180)
 
 # =============================================================================================
 # Block D - IR module (breakaway board; nets IRM_*)
