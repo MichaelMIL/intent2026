@@ -25539,6 +25539,26 @@
 		(layer "F.SilkS")
 		(uuid "b4f673d7-6131-4760-8716-b902e7b396a6")
 	)
+	(gr_line
+		(start 138.2 167.4)
+		(end 149.8 167.4)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "9a1a4b35-9c2b-463e-9c44-a4a15cbb0e2c")
+	)
+	(gr_line
+		(start 138.2 169.1)
+		(end 149.8 169.1)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "09727821-8a0b-49fe-8755-edbd03b135db")
+	)
 	(gr_arc
 		(start 139.2 90)
 		(mid 138.6 90.6)
@@ -28616,32 +28636,21 @@
 			)
 		)
 	)
+	(gr_text "B3 · BEEP FIZZ"
+		(at 144 168.25 180)
+		(layer "F.SilkS")
+		(uuid "7e1c7033-b80b-4c1d-9484-fb35312de71b")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+		)
+	)
 	(gr_text "38k"
 		(at 117.5 169.5 270)
 		(layer "F.SilkS")
 		(uuid "c686c6c5-e551-4ed3-8c01-17b201b750e7")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-		)
-	)
-	(gr_text "BEEP FIZZ"
-		(at 138.45 170.6 270)
-		(layer "F.SilkS")
-		(uuid "89b5dd73-bf0b-4a54-94f0-59eec303dd8a")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-		)
-	)
-	(gr_text "B3"
-		(at 149.65 170.6 270)
-		(layer "F.SilkS")
-		(uuid "b20d1dba-013e-49f8-8f5c-2d69753a426a")
 		(effects
 			(font
 				(size 0.8 0.8)
@@ -28781,6 +28790,42 @@
 			)
 		)
 	)
+	(gr_text "B1 IR MODULE"
+		(at 112 155.6 0)
+		(layer "B.SilkS")
+		(uuid "e79a7ffb-4496-4643-8a26-64cb6aca5994")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+			(justify mirror)
+		)
+	)
+	(gr_text "snap off,"
+		(at 112 157.4 0)
+		(layer "B.SilkS")
+		(uuid "8098ee24-8827-4691-b91a-db05cabbef04")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+			(justify mirror)
+		)
+	)
+	(gr_text "plug into J5"
+		(at 112 159.000001 0)
+		(layer "B.SilkS")
+		(uuid "0a7e1642-6faf-4e94-998b-0497cb7b6f0f")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+			(justify mirror)
+		)
+	)
 	(gr_text "AUTHORIZED PERSONNEL ONLY"
 		(at 128 79.4 0)
 		(layer "B.SilkS")
@@ -28817,6 +28862,42 @@
 			(justify mirror)
 		)
 	)
+	(gr_text "B2 IMU MODULE"
+		(at 128 155.6 0)
+		(layer "B.SilkS")
+		(uuid "eaeb3079-dbdc-48f8-8dfc-cc54f12721fd")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+			(justify mirror)
+		)
+	)
+	(gr_text "snap off,"
+		(at 128 157.4 0)
+		(layer "B.SilkS")
+		(uuid "de2d7932-0f1e-4d6c-9d1b-af4832c53e9e")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+			(justify mirror)
+		)
+	)
+	(gr_text "plug into J6"
+		(at 128 159.000001 0)
+		(layer "B.SilkS")
+		(uuid "09977029-1694-45fb-a01d-0eebebd985ef")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+			(justify mirror)
+		)
+	)
 	(gr_text "SW5: optional (DNP)"
 		(at 137.5 137.5 0)
 		(layer "B.SilkS")
@@ -28841,22 +28922,10 @@
 			(justify mirror)
 		)
 	)
-	(gr_text "3V3 INSIDE"
-		(at 151.2 92.1 0)
+	(gr_text "B3 SPK MODULE"
+		(at 144 155.6 0)
 		(layer "B.SilkS")
-		(uuid "d866eddc-2a73-4a2e-9186-4de20563c1dc")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "plug into J5"
-		(at 112 155.599999 180)
-		(layer "B.SilkS")
-		(uuid "0a7e1642-6faf-4e94-998b-0497cb7b6f0f")
+		(uuid "d5945192-f840-4063-bea0-eaa407e95aaf")
 		(effects
 			(font
 				(size 0.8 0.8)
@@ -28866,79 +28935,7 @@
 		)
 	)
 	(gr_text "snap off,"
-		(at 112 157.2 180)
-		(layer "B.SilkS")
-		(uuid "8098ee24-8827-4691-b91a-db05cabbef04")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "B1 IR MODULE"
-		(at 112 159 180)
-		(layer "B.SilkS")
-		(uuid "e79a7ffb-4496-4643-8a26-64cb6aca5994")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "plug into J6"
-		(at 128 155.599999 180)
-		(layer "B.SilkS")
-		(uuid "09977029-1694-45fb-a01d-0eebebd985ef")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "snap off,"
-		(at 128 157.2 180)
-		(layer "B.SilkS")
-		(uuid "de2d7932-0f1e-4d6c-9d1b-af4832c53e9e")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "B2 IMU MODULE"
-		(at 128 159 180)
-		(layer "B.SilkS")
-		(uuid "eaeb3079-dbdc-48f8-8dfc-cc54f12721fd")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "plug into J7"
-		(at 144 155.599999 180)
-		(layer "B.SilkS")
-		(uuid "54a822f5-90e1-4dd4-9197-908c14dbfb98")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "snap off,"
-		(at 144 157.2 180)
+		(at 144 157.4 0)
 		(layer "B.SilkS")
 		(uuid "d58b72d4-33f0-4fd9-90be-0658eec8cd17")
 		(effects
@@ -28949,10 +28946,22 @@
 			(justify mirror)
 		)
 	)
-	(gr_text "B3 SPK MODULE"
-		(at 144 159 180)
+	(gr_text "plug into J7"
+		(at 144 159.000001 0)
 		(layer "B.SilkS")
-		(uuid "d5945192-f840-4063-bea0-eaa407e95aaf")
+		(uuid "54a822f5-90e1-4dd4-9197-908c14dbfb98")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+			(justify mirror)
+		)
+	)
+	(gr_text "3V3 INSIDE"
+		(at 151.2 92.1 0)
+		(layer "B.SilkS")
+		(uuid "d866eddc-2a73-4a2e-9186-4de20563c1dc")
 		(effects
 			(font
 				(size 0.8 0.8)

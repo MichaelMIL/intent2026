@@ -219,7 +219,7 @@ def apply(board, art):
 
 def module_silk(board):
     # ---------------- BREAKAWAY MODULES = soda cans (front: rims, label band; back: name + where it plugs in) --------
-    # The front and back texts are turned 180 deg: a plugged-in module hangs upside down from its socket (BUILD-NOTES item 24).
+    # The front texts are turned 180 deg: a plugged-in module hangs upside down from its socket (BUILD-NOTES item 24).
     for name, (x1, y1, x2, y2, tx) in MODULES.items():
         X = lambda v: x1 + v
         Y = lambda v: y1 + v
@@ -236,12 +236,12 @@ def module_silk(board):
             text(board, 'B2 · SHAKE SODA', X(6.5), Y(12.1), 0.8, angle=180, thick=0.15)
             text(board, '6-axis IMU', X(6.5), Y(10.7), 0.8, angle=180)
         else:
-            text(board, 'B3', X(12.15), Y(18.6), 0.8, angle=270)
-            text(board, 'BEEP FIZZ', X(0.95), Y(18.6), 0.8, angle=270)
+            line(board, X(0.7), Y(15.4), X(12.3), Y(15.4)); line(board, X(0.7), Y(17.1), X(12.3), Y(17.1))
+            text(board, 'B3 · BEEP FIZZ', X(6.5), Y(16.25), 0.8, angle=180, thick=0.15)
         cx = (x1 + x2) / 2
-        text(board, code + ' ' + name + ' MODULE', cx, Y(7.0), 0.8, layer=BS, angle=180, thick=0.15)
-        text(board, 'snap off,', cx, Y(5.2), 0.8, layer=BS, angle=180)
-        text(board, 'plug into ' + slot, cx, Y(3.6), 0.8, layer=BS, angle=180)
+        text(board, code + ' ' + name + ' MODULE', cx, Y(3.6), 0.8, layer=BS, thick=0.15)
+        text(board, 'snap off,', cx, Y(5.4), 0.8, layer=BS)
+        text(board, 'plug into ' + slot, cx, Y(7.0), 0.8, layer=BS)
 
 
 def back_panel(board):
