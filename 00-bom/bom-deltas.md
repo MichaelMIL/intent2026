@@ -174,3 +174,12 @@ Net vs rev 0.6: ≈ **−$0.5/board** at 600.
 - Plugged in rotated 180°, our modules get badge 3V3 on their unused pin 6 and their 3V3/GND pins land on GPIO2/GPIO1:
   nothing is shorted, the module just does not work. Third-party SAOs could be back-powered from a GPIO; firmware
   should keep GPIO1/GPIO2 as inputs until a module is detected.
+
+## rev 0.6d — battery connector J3 (2026-10-29, user request)
+
+| Ref | Was | Now | LCSC | Notes |
+|---|---|---|---|---|
+| J3 | CAX PH2.0-2P-LT, custom footprint (C722761) | **JST B2B-PH-SM4-TB**, genuine JST PH 2.0 mm, 2-pin SMD vertical, with solder tabs | **C160352** | 72,150 in stock; $0.21 (5+), $0.13 (1,000+). Stock KiCad footprint `Connector_JST:JST_PH_B2B-PH-SM4-TB_1x02-1MP_P2.00mm_Vertical`. Pin 1 = BAT_IN (+), pin 2 = GND as before |
+
+- Same PH 2.0 mating plug as before, so the battery-box lead doesn't change. Check the box's plug polarity against pin 1 (some boxes are wired the other way).
+- The footprint changed, so the PCB needs Update PCB from Schematic and J3 re-placed. No JLC rotation data for C160352 yet: check J3 in the JLC preview.

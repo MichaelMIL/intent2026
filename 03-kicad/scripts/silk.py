@@ -265,6 +265,4 @@ def apply(board, art):
     text(board, 'INTENT 2026 badge \u00b7 rev 0.6 \u00b7 2026-10', 34.25, 82.4, 0.9, layer=BS)
     text(board, 'battery lead \u2192 J3 (front, bottom)', 34.25, 86.8, 0.9, layer=BS)
     text(board, 'NO REFUNDS · DO NOT TILT OR ROCK', 34.25, 89.0, 0.9, layer=BS)
-    text(board, 'SW5: optional (DNP)', 18.6, 92.6, 0.8, layer=BS)
-    text(board, 'JP1: cut for SW5', 18.6, 94.4, 0.8, layer=BS)
     text(board, 'JLCJLCJLCJLC', 4.9, 68.0, 1.0, layer=BS, angle=90)

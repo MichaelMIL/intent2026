@@ -284,7 +284,7 @@
       "internal_id": "",
       "mfg": "",
       "mpn": "",
-      "sch_revision": ""
+      "sch_revision": "0.6"
     },
     "layer_pairs": [],
     "layer_presets": [],
@@ -785,7 +785,7 @@
       {
         "filename": "intent-2026-badge.kicad_sch",
         "name": "intent-2026-badge",
-        "uuid": "00000000-0000-0000-0000-000000000000"
+        "uuid": "6ae449ae-8182-5e03-9ce6-aee30e1d9ad8"
       }
     ],
     "used_designators": "",
@@ -793,8 +793,8 @@
   },
   "sheets": [
     [
-      "6f6b0d3d-0000-0000-0000-000000000000",
-      "Root"
+      "6ae449ae-8182-5e03-9ce6-aee30e1d9ad8",
+      "intent-2026-badge"
     ]
   ],
   "text_variables": {

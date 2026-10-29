@@ -88,15 +88,12 @@ sh.box(157.48, 25.4, 330.2, 121.92, 'POWER   USB or 3xAAA -> VSYS -> 3V3 LDO')
 sh.power('VBUS', 170.18, 43.18); W((170.18, 43.18), (170.18, 53.34), (179.07, 53.34))
 put('D6', 182.88, 53.34, 180, **H)                      # anode left (VBUS), cathode right (VSYS)
 W(P('D6', 1), (226.06, 53.34), (226.06, 43.18)); sh.power('VSYS', 226.06, 43.18)
-# battery: J3 -> JP1 (or SW5) -> Q1 drain; VBUS on the gate holds Q1 off when USB is present
+# battery: J3 -> Q1 drain (SW5/JP1 removed 2026-10-29: the switch is on the battery box); VBUS on the gate holds Q1 off on USB
 put('J3', 170.18, 71.12, mir='y', ref_at=(-2.54, -5.08), val_at=(-2.54, 7.62))
 W(P('J3', 1), (185.42, 71.12)); sh.label('BAT_IN', 177.8, 71.12)
 W(P('J3', 2), (177.8, 73.66), (177.8, 78.74)); sh.power('GND', 177.8, 78.74)
-put('JP1', 190.5, 71.12, ref_at=(0, -3.81), val_at=(0, 3.81))
-put('SW5', 190.5, 60.96, ref_at=(0, -5.08), val_at=(8.89, 0.64), just=['left'])
-W((185.42, 71.12), P('SW5', 2)); W(P('SW5', 1), (198.12, 58.42), (198.12, 71.12)); sh.nc(P('SW5', 3))
 put('Q1', 215.9, 73.66, 90, ref_at=(6.35, 2.54), val_at=(6.35, 5.08), just=['left'])
-W(P('JP1', 2), P('Q1', 3)); sh.label('BAT_SW', 200.66, 71.12)
+W((185.42, 71.12), P('Q1', 3))
 W(P('Q1', 2), (226.06, 71.12), (226.06, 53.34))
 put('R10', 215.9, 87.63, **V)
 W(P('Q1', 1), P('R10', 1)); W(P('R10', 2), (215.9, 93.98)); sh.power('GND', 215.9, 93.98)
@@ -112,7 +109,7 @@ W((279.4, 53.34), P('U3', 1)); W((284.48, 53.34), (284.48, 55.88), P('U3', 3)); 
 W(P('U3', 5), (317.5, 53.34), (317.5, 43.18)); sh.power('+3V3', 317.5, 43.18)
 W(P('C9', 2), (279.4, 66.04), (309.88, 66.04), P('C20', 2)); W(P('U3', 2), (297.18, 66.04)); sh.power('GND', 297.18, 66.04)
 note(160.02, 102.87, 'VSYS = 4.65 V on USB (after D6), 3.0-4.8 V on battery. With both present VBUS holds Q1 off, D6 blocks back-feed.',
-     'SW5 is DNP (the switch is on the battery box); JP1 bridges it. Cut JP1 only if SW5 is fitted.',
+     'J3: JST B2B-PH-SM4-TB (C160352) for the 3xAAA box; the power switch is on the box.',
      'RGB LEDs run from VSYS, everything else from 3V3 (AP2112K-3.3, 600 mA, EN tied to VIN).',
      'R15/R16: VBUS_SENSE = 2.5 V on USB, 0 V on battery (GPIO29 / ADC3) so firmware can dim and sleep.')
 

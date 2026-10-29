@@ -1,5 +1,5 @@
 ** Drc report for intent-2026-badge.kicad_pcb **
-** Created on 2026-10-18T22:21:02 **
+** Created on 2026-10-29T21:55:18 **
 ** Report includes: Errors, Warnings, Exclusions **
 
 ** Found 2 DRC violations **
@@ -14,7 +14,7 @@
 
 ** Found 0 unconnected pads **
 
-** Found 94 Footprint errors **
+** Found 92 Footprint errors **
 [footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'IOVDD')
     Local override; warning
     @(130.9000 mm, 94.4000 mm): Footprint C1
@@ -135,7 +135,7 @@
 [footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: '2x13 expansion / SWD, DNP')
     Local override; warning
     @(103.6000 mm, 81.0000 mm): Footprint J2
-[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Battery box plug, pin1 = +')
+[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Battery box plug, JST B2B-PH-SM4-TB (C160352), pin1 = +')
     Local override; warning
     @(120.0000 mm, 145.2000 mm): Footprint J3
 [footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Audio Jack, 4 Poles (TRRS)')
@@ -150,9 +150,6 @@
 [footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'SAO port: 1 3V3, 2 GND, 3 SDA, 4 SCL, 5 GPIO1 = SPK_PWM, 6 GPIO2 = SAO3_GPIO2')
     Local override; warning
     @(131.9600 mm, 134.5200 mm): Footprint J7
-[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Solder Jumper, 2-pole, closed/bridged')
-    Local override; warning
-    @(130.5000 mm, 141.0000 mm): Footprint JP1
 [footprint_symbol_field_mismatch]: Field 'Datasheet' differs (PCB: '', Schematic: 'https://cdn-shop.adafruit.com/product-files/4684/4684_WS2812B-2020_V1.3_EN.pdf')
     Local override; warning
     @(144.0000 mm, 86.0000 mm): Footprint LED1
@@ -261,9 +258,6 @@
 [footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Push button switch, generic, two pins')
     Local override; warning
     @(144.0000 mm, 127.0000 mm): Footprint SW4
-[footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Optional on-board power switch (DNP, cut JP1 if fitted)')
-    Local override; warning
-    @(130.5000 mm, 145.6000 mm): Footprint SW5
 [footprint_symbol_field_mismatch]: Field 'Description' differs (PCB: '', Schematic: 'Reset (RUN to GND); hold BOOTSEL + tap RESET for the UF2 bootloader')
     Local override; warning
     @(151.5000 mm, 135.0000 mm): Footprint SW6

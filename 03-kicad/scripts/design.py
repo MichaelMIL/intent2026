@@ -136,17 +136,12 @@ R('R12', '27', L_27R, 'USB_DM_CONN', 'USB_DM')
 # ---- power path -------------------------------------------------------------
 part('D6', 'Device:D_Schottky', 'B5819W', 'Diode_SMD:D_SOD-123', 'C7420330', {'1': 'VSYS', '2': 'VBUS'})
 part('Q1', 'Transistor_FET:AO3401A', 'HL3401', 'Package_TO_SOT_SMD:SOT-23', 'C22469449',
-     {'1': 'VBUS', '2': 'VSYS', '3': 'BAT_SW'})
+     {'1': 'VBUS', '2': 'VSYS', '3': 'BAT_IN'})   # 2026-10-29: SW5/JP1 removed in the KiCad schematic, J3 feeds Q1 directly
 R('R10', '10k', L_10K, 'VBUS', GND)
 R('R15', '10k', L_10K, 'VBUS', 'VBUS_SENSE')
 R('R16', '10k', L_10K, 'VBUS_SENSE', GND)
-part('J3', 'Connector_Generic:Conn_01x02', 'BATT 3xAAA', 'intent:JST_PH_2P_SMD_Vertical_C722761', 'C722761',
-     {'1': 'BAT_IN', '2': GND}, desc='Battery box plug, pin1 = +')
-part('SW5', 'Switch:SW_SPDT', 'MSK12C02', 'Button_Switch_SMD:SW_SPDT_Shouhan_MSK12C02', 'C431540',
-     {'1': 'BAT_SW', '2': 'BAT_IN', '3': None}, dnp=True, in_bom=False, side='B',
-     desc='Optional on-board power switch (DNP, cut JP1 if fitted)')
-part('JP1', 'Jumper:SolderJumper_2_Bridged', 'SW5 bypass', 'Jumper:SolderJumper-2_P1.3mm_Bridged_Pad1.0x1.5mm', '',
-     {'1': 'BAT_IN', '2': 'BAT_SW'}, in_bom=False, side='B')
+part('J3', 'Connector_Generic:Conn_01x02', 'BATT 3xAAA', 'Connector_JST:JST_PH_B2B-PH-SM4-TB_1x02-1MP_P2.00mm_Vertical',
+     'C160352', {'1': 'BAT_IN', '2': GND}, desc='Battery box plug, JST B2B-PH-SM4-TB (C160352), pin1 = +')
 C('C9', '10uF', L_10U, 'VSYS', GND, fp=FP_C0805, desc='LDO input')
 part('U3', 'Regulator_Linear:AP2112K-3.3', 'AP2112K-3.3TRG1', 'Package_TO_SOT_SMD:SOT-23-5', 'C51118',
      {'1': 'VSYS', '2': GND, '3': 'VSYS', '4': None, '5': '+3V3'}, desc='3V3 LDO 600 mA, EN tied to VIN')

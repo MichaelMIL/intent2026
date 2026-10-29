@@ -121,6 +121,6 @@ Open the project: `open -a KiCad "/Users/michael/Downloads/AI PCB /03-kicad/inte
 - IR receiver U5 pinout: 1, 2 = GND, 3 = OUT, 4 = VCC. U5 lives on the IR module (nets IRM_*).
 - Expansion slots (rev 0.6, SAO): 1 = 3V3, 2 = GND, 3 = SDA (GPIO12), 4 = SCL (GPIO13), 5 = GPIO1 (J5 IR = GPIO22, J6 AUDIO = GPIO11, J7 SPK = GPIO25, also J2 pin 15), 6 = GPIO2 (GPIO26/27/28). 4.7k I²C pull-ups R22/R23.
 - Mouse bites MB1–MB3 are board-only footprints (`SetBoardOnly`), excluded from BOM/CPL and from schematic parity.
-- J3 is on the FRONT pedestal so assembly stays top-side only. SW5 (DNP) + JP1 are on the back.
+- J3 = JST B2B-PH-SM4-TB (C160352) battery-box plug, pin 1 = BAT_IN. SW5/JP1 were removed 2026-10-29 (switch on the box); the schematic is now edited in KiCad, see BUILD-NOTES item 19.
 - All refdes are on the Fab layer, not silk.
 - Hebrew mirror of the BOM deltas exists (`00-bom/bom-deltas-he.md`); keep it in sync if deltas change.
