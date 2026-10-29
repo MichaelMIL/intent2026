@@ -154,13 +154,13 @@ def logo(board, art):
             board.Add(s)
 
 
-def pin1(board, x, y, s=0.7):
+def pin1(board, x, y, s=0.7, layer=FS):
     """Filled pin-1 triangle pointing right (+x), tip at (x + s/2, y)."""
-    polyline(board, [(x - s / 2, y - s / 2), (x + s / 2, y), (x - s / 2, y + s / 2)], w=0.12)
+    polyline(board, [(x - s / 2, y - s / 2), (x + s / 2, y), (x - s / 2, y + s / 2)], layer=layer, w=0.12)
     poly = pcbnew.PCB_SHAPE(board)
     poly.SetShape(pcbnew.SHAPE_T_POLY)
     poly.SetPolyPoints([P(x - s / 2, y - s / 2), P(x + s / 2, y), P(x - s / 2, y + s / 2)])
-    poly.SetFilled(True); poly.SetWidth(0); poly.SetLayer(FS)
+    poly.SetFilled(True); poly.SetWidth(0); poly.SetLayer(layer)
     board.Add(poly)
 
 
@@ -225,7 +225,7 @@ def module_silk(board):
         code, slot = {'IR': ('B1', 'J5'), 'IMU': ('B2', 'J6'), 'SPK': ('B3', 'J7')}[name]
         circle(board, tx, 101.1, 0.6)                        # pull tab on the stub that stays on the can
         line(board, X(1.1), Y(0.7), X(11.9), Y(0.7))        # top rim (the bottom of the can is the SAO header now)
-        pin1(board, X(2.3), Y(20.04))                       # SAO header pin 1 (bottom-left pad, header at rot 90)
+        pin1(board, X(2.3), Y(14.97), layer=BS)             # SAO header pin 1 (back side, top-left pad seen from the front)
         if name == 'IR':
             line(board, X(0.7), Y(11.5), X(12.3), Y(11.5)); line(board, X(0.7), Y(13.2), X(12.3), Y(13.2))
             text(board, 'B1 · IR COLA', X(6.5), Y(12.35), 0.8, thick=0.15)
@@ -238,9 +238,9 @@ def module_silk(board):
             text(board, 'B3', X(0.85), Y(18.6), 0.8, angle=90)
             text(board, 'BEEP FIZZ', X(12.05), Y(18.6), 0.8, angle=90)
         cx = (x1 + x2) / 2
-        text(board, code + ' ' + name + ' MODULE', cx, Y(16.0), 0.8, layer=BS, thick=0.15)
-        text(board, 'snap off,', cx, Y(17.8), 0.8, layer=BS)
-        text(board, 'plug into ' + slot, cx, Y(19.4), 0.8, layer=BS)
+        text(board, code + ' ' + name + ' MODULE', cx, Y(3.6), 0.8, layer=BS, thick=0.15)
+        text(board, 'snap off,', cx, Y(5.4), 0.8, layer=BS)
+        text(board, 'plug into ' + slot, cx, Y(7.0), 0.8, layer=BS)
 
 
 def back_panel(board):

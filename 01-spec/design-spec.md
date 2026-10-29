@@ -229,7 +229,7 @@ Power in the middle: a module plugged in backwards swaps GND and signal; 3V3 can
 
 Speaker module: GPIO25 → R20 1 kΩ → Q2 base (R21 10 kΩ to ground keeps it off while the pin floats at reset); Q2 emitter → ground; collector → LS1 (−); LS1 (+) → 3V3; D7 cathode to 3V3, anode to the collector (flyback); C25 across 3V3/ground. Drive with a 2.7 kHz square wave at 50 % duty (resonance); ≤ 95 mA pulsed from the 3V3 LDO.
 
-Mechanics: the three modules (soda cans 13 × 22 mm, R 2.2 corners) hang 2 mm under the pedestal at y 102–124 on 4 mm wide tabs with four 0.5 mm mouse-bite holes (1.0 mm pitch) on the pedestal edge line, so the badge edge stays clean and the stub remains on the module. No copper crosses a tab: every module has its own ground net and pour. Modules are plugged in standing upright; right-angle pin headers on the modules (same pads) would make them lie flat and face forward instead.
+Mechanics: the three modules (soda cans 13 × 22 mm, R 2.2 corners) hang 2 mm under the pedestal at y 102–124 on 4 mm wide tabs with four 0.5 mm mouse-bite holes (1.0 mm pitch) on the pedestal edge line, so the badge edge stays clean and the stub remains on the module. No copper crosses a tab: every module has its own ground net and pour. Since 2026-10-29 the module SAO headers (P1–P3) are SMD on the can backs, so a module plugs in face-up and lies flat over the badge, about 7.5 mm above it, with its body extending up from the socket (BUILD-NOTES item 23).
 
 ### 3.8 Removed from BOM-B2
 
