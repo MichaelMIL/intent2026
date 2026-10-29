@@ -28702,6 +28702,18 @@
 			)
 		)
 	)
+	(gr_text "OLED Display"
+		(at 109.26 76.5 0)
+		(layer "F.SilkS")
+		(uuid "bd9c07ef-7f57-48d8-9132-fa2650ccc354")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+			(justify left bottom)
+		)
+	)
 	(gr_text "3×AAA"
 		(at 112.2 144.4 0)
 		(layer "F.SilkS")
@@ -28790,42 +28802,6 @@
 			)
 		)
 	)
-	(gr_text "B1 IR MODULE"
-		(at 112 155.6 0)
-		(layer "B.SilkS")
-		(uuid "e79a7ffb-4496-4643-8a26-64cb6aca5994")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "snap off,"
-		(at 112 157.4 0)
-		(layer "B.SilkS")
-		(uuid "8098ee24-8827-4691-b91a-db05cabbef04")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "plug into J5"
-		(at 112 159.000001 0)
-		(layer "B.SilkS")
-		(uuid "0a7e1642-6faf-4e94-998b-0497cb7b6f0f")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
 	(gr_text "AUTHORIZED PERSONNEL ONLY"
 		(at 128 79.4 0)
 		(layer "B.SilkS")
@@ -28862,10 +28838,22 @@
 			(justify mirror)
 		)
 	)
-	(gr_text "B2 IMU MODULE"
-		(at 128 155.6 0)
+	(gr_text "3V3 INSIDE"
+		(at 151.2 92.1 0)
 		(layer "B.SilkS")
-		(uuid "eaeb3079-dbdc-48f8-8dfc-cc54f12721fd")
+		(uuid "d866eddc-2a73-4a2e-9186-4de20563c1dc")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+			(justify mirror)
+		)
+	)
+	(gr_text "plug into J5"
+		(at 112 155.599999 180)
+		(layer "B.SilkS")
+		(uuid "0a7e1642-6faf-4e94-998b-0497cb7b6f0f")
 		(effects
 			(font
 				(size 0.8 0.8)
@@ -28875,9 +28863,21 @@
 		)
 	)
 	(gr_text "snap off,"
-		(at 128 157.4 0)
+		(at 112 157.2 180)
 		(layer "B.SilkS")
-		(uuid "de2d7932-0f1e-4d6c-9d1b-af4832c53e9e")
+		(uuid "8098ee24-8827-4691-b91a-db05cabbef04")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+			(justify mirror)
+		)
+	)
+	(gr_text "B1 IR MODULE"
+		(at 112 159 180)
+		(layer "B.SilkS")
+		(uuid "e79a7ffb-4496-4643-8a26-64cb6aca5994")
 		(effects
 			(font
 				(size 0.8 0.8)
@@ -28887,7 +28887,7 @@
 		)
 	)
 	(gr_text "plug into J6"
-		(at 128 159.000001 0)
+		(at 128 155.599999 180)
 		(layer "B.SilkS")
 		(uuid "09977029-1694-45fb-a01d-0eebebd985ef")
 		(effects
@@ -28898,46 +28898,22 @@
 			(justify mirror)
 		)
 	)
-	(gr_text "SW5: optional (DNP)"
-		(at 137.5 137.5 0)
-		(layer "B.SilkS")
-		(uuid "c5de946f-42ff-411c-b0de-a1fedd56a4d0")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "JP1: cut for SW5"
-		(at 137.5 139.3 0)
-		(layer "B.SilkS")
-		(uuid "ad29a892-b872-4bb2-a95a-ae7c33843f4c")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "B3 SPK MODULE"
-		(at 144 155.6 0)
-		(layer "B.SilkS")
-		(uuid "d5945192-f840-4063-bea0-eaa407e95aaf")
-		(effects
-			(font
-				(size 0.8 0.8)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
 	(gr_text "snap off,"
-		(at 144 157.4 0)
+		(at 128 157.2 180)
 		(layer "B.SilkS")
-		(uuid "d58b72d4-33f0-4fd9-90be-0658eec8cd17")
+		(uuid "de2d7932-0f1e-4d6c-9d1b-af4832c53e9e")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+			(justify mirror)
+		)
+	)
+	(gr_text "B2 IMU MODULE"
+		(at 128 159 180)
+		(layer "B.SilkS")
+		(uuid "eaeb3079-dbdc-48f8-8dfc-cc54f12721fd")
 		(effects
 			(font
 				(size 0.8 0.8)
@@ -28947,7 +28923,7 @@
 		)
 	)
 	(gr_text "plug into J7"
-		(at 144 159.000001 0)
+		(at 144 155.599999 180)
 		(layer "B.SilkS")
 		(uuid "54a822f5-90e1-4dd4-9197-908c14dbfb98")
 		(effects
@@ -28958,10 +28934,22 @@
 			(justify mirror)
 		)
 	)
-	(gr_text "3V3 INSIDE"
-		(at 151.2 92.1 0)
+	(gr_text "snap off,"
+		(at 144 157.2 180)
 		(layer "B.SilkS")
-		(uuid "d866eddc-2a73-4a2e-9186-4de20563c1dc")
+		(uuid "d58b72d4-33f0-4fd9-90be-0658eec8cd17")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+			(justify mirror)
+		)
+	)
+	(gr_text "B3 SPK MODULE"
+		(at 144 159 180)
+		(layer "B.SilkS")
+		(uuid "d5945192-f840-4063-bea0-eaa407e95aaf")
 		(effects
 			(font
 				(size 0.8 0.8)
@@ -28986,18 +28974,6 @@
 		(at 112 68.4 0)
 		(layer "B.SilkS")
 		(uuid "9d8580f0-f133-4f9b-a5d4-ab06571b1edd")
-		(effects
-			(font
-				(size 0.9 0.9)
-				(thickness 0.15)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "battery lead → J3 (front, bottom)"
-		(at 115 136 0)
-		(layer "B.SilkS")
-		(uuid "8dc35539-ef7d-4ef2-a234-4445aa629ff6")
 		(effects
 			(font
 				(size 0.9 0.9)

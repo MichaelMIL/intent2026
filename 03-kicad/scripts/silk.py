@@ -219,7 +219,7 @@ def apply(board, art):
 
 def module_silk(board):
     # ---------------- BREAKAWAY MODULES = soda cans (front: rims, label band; back: name + where it plugs in) --------
-    # The front texts are turned 180 deg: a plugged-in module hangs upside down from its socket (BUILD-NOTES item 24).
+    # The front and back texts are turned 180 deg: a plugged-in module hangs upside down from its socket (BUILD-NOTES item 24).
     for name, (x1, y1, x2, y2, tx) in MODULES.items():
         X = lambda v: x1 + v
         Y = lambda v: y1 + v
@@ -239,9 +239,9 @@ def module_silk(board):
             line(board, X(0.7), Y(15.4), X(12.3), Y(15.4)); line(board, X(0.7), Y(17.1), X(12.3), Y(17.1))
             text(board, 'B3 · BEEP FIZZ', X(6.5), Y(16.25), 0.8, angle=180, thick=0.15)
         cx = (x1 + x2) / 2
-        text(board, code + ' ' + name + ' MODULE', cx, Y(3.6), 0.8, layer=BS, thick=0.15)
-        text(board, 'snap off,', cx, Y(5.4), 0.8, layer=BS)
-        text(board, 'plug into ' + slot, cx, Y(7.0), 0.8, layer=BS)
+        text(board, code + ' ' + name + ' MODULE', cx, Y(7.0), 0.8, layer=BS, angle=180, thick=0.15)
+        text(board, 'snap off,', cx, Y(5.2), 0.8, layer=BS, angle=180)
+        text(board, 'plug into ' + slot, cx, Y(3.6), 0.8, layer=BS, angle=180)
 
 
 def back_panel(board):
@@ -273,6 +273,5 @@ def back_panel(board):
     rect(board, 22.0, 77.4, 46.5, 84.4, layer=BS, w=0.15)
     text(board, 'J2: 3V3 LOGIC ONLY \u2014 NO 5V', 34.25, 79.4, 1.1, layer=BS, thick=0.2)
     text(board, 'INTENT 2026 badge \u00b7 rev 0.6 \u00b7 2026-10', 34.25, 82.4, 0.9, layer=BS)
-    text(board, 'battery lead \u2192 J3 (front, bottom)', 34.25, 86.8, 0.9, layer=BS)
     text(board, 'NO REFUNDS · DO NOT TILT OR ROCK', 34.25, 89.0, 0.9, layer=BS)
     text(board, 'JLCJLCJLCJLC', 4.9, 68.0, 1.0, layer=BS, angle=90)
