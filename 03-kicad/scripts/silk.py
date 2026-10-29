@@ -155,7 +155,7 @@ def logo(board, art):
 
 
 def pin1(board, x, y, s=0.7, layer=FS):
-    """Filled pin-1 triangle pointing right (+x), tip at (x + s/2, y)."""
+    """Filled pin-1 triangle pointing right (+x), tip at (x + s/2, y); a negative s points it left."""
     polyline(board, [(x - s / 2, y - s / 2), (x + s / 2, y), (x - s / 2, y + s / 2)], layer=layer, w=0.12)
     poly = pcbnew.PCB_SHAPE(board)
     poly.SetShape(pcbnew.SHAPE_T_POLY)
@@ -225,7 +225,7 @@ def module_silk(board):
         code, slot = {'IR': ('B1', 'J5'), 'IMU': ('B2', 'J6'), 'SPK': ('B3', 'J7')}[name]
         circle(board, tx, 101.1, 0.6)                        # pull tab on the stub that stays on the can
         line(board, X(1.1), Y(0.7), X(11.9), Y(0.7))        # top rim (the bottom of the can is the SAO header now)
-        pin1(board, X(2.3), Y(14.97), layer=BS)             # SAO header pin 1 (back side, top-left pad seen from the front)
+        pin1(board, X(10.7), Y(20.03), s=-0.7, layer=BS)    # SAO header pin 1 (back, bottom-right pad seen from the front)
         if name == 'IR':
             line(board, X(0.7), Y(11.5), X(12.3), Y(11.5)); line(board, X(0.7), Y(13.2), X(12.3), Y(13.2))
             text(board, 'B1 · IR COLA', X(6.5), Y(12.35), 0.8, thick=0.15)

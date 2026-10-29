@@ -71,10 +71,10 @@ P = {
 
 # --- module parts, module-local coordinates (origin = can top-left; can = 13 x 22 mm, tab at the top centre x 6.5) ---
 # rev 0.6: SAO 2x3 SMD header at the bottom of the can. 2026-10-29: rot 90 (rows horizontal, like the badge sockets
-# J5-J7; pin 1 = bottom-left pad), 1.1 mm higher so the pads clear the can bottom. Later that day: on the BACK at
-# rot 270 (pin 1 = top-left pad seen from the front, the same pad pattern as the sockets), so a module plugs in
-# face-up with its can art, IR dome and transducer facing out.
-HDR = (6.5, 17.5, 270, 'B')
+# J5-J7; pin 1 = bottom-left pad), 1.1 mm higher so the pads clear the can bottom. Later that day: on the BACK, so a
+# module plugs in face-up with its IR dome and transducer facing out, at rot 90 (pin 1 = bottom-right pad seen from
+# the front): the module is turned 180 deg to plug in and hangs down from its socket instead of covering D1-D5.
+HDR = (6.5, 17.5, 90, 'B')
 MP = {
     # IR: receiver dome up top, RC filter below it, label band y 11.3-14.5
     'IR': {'P1': HDR, 'U5': (6.5, 5.0, 0), 'R19': (3.0, 9.6, 90), 'C23': (10.0, 9.6, 90), 'C24': (6.5, 10.3, 0)},
