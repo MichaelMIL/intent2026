@@ -2,9 +2,9 @@
 
 RP2040 conference badge for the INTENT 2026 security summit. 56 × 100 mm, 2-layer, purple mask,
 vending-machine outline (header sign box with the lanyard holes on top of a 56 mm cabinet with feet, pedestal below), plus three
-**breakaway soda-can modules** 13 × 22 mm (IR receiver, audio jack, speaker) hanging under the pedestal on mouse-bite
+**breakaway soda-can modules** 13 × 22 mm (IR receiver, IMU, speaker) hanging under the pedestal on mouse-bite
 tabs (blank 56 × 124 mm). Each module has a 2×3 SMD SAO pin header (P1–P3) and plugs into a
-2×3 SMD SAO socket on the main board (J5 IR / J6 AUDIO / J7 SPK; rev 0.6, see Conventions). Fab: JLCPCB (10-board
+2×3 SMD SAO socket on the main board (J5 IR / J6 IMU / J7 SPK; rev 0.6, see Conventions). Fab: JLCPCB (10-board
 prototype, then 600). Board, schematic and BOM rev 0.6 (2026-10-18, re-laid out and re-routed, see BUILD-NOTES items 14-16).
 
 **Path note:** the project folder is `/Users/michael/Downloads/AI PCB ` with a trailing space.
@@ -39,7 +39,7 @@ The `.kicad_sch` / `.kicad_pcb` files are **generated**. Do not hand-edit them f
   `design.MODULES` maps module → ground net / socket / header.
 - Silkscreen art: `scripts/silk.py` (vending-machine theme: shelf items A1–A4 with product icons and prices, coil,
   glass glare, keypad bezel, CREDIT meter, ITEM PICKUP door with slots B1/B2/B3, coin + coin slot, back: AAA cells,
-  DANGER sticker, service log; cans B1 IR COLA / B2 AUDIO POP / B3 BEEP FIZZ with pull-tab rings on the stubs).
+  DANGER sticker, service log; cans B1 IR COLA / B2 SHAKE SODA (IMU) / B3 BEEP FIZZ with pull-tab rings on the stubs).
 - Exposed-copper art: `scripts/art_copper.py` (INTENT logo from `build/logo.json` via `scripts/art_logo.py`,
   INTENT-O-MATIC marquee, A/B/C, BOOT, can rims). Regions in `placement.ART_KEEPOUTS` must stay free of F.Cu
   signal tracks; `router/prune_routes.py --art` removes GND vias there. Re-check after any re-route.
@@ -119,7 +119,7 @@ Open the project: `open -a KiCad "/Users/michael/Downloads/AI PCB /03-kicad/inte
 
 - Keypad: A = GPIO4 (SW2, top), B = GPIO3, C = GPIO2 (SW4, bottom).
 - IR receiver U5 pinout: 1, 2 = GND, 3 = OUT, 4 = VCC. U5 lives on the IR module (nets IRM_*).
-- Expansion slots (rev 0.6, SAO): 1 = 3V3, 2 = GND, 3 = SDA (GPIO12), 4 = SCL (GPIO13), 5 = GPIO1 (J5 IR = GPIO22, J6 AUDIO = GPIO11, J7 SPK = GPIO25, also J2 pin 15), 6 = GPIO2 (GPIO26/27/28). 4.7k I²C pull-ups R22/R23.
+- Expansion slots (rev 0.6, SAO): 1 = 3V3, 2 = GND, 3 = SDA (GPIO12), 4 = SCL (GPIO13), 5 = GPIO1 (J5 IR = GPIO22, J6 IMU = GPIO11 (INT1; INT2 on GPIO27, I2C 0x6A), J7 SPK = GPIO25, also J2 pin 15), 6 = GPIO2 (GPIO26/27/28). 4.7k I²C pull-ups R22/R23.
 - Mouse bites MB1–MB3 are board-only footprints (`SetBoardOnly`), excluded from BOM/CPL and from schematic parity.
 - J3 = JST B2B-PH-SM4-TB (C160352) battery-box plug, pin 1 = BAT_IN. SW5/JP1 were removed 2026-10-29 (switch on the box); the schematic is now edited in KiCad, see BUILD-NOTES item 19.
 - All refdes are on the Fab layer, not silk.

@@ -18,7 +18,7 @@ TAB_W, TAB_L = 4.0, 2.0          # tab width / length (= routed gap between main
 CAN_W, CAN_H, CAN_R = 13.0, 22.0, 2.2
 MODULES = {
     'IR':    (5.5, 102.0, 18.5, 124.0, 12.0),
-    'AUDIO': (21.5, 102.0, 34.5, 124.0, 28.0),
+    'IMU':   (21.5, 102.0, 34.5, 124.0, 28.0),
     'SPK':   (37.5, 102.0, 50.5, 124.0, 44.0),
 }
 # outline corner style of each module: ('chamfer' | 'round', size mm). Corners must stay clear of the tab
@@ -69,22 +69,22 @@ P = {
 }
 
 # --- module parts, module-local coordinates (origin = can top-left; can = 13 x 22 mm, tab at the top centre x 6.5) ---
-# rev 0.6: SAO 2x3 SMD header at the bottom of the can (rot 0: odd pins in the left column, pin 1 top left).
-HDR = (6.5, 18.6, 0)
+# rev 0.6: SAO 2x3 SMD header at the bottom of the can. 2026-10-29: rot 90 (rows horizontal, like the badge sockets
+# J5-J7; pin 1 = bottom-left pad), 1.1 mm higher so the pads clear the can bottom.
+HDR = (6.5, 17.5, 90)
 MP = {
     # IR: receiver dome up top, RC filter below it, label band y 11.3-14.5
     'IR': {'P1': HDR, 'U5': (6.5, 5.0, 0), 'R19': (3.0, 9.6, 90), 'C23': (10.0, 9.6, 90), 'C24': (6.5, 10.3, 0)},
-    # AUDIO: jack lying across the can, body 0.2 mm inside the left edge, barrel 1.8 mm into the 3 mm gap (mouth -x);
-    # PWM filter in a row between the jack and the header
-    'AUDIO': {'P2': HDR, 'J4': (7.5, 7.0, 0), 'R17': (2.0, 13.3, 0), 'C21': (4.6, 13.3, 0), 'C22': (8.4, 13.3, 0)},
-    # SPK: transducer up top, driver row between it and the header
-    'SPK': {'P3': HDR, 'LS1': (6.5, 5.5, 0), 'Q2': (2.6, 12.4, 0), 'D7': (7.5, 11.8, 0), 'R20': (6.0, 13.6, 0),
-            'R21': (8.5, 13.6, 0), 'C25': (11.4, 12.4, 90)},
+    # IMU (2026-10-29, replaces the audio jack): LSM6DS3TR-C in the middle of the can, its two 100 nF caps beside it
+    'IMU': {'P2': HDR, 'U7': (6.5, 7.5, 0), 'C30': (2.6, 7.5, 90), 'C31': (10.4, 7.5, 90)},
+    # SPK: transducer up top; since the header turned (2026-10-29) the driver row sits on the BACK of the can
+    'SPK': {'P3': HDR, 'LS1': (6.5, 5.5, 0), 'Q2': (2.6, 12.4, 0, 'B'), 'D7': (7.5, 11.8, 0, 'B'),
+            'R20': (6.0, 13.6, 0, 'B'), 'R21': (8.5, 13.6, 0, 'B'), 'C25': (11.4, 12.4, 90, 'B')},
 }
 for _m, _parts in MP.items():
     _x1, _y1 = MODULES[_m][0], MODULES[_m][1]
-    for _ref, (_x, _y, _rot) in _parts.items():
-        P[_ref] = (round(_x1 + _x, 3), round(_y1 + _y, 3), _rot)
+    for _ref, _v in _parts.items():
+        P[_ref] = (round(_x1 + _v[0], 3), round(_y1 + _v[1], 3)) + tuple(_v[2:])
 
 
 def get(ref):

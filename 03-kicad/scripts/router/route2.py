@@ -20,8 +20,9 @@ MARGIN = 0.045
 EDGE_CLR = 0.3
 VIA_D, VIA_DRILL = 0.6, 0.3
 WIN = 1.3
+# IMM_INT2 0.15 mm: LGA-14 pad 9 of U7 sits 0.5 mm between two foreign pads
 WIDTH = {'VBUS': 0.5, 'VSYS': 0.5, 'BAT_IN': 0.5, 'BAT_SW': 0.5, '+3V3': 0.3, '+1V1': 0.3, 'GND': 0.3,
-         'IRM_GND': 0.3, 'IRM_3V3': 0.3, 'AUM_GND': 0.3, 'SPM_GND': 0.3, 'SPM_3V3': 0.3, 'SPM_COL': 0.3}
+         'IRM_GND': 0.3, 'IRM_3V3': 0.3, 'IMM_GND': 0.3, 'IMM_3V3': 0.3, 'IMM_INT2': 0.15, 'SPM_GND': 0.3, 'SPM_3V3': 0.3, 'SPM_COL': 0.3}
 LAYER_COST = (100, 230)
 VIA_COST = 55
 
@@ -499,7 +500,7 @@ class Router:
             xs = [p['x'] for p in self.nets[n]]; ys = [p['y'] for p in self.nets[n]]
             return (max(xs) - min(xs)) + (max(ys) - min(ys))
         order = sorted([n for n in self.nets if n != 'GND'], key=span) + ([] if os.environ.get('GND_LAST') else ['GND'])
-        # NET_ONLY=IRM_,AUM_,SPM_: route just these net prefixes (e.g. the breakaway modules after a re-placement);
+        # NET_ONLY=IRM_,IMM_,SPM_: route just these net prefixes (e.g. the breakaway modules after a re-placement);
         # everything else comes in as FIXED_ROUTES and is exported separately by main()
         only = os.environ.get('NET_ONLY')
         if only:

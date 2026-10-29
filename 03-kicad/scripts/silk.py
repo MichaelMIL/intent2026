@@ -3,7 +3,7 @@
 Vending-machine theme (rev 0.5): price-tagged shelf items A1-A4 (the RGB LEDs) over a dispensing coil, a keypad
 bezel with SELECT, a CREDIT meter with coin values, an ITEM PICKUP door around the three module slots B1-B3, a coin
 slot by the UART test pads, a marquee in the header sign box, service-panel texts on the back. The breakaway modules
-are soda cans: B1 "IR COLA", B2 "AUDIO POP", B3 "BEEP FIZZ" (rim lines, label band with a wave, pin labels)."""
+are soda cans: B1 "IR COLA", B2 "SHAKE SODA" (IMU), B3 "BEEP FIZZ" (rim lines, label band with a wave, pin labels)."""
 import math
 import pcbnew
 from pcb_build import OX, OY, mm, P, MODULES
@@ -201,7 +201,7 @@ def apply(board, art):
     # item pickup door: the three SAO slots B1..B3 (2x3 SMD sockets at rot 90, pin 1 = top-left pad, marked)
     text(board, 'ITEM PICKUP', 13.45, 77.3, 0.8)
     rect(board, 0.6, 78.4, 26.9, 89.5, w=0.2)
-    for x, name in ((4.65, 'B1 IR'), (13.45, 'B2 AUDIO'), (22.25, 'B3 SPK')):
+    for x, name in ((4.65, 'B1 IR'), (13.45, 'B2 IMU'), (22.25, 'B3 SPK')):
         text(board, name, x, 79.3, 0.8, thick=0.15)
         pin1(board, x - 3.75, 81.98)
     text(board, 'USB-C', 53.3, 78.1, 0.8)
@@ -212,29 +212,38 @@ def apply(board, art):
     text(board, 'TX', 37.0, 97.0, 0.9); text(board, 'RX', 40.5, 97.0, 0.9); text(board, 'GND', 44.0, 97.0, 0.9)
     text(board, '3×AAA', 12.2, 94.4, 1.0)
     text(board, '+', 17.6, 97.4, 1.2, thick=0.2); text(board, '−', 22.5, 97.4, 1.2, thick=0.2)
+    module_silk(board)
+    # ---------------- BACK: service panel ----------------
+    back_panel(board)
+
+
+def module_silk(board):
     # ---------------- BREAKAWAY MODULES = soda cans (front: rims, label band; back: name + where it plugs in) --------
     for name, (x1, y1, x2, y2, tx) in MODULES.items():
         X = lambda v: x1 + v
         Y = lambda v: y1 + v
-        code, slot = {'IR': ('B1', 'J5'), 'AUDIO': ('B2', 'J6'), 'SPK': ('B3', 'J7')}[name]
+        code, slot = {'IR': ('B1', 'J5'), 'IMU': ('B2', 'J6'), 'SPK': ('B3', 'J7')}[name]
         circle(board, tx, 101.1, 0.6)                        # pull tab on the stub that stays on the can
         line(board, X(1.1), Y(0.7), X(11.9), Y(0.7))        # top rim (the bottom of the can is the SAO header now)
-        pin1(board, X(1.55), Y(16.06))                      # SAO header pin 1 (top-left pad)
+        pin1(board, X(2.3), Y(20.04))                       # SAO header pin 1 (bottom-left pad, header at rot 90)
         if name == 'IR':
-            line(board, X(0.7), Y(11.3), X(12.3), Y(11.3)); line(board, X(0.7), Y(14.6), X(12.3), Y(14.6))
+            line(board, X(0.7), Y(11.5), X(12.3), Y(11.5)); line(board, X(0.7), Y(13.2), X(12.3), Y(13.2))
             text(board, 'B1 · IR COLA', X(6.5), Y(12.35), 0.8, thick=0.15)
-            text(board, '38 kHz', X(6.5), Y(13.75), 0.8)
-        elif name == 'AUDIO':
-            text(board, 'B2', X(0.85), Y(18.6), 0.8, angle=90)
-            text(board, 'AUDIO POP', X(12.05), Y(18.6), 0.8, angle=90)
+            text(board, '38k', X(1.0), Y(17.5), 0.8, angle=90)
+        elif name == 'IMU':
+            line(board, X(0.7), Y(9.9), X(12.3), Y(9.9)); line(board, X(0.7), Y(13.2), X(12.3), Y(13.2))
+            text(board, 'B2 · SHAKE SODA', X(6.5), Y(11.0), 0.8, thick=0.15)
+            text(board, '6-axis IMU', X(6.5), Y(12.4), 0.8)
         else:
             text(board, 'B3', X(0.85), Y(18.6), 0.8, angle=90)
             text(board, 'BEEP FIZZ', X(12.05), Y(18.6), 0.8, angle=90)
         cx = (x1 + x2) / 2
-        text(board, code + ' ' + name + ' MODULE', cx, Y(11.0), 0.8, layer=BS, thick=0.15)
-        text(board, 'snap off,', cx, Y(13.0), 0.8, layer=BS)
-        text(board, 'plug into ' + slot, cx, Y(14.6), 0.8, layer=BS)
-    # ---------------- BACK: service panel ----------------
+        text(board, code + ' ' + name + ' MODULE', cx, Y(16.0), 0.8, layer=BS, thick=0.15)
+        text(board, 'snap off,', cx, Y(17.8), 0.8, layer=BS)
+        text(board, 'plug into ' + slot, cx, Y(19.4), 0.8, layer=BS)
+
+
+def back_panel(board):
     text(board, 'TEAM', 52, 11.5, 1.6, layer=BS, just='L', thick=0.25)
     for i, n in enumerate(TEAM):
         text(board, n, 52, 13.9 + 2.0 * i, 1.3, layer=BS, just='L', thick=0.2)

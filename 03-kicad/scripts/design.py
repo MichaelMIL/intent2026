@@ -9,6 +9,8 @@ rev 0.6 (2026-10-17, schematic/BOM review against the RP2040 hardware design gui
   * RGB data buffer U6 SN74LV1T34 (C100024) on VSYS: DIN swings to VSYS, fixes VIH = 0.7 x VDD at any VSYS
   * Expansion ports -> SAO (badge.team): 2x3 socket J5-J7, 2x3 header P1-P3; pinout 1 3V3, 2 GND, 3 SDA,
     4 SCL, 5 GPIO1, 6 GPIO2. I2C0 on GPIO12/13 (4.7k pull-ups), GPIO1 = old slot signal, GPIO2 = GPIO26/27/28
+  * 2026-10-29: the AUDIO module (PWM filter + 3.5 mm jack) became an IMU module: ST LSM6DS3TR-C (C967633) on the SAO
+    I2C bus at 0x6A (SA0 = GND), INT1 -> SAO GPIO1 (GPIO11, net IMU_INT1), INT2 -> SAO GPIO2 (GPIO27). Nets IMM_*
   * 2026-10-18: SAO socket/header changed to SMT (C42163131 / C3294461); see bom-deltas for the keyed-connector check
 
 rev 0.5 (2026-10-11): the IR receiver, the audio jack and a new speaker are **breakaway modules** on the same
@@ -54,7 +56,7 @@ parts = []
 
 
 def part(ref, lib, value, fp, lcsc, pins, dnp=False, in_bom=True, desc='', side='F', module=''):
-    """module: '' = main board, else the breakaway module the part sits on ('IR', 'AUDIO', 'SPK')."""
+    """module: '' = main board, else the breakaway module the part sits on ('IR', 'IMU', 'SPK')."""
     parts.append(dict(ref=ref, lib=lib, value=value, fp=fp, lcsc=lcsc, pins=pins,
                       dnp=dnp, in_bom=in_bom, desc=desc, side=side, module=module))
 
@@ -71,7 +73,7 @@ def C(ref, val, lcsc, a, b, fp=FP_C, desc='', module=''):
 gpio = {i: None for i in range(30)}
 gpio.update({0: 'UART0_TX', 1: 'UART0_RX', 2: 'BTN_C', 3: 'BTN_B', 4: 'BTN_A',   # A=GPIO4 (layout order)
              5: 'LED_R1', 6: 'LED_R2', 7: 'LED_R3', 8: 'LED_R4', 9: 'LED_R5',
-             10: 'RGB_CTRL', 11: 'AUDIO_PWM', 12: 'SAO_SDA', 13: 'SAO_SCL', 22: 'IR_OUT', 25: 'SPK_PWM',
+             10: 'RGB_CTRL', 11: 'IMU_INT1', 12: 'SAO_SDA', 13: 'SAO_SCL', 22: 'IR_OUT', 25: 'SPK_PWM',
              26: 'SAO1_GPIO2', 27: 'SAO2_GPIO2', 28: 'SAO3_GPIO2', 29: 'VBUS_SENSE'})
 for i in list(range(14, 22)) + [23, 24]:
     gpio[i] = 'GPIO%d' % i
@@ -168,7 +170,7 @@ for i in range(4):
 # ---- expansion ports (main board): SAO (badge.team), 2x3 2.54 mm socket ---------
 # 1 = 3V3, 2 = GND, 3 = SDA, 4 = SCL, 5 = GPIO1, 6 = GPIO2. Shared I2C0 bus (GPIO12/13), GPIO1 = the slot signal of
 # rev 0.5, GPIO2 = GPIO26/27/28 (ADC-capable). The module side is P1-P3 below.
-SAO_PORTS = (('J5', 'SAO1 IR', 'IR_OUT', 'SAO1_GPIO2'), ('J6', 'SAO2 AUDIO', 'AUDIO_PWM', 'SAO2_GPIO2'),
+SAO_PORTS = (('J5', 'SAO1 IR', 'IR_OUT', 'SAO1_GPIO2'), ('J6', 'SAO2 IMU', 'IMU_INT1', 'SAO2_GPIO2'),
              ('J7', 'SAO3 SPK', 'SPK_PWM', 'SAO3_GPIO2'))
 for ref, name, g1, g2 in SAO_PORTS:
     part(ref, 'Connector_Generic:Conn_02x03_Odd_Even', name, FP_SOCKET6, L_SOCKET6,
@@ -188,16 +190,19 @@ R('R19', '100', L_100R, 'IRM_3V3', 'IRM_VCC', module=M)
 C('C23', '100nF', L_100N, 'IRM_VCC', 'IRM_GND', module=M)
 C('C24', '10uF', L_10U, 'IRM_VCC', 'IRM_GND', fp=FP_C0805, module=M)
 
-# ---- audio module (breakaway, nets AUM_*) ---------------------------------------
-M = 'AUDIO'
-part('P2', 'Connector_Generic:Conn_02x03_Odd_Even', 'AUDIO MODULE', FP_PINS6, L_PINS6,
-     dict(SAO_NC, **{'1': None, '2': 'AUM_GND', '5': 'AUM_PWM'}), desc='SAO add-on header (GPIO1 = PWM, 3V3 unused)',
-     module=M)
-R('R17', '1k', L_1K, 'AUM_PWM', 'AUM_FILT', module=M)
-C('C21', '10nF', L_10N, 'AUM_FILT', 'AUM_GND', module=M)
-C('C22', '10uF', 'C19702', 'AUM_FILT', 'AUM_OUT', fp='Capacitor_SMD:C_0603_1608Metric', desc='DC block (0603 since rev 0.6: fits under the jack)', module=M)
-part('J4', 'Connector_Audio:AudioJack4', 'PJ-320D', 'intent:Jack_3.5mm_PJ-320D_SMD_C431535', 'C431535',
-     {'T': 'AUM_OUT', 'R1': 'AUM_OUT', 'R2': 'AUM_GND', 'S': 'AUM_GND'}, module=M)
+# ---- IMU module (breakaway, nets IMM_*) - was the audio module until 2026-10-29 ------
+M = 'IMU'
+part('P2', 'Connector_Generic:Conn_02x03_Odd_Even', 'IMU MODULE', FP_PINS6, L_PINS6,
+     {'1': 'IMM_3V3', '2': 'IMM_GND', '3': 'IMM_SDA', '4': 'IMM_SCL', '5': 'IMM_INT1', '6': 'IMM_INT2'},
+     desc='SAO add-on header: I2C to the badge, GPIO1 = INT1, GPIO2 = INT2', module=M)
+# LSM6DS3TR-C in I2C mode (datasheet Mode 1): CS = VDDIO, SA0 = GND (address 0x6A), SDx/SCx = GND, pins 10/11 NC;
+# 100 nF on VDD and on VDDIO (datasheet note 1). SDA/SCL pull-ups are on the badge (R22/R23).
+part('U7', 'Sensor_Motion:LSM6DS3', 'LSM6DS3TR-C', 'Package_LGA:LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y', 'C967633',
+     {'1': 'IMM_GND', '2': 'IMM_GND', '3': 'IMM_GND', '4': 'IMM_INT1', '5': 'IMM_3V3', '6': 'IMM_GND', '7': 'IMM_GND',
+      '8': 'IMM_3V3', '9': 'IMM_INT2', '10': None, '11': None, '12': 'IMM_3V3', '13': 'IMM_SCL', '14': 'IMM_SDA'},
+     desc='6-axis IMU (accel + gyro), I2C 0x6A', module=M)
+C('C30', '100nF', L_100N, 'IMM_3V3', 'IMM_GND', desc='U7 VDD', module=M)
+C('C31', '100nF', L_100N, 'IMM_3V3', 'IMM_GND', desc='U7 VDDIO', module=M)
 
 # ---- speaker module (breakaway, nets SPM_*) — BOM-B2 add-on 7 ---------------------
 M = 'SPK'
@@ -226,11 +231,11 @@ part('TP3', 'Connector:TestPoint', 'GND', 'TestPoint:TestPoint_THTPad_D1.5mm_Dri
 part('H1', 'Mechanical:MountingHole', 'Lanyard', 'intent:LanyardHole_4.0mm_Plated', '', {}, in_bom=False)
 part('H2', 'Mechanical:MountingHole', 'Lanyard', 'intent:LanyardHole_4.0mm_Plated', '', {}, in_bom=False)
 
-PWR_FLAGS = ['GND', 'VBUS', 'VSYS', 'IRM_VCC', 'IRM_3V3', 'IRM_GND', 'AUM_GND', 'SPM_3V3', 'SPM_GND']
+PWR_FLAGS = ['GND', 'VBUS', 'VSYS', 'IRM_VCC', 'IRM_3V3', 'IRM_GND', 'IMM_3V3', 'IMM_GND', 'SPM_3V3', 'SPM_GND']
 
 # breakaway modules: name -> ground net (zones) and the socket it mates with
 MODULES = {'IR': dict(gnd='IRM_GND', socket='J5', pins='P1'),
-           'AUDIO': dict(gnd='AUM_GND', socket='J6', pins='P2'),
+           'IMU': dict(gnd='IMM_GND', socket='J6', pins='P2'),
            'SPK': dict(gnd='SPM_GND', socket='J7', pins='P3')}
 
 if __name__ == '__main__':

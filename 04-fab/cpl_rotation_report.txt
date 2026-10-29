@@ -5,7 +5,7 @@ D3    C2286      KiCad rot   0.0 -> JLC rot 180.0, offset (-0.000, -0.000) mm, f
 D4    C2286      KiCad rot   0.0 -> JLC rot 180.0, offset (-0.000, -0.000) mm, fit err 0.037 mm
 D5    C2286      KiCad rot   0.0 -> JLC rot 180.0, offset (-0.000, -0.000) mm, fit err 0.037 mm
 Q1    C22469449  KiCad rot   0.0 -> JLC rot 180.0, offset (0.054, 0.000) mm, fit err 0.145 mm
-Q2    C2146      KiCad rot   0.0 -> JLC rot 180.0, offset (0.054, 0.000) mm, fit err 0.145 mm
+Q2    C2146      KiCad rot   0.0 -> JLC rot 180.0, offset (0.054, 0.000) mm, fit err 1.341 mm
 U2    C2456211   KiCad rot   0.0 -> JLC rot 270.0, offset (-0.000, 0.000) mm, fit err 0.207 mm
 U4    C2827654   KiCad rot   0.0 -> JLC rot 270.0, offset (0.000, -0.000) mm, fit err 0.012 mm
 
@@ -23,4 +23,4 @@ Check these in the JLC placement preview before paying:
                     GPIO pins: pin 1 must match the silk triangle.
 rev 0.6 parts with NO JLC footprint data in jlc_footprints.json (no correction applied, check in the preview):
   J1 C165948 HRO TYPE-C-31-M-12, U3 C51118 AP2112K SOT-23-5 (pin 1 = VIN), U6 C100024 SN74LV1T34 SOT-23-5,
-  J5-J7 C42163131, P1-P3 C3294461, C22 C19702 (0603, symmetric).
+  J5-J7 C42163131, P1-P3 C3294461, U7 C967633 LSM6DS3TR-C LGA-14 (pin 1 dot!), J3 C160352.

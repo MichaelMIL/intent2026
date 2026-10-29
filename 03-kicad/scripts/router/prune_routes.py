@@ -1,6 +1,6 @@
 """Prepare routes.json for a partial re-route.
 
-usage: python3 prune_routes.py [--art] <geo.json> <routes.json> <out_main.json> [net_prefixes=IRM_,AUM_,SPM_ | -]
+usage: python3 prune_routes.py [--art] <geo.json> <routes.json> <out_main.json> [net_prefixes=IRM_,IMM_,SPM_ | -]
        python3 prune_routes.py --merge <main.json> <modules.json> <out_routes.json>
 
 --art also drops GND copper inside placement.ART_KEEPOUTS (exposed-copper art regions); '-' keeps every net
@@ -33,7 +33,7 @@ def main():
         art = [(box(x1, y1, x2, y2), L) for x1, y1, x2, y2, L in placement.ART_KEEPOUTS]
         a = a[1:]
     geo = json.load(open(a[0])); routes = json.load(open(a[1]))
-    spec = a[3] if len(a) > 3 else 'IRM_,AUM_,SPM_'
+    spec = a[3] if len(a) > 3 else 'IRM_,IMM_,SPM_'
     pre = () if spec == '-' else tuple(spec.split(','))
     board = Polygon(geo['outline'])
     # unconnected pads with their own clearance (lanyard holes): GND copper inside that ring is dropped as well

@@ -3,7 +3,7 @@
 Layout (A2, one sheet):
     row 1: USB-C | power path | expansion ports (J5-J7) | IR module
     row 2: RP2040 core (decoupling, crystal, flash, BOOTSEL) | UI (keys, LEDs, RGB) | header / TP / flags
-    row 3: audio module | speaker module      (the three modules are breakaway boards with their own nets)
+    row 3: IMU module | speaker module      (the three modules are breakaway boards with their own nets)
 Power rails use power symbols; every other net carries a local label with the design.py net
 name, so the PCB netlist (names included) is unchanged. Verify with scripts/check_sch.py.
 """
@@ -132,7 +132,7 @@ for ref, y in (('R22', 96.52), ('R23', 104.14)):
     W(P(ref, 2), (370.84, y))
 W((370.84, 93.98), (370.84, 104.14)); sh.power('+3V3', 370.84, 93.98)
 sh.text('SAO (badge.team): 1 3V3, 2 GND, 3 SDA, 4 SCL, 5 GPIO1, 6 GPIO2.', 337.82, 110.49, 1.27)
-sh.text('I2C0 on GPIO12/13, 4.7k pull-ups. GPIO1: IR 22 / AUDIO 11 / SPK 25.', 337.82, 113.79, 1.27)
+sh.text('I2C0 on GPIO12/13, 4.7k pull-ups. GPIO1: IR 22 / IMU 11 / SPK 25.', 337.82, 113.79, 1.27)
 sh.text('GPIO2: GPIO26/27/28 (ADC). Socket on badge, 2x3 pin header on the add-on.', 337.82, 117.09, 1.27)
 
 # =============================================================================================
@@ -306,33 +306,35 @@ for x, net in ((515.62, 'VBUS'), (530.86, 'VSYS'), (546.1, None)):
         W((x, 274.32), (x, 279.4)); sh.flag(x, 274.32); sh.power('GND', x, 279.4)
 W((561.34, 274.32), (561.34, 279.4)); sh.label('IRM_VCC', 561.34, 274.32); sh.flag(561.34, 279.4, rot=180)
 # module rails and grounds: fed only through header pins / passives, so each needs a flag
-for i, net in enumerate(('IRM_3V3', 'IRM_GND', 'AUM_GND', 'SPM_3V3', 'SPM_GND')):
-    x = 505.46 + 12.7 * i
+for i, net in enumerate(('IRM_3V3', 'IRM_GND', 'IMM_3V3', 'IMM_GND', 'SPM_3V3', 'SPM_GND')):
+    x = 505.46 + 10.16 * i
     W((x, 297.18), (x, 302.26)); sh.label(net, x, 297.18); sh.flag(x, 302.26, rot=180)
 sh.text('PWR_FLAGs: nets fed only through passive pins', 505.46, 318.77, 1.5)
 sh.text('(row 2: breakaway-module rails and grounds).', 505.46, 322.58, 1.5)
 
 # =============================================================================================
-# Block H - audio module (breakaway board; nets AUM_*)
+# Block H - IMU module (breakaway board; nets IMM_*) - was the audio module until 2026-10-29
 # =============================================================================================
-sh.box(17.78, 347.98, 203.2, 407.67, 'AUDIO MODULE  breakaway board, plugs into J6')
-put('P2', 30.48, 378.46, mir='y', ref_at=(-1.27, -8.89), val_at=(-1.27, -6.35), just=['left'])
-put('R17', 45.72, 381.0, 90, **H)
-W(P('P2', 5), P('R17', 1)); sh.label('AUM_PWM', 38.1, 381.0, 270)
-p = P('P2', 2); W(p, (20.32, p[1]), (20.32, 388.62)); sh.power('AUM_GND', 20.32, 388.62, lib='power:GND')
-for pn in (1, 3, 4, 6):
-    sh.nc(P('P2', pn))
-W(P('R17', 2), (63.5, 381.0))
-put('C21', 55.88, 384.81, **V); sh.power('AUM_GND', 55.88, 388.62, lib='power:GND')
-sh.label('AUM_FILT', 52.07, 381.0)
-put('C22', 67.31, 381.0, 90, ref_at=(0, -5.08), val_at=(0, -2.54))
-put('J4', 99.06, 375.92, mir='y', ref_at=(0, -10.16), val_at=(0, 10.16))
-W(P('C22', 2), P('J4', 'T')); sh.label('AUM_OUT', 72.39, 381.0)
-W(P('J4', 'R1'), (83.82, 378.46), (83.82, 381.0))
-W(P('J4', 'R2'), (88.9, 375.92), (88.9, 368.3)); W(P('J4', 'S'), (88.9, 373.38)); sh.power('AUM_GND', 88.9, 368.3, rot=180, lib='power:GND')
-note(20.32, 397.51, 'GPIO11 PWM (>= 100 kHz carrier) -> 1k / 10n low-pass (fc ~ 16 kHz) -> 10 uF DC block -> tip + ring 1 (mono). Sleeve + ring 2 = GND.',
-     'Level into 32 ohm ~ 0.1 Vpp. PJ-320D (C431535) SMD pads: 1 = S, 2 = R2, 3 = R1, 4 = T. Detect-switch pads unused.',
-     'P2: SAO 2x3 header, 2 = GND, 5 = GPIO1 = PWM (3V3 unused); plugs into J6. Snap off; the jack then points sideways.')
+sh.box(17.78, 347.98, 203.2, 407.67, 'IMU MODULE  breakaway board, plugs into J6')
+put('P2', 45.72, 378.46, ref_at=(-1.27, -6.35), val_at=(-1.27, 6.35), just=['left'])
+for pn, net in ((1, 'IMM_3V3'), (3, 'IMM_SDA'), (5, 'IMM_INT1')):
+    p = P('P2', pn); W(p, (35.56, p[1])); sh.label(net, 35.56, p[1], 180)
+for pn, net in ((2, 'IMM_GND'), (4, 'IMM_SCL'), (6, 'IMM_INT2')):
+    p = P('P2', pn); W(p, (58.42, p[1])); sh.label(net, 58.42, p[1])
+put('U7', 111.76, 375.92, ref_at=(5.08, -17.78), val_at=(5.08, 17.78), just=['left'])
+for pn, net in ((1, 'IMM_GND'), (2, 'IMM_GND'), (3, 'IMM_GND'), (14, 'IMM_SDA'), (13, 'IMM_SCL'), (12, 'IMM_3V3')):
+    p = P('U7', pn); W(p, (93.98, p[1])); sh.label(net, 93.98, p[1], 180)
+for pn, net in ((4, 'IMM_INT1'), (9, 'IMM_INT2')):
+    p = P('U7', pn); W(p, (129.54, p[1])); sh.label(net, 129.54, p[1])
+sh.nc(P('U7', 10)); sh.nc(P('U7', 11))
+W(P('U7', 5), (111.76, 355.6)); W(P('U7', 8), (114.3, 355.6))
+W((106.68, 355.6), (162.56, 355.6)); sh.label('IMM_3V3', 106.68, 355.6, 180)
+put('C30', 152.4, 359.41, **V); put('C31', 162.56, 359.41, **V)
+W(P('C30', 2), (152.4, 365.76), (162.56, 365.76), P('C31', 2)); sh.power('IMM_GND', 157.48, 365.76, lib='power:GND')
+sh.power('IMM_GND', 111.76, 391.16, lib='power:GND')
+sh.text('ST LSM6DS3TR-C 6-axis IMU (C967633), I2C mode (datasheet Mode 1): CS = VDDIO, SA0 = GND -> 0x6A,', 20.32, 399.67, 1.27)
+sh.text('SDx/SCx = GND, pins 10/11 NC. 100 nF on VDD (C30) and VDDIO (C31). I2C pull-ups are on the badge (R22/R23).', 20.32, 402.59, 1.27)
+sh.text('P2: SAO 2x3, 1 3V3, 2 GND, 3 SDA, 4 SCL, 5 GPIO1 = INT1 (GPIO11), 6 GPIO2 = INT2 (GPIO27). Plugs into J6.', 20.32, 405.51, 1.27)
 
 # =============================================================================================
 # Block I - speaker module (breakaway board; nets SPM_*; BOM-B2 add-on 7)
@@ -375,6 +377,6 @@ if __name__ == '__main__':
     if missing:
         raise SystemExit('parts not placed: %s' % missing)
     nw, nj = sh.write(OUT, 'INTENT 2026 Hardware Badge', '2026-10-17', '0.6', 'INTENT 2026 - by Palo Alto Networks',
-                      ['RP2040 badge, 56x100 mm vending-machine outline + 3 breakaway SAO modules (IR, audio, speaker)',
+                      ['RP2040 badge, 56x100 mm vending-machine outline + 3 breakaway SAO modules (IR, IMU, speaker)',
                        'Generated by scripts/gen_sch.py - edit design.py, not this file'])
     print('wrote', os.path.abspath(OUT), len(sh.placed), 'symbols', nw, 'wires', nj, 'junctions')

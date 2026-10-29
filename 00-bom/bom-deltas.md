@@ -183,3 +183,14 @@ Net vs rev 0.6: ≈ **−$0.5/board** at 600.
 
 - Same PH 2.0 mating plug as before, so the battery-box lead doesn't change. Check the box's plug polarity against pin 1 (some boxes are wired the other way).
 - The footprint changed, so the PCB needs Update PCB from Schematic and J3 re-placed. No JLC rotation data for C160352 yet: check J3 in the JLC preview.
+
+## rev 0.6e — audio module → IMU module (2026-10-29, user request)
+
+| Ref | Change | LCSC | Notes |
+|---|---|---|---|
+| J4, R17, C21, C22 | **removed** (PJ-320D jack, PWM filter) | C431535, C11702, C15195, C19702 | the audio module is gone |
+| U7 | **new** ST **LSM6DS3TR-C** 6-axis IMU (accel + gyro), LGA-14 2.5 × 3 mm | **C967633** | 22,645 in stock; $0.99 (100+), $0.91 (1,000+) |
+| C30, C31 | **new** 100 nF on VDD / VDDIO | C60474 | datasheet note 1 |
+
+- I2C mode (datasheet Mode 1): CS = VDDIO, SA0 = GND → address **0x6A**, SDx/SCx = GND, pins 10/11 NC. SDA/SCL go to the SAO I2C bus (pull-ups R22/R23 on the badge). INT1 → SAO GPIO1 (GPIO11, net renamed AUDIO_PWM → IMU_INT1), INT2 → SAO GPIO2 (GPIO27).
+- Cost at 600: about +$0.95/board for U7 + caps, −$0.25 for the jack and filter.

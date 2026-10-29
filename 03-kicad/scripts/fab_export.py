@@ -120,7 +120,7 @@ def main(pcb, outdir):
                 '                    GPIO pins: pin 1 must match the silk triangle.\n'
                 'rev 0.6 parts with NO JLC footprint data in jlc_footprints.json (no correction applied, check in the preview):\n'
                 '  J1 C165948 HRO TYPE-C-31-M-12, U3 C51118 AP2112K SOT-23-5 (pin 1 = VIN), U6 C100024 SN74LV1T34 SOT-23-5,\n'
-                '  J5-J7 C42163131, P1-P3 C3294461, C22 C19702 (0603, symmetric).\n')
+                '  J5-J7 C42163131, P1-P3 C3294461, U7 C967633 LSM6DS3TR-C LGA-14 (pin 1 dot!), J3 C160352.\n')
     print('BOM lines', len(bom), 'placements', len(cpl), 'corrected', len(report))
     print('\n'.join(report))
 
